@@ -3,4 +3,5 @@
 **/.ipynb_checkpoints/*
 
 docs/build/*
+!docs/build/html/*
 !docs/build/.gitkeep

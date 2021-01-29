@@ -1,0 +1,436 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Basic Usage &mdash; TX2  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+  
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dashboard Widgets" href="dashboard_widgets.html" />
+    <link rel="prev" title="TX2 Documentation" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> TX2
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Usage</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Basic Usage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#wrapper-setup">Wrapper Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#default-approach">Default Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#custom-approach">Custom Approach</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#input-data-flow">Input Data Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#dashboard-setup">Dashboard Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tips">Tips</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard_widgets.html">Dashboard Widgets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calc.html">Calc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TX2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Basic Usage</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/basic_usage.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="basic-usage">
+<h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
+<p>TX2 consists of two classes: <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a>
+and <a class="reference internal" href="dashboard.html#tx2.dashboard.Dashboard" title="tx2.dashboard.Dashboard"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.dashboard.Dashboard</span></code></a>.</p>
+<p>The wrapper class wraps around the transformer/classification
+model and acts as an interface between the dashboard and the transformer.
+The wrapper is in charge of computing and caching all the necessary
+data for the dashboard visualizations.</p>
+<p>The dashboard class handles setting up and rendering the widget
+layout and handling dashboard interactivity.</p>
+<p>Note that this dashboard is primarily for exploring how a transformer responds to a test
+set of data, and the larger this test set, the slower the dashboard may respond and the
+longer the wrapper’s pre-computation steps will take.</p>
+<div class="section" id="wrapper-setup">
+<h2>Wrapper Setup<a class="headerlink" href="#wrapper-setup" title="Permalink to this headline">¶</a></h2>
+<p>There are two different general approaches for setting up the transformer
+wrapper, depending on the level of customization needed to suit your
+model. The wrapper relies on four different functions for computation:</p>
+<ul class="simple">
+<li><p>An <strong>embedding function</strong> - returns a single sequence embedding for each input text.</p></li>
+<li><p>A <strong>classification function</strong> - returns the predicted output class for each input text.</p></li>
+<li><p>A <strong>soft classification function</strong> - returns some output value for each class for each input text (essentially a non-argmaxed classification output.)</p></li>
+<li><p>An <strong>encoding function</strong> - converts text into inputs the model is expecting.</p></li>
+</ul>
+<p>In all cases, the wrapper is instantiated, and then the wrapper’s <code class="code docutils literal notranslate"><span class="pre">prepare()</span></code> function
+must be called. This runs through all necessary data computations that the
+dashboard relies on.</p>
+<div class="section" id="default-approach">
+<h3>Default Approach<a class="headerlink" href="#default-approach" title="Permalink to this headline">¶</a></h3>
+<p>In the default approach, defaults for the four functions are already handled internally, and
+rely on directly passing the necessary model pieces to the <code class="code docutils literal notranslate"><span class="pre">wrapper</span></code>
+constructor. There are three pieces the constructor expects for this
+to work correctly:</p>
+<ol class="arabic simple">
+<li><p>A huggingface tokenizer (the default <strong>encoding function</strong> will call <code class="code docutils literal notranslate"><span class="pre">encode_plus</span></code> on this tokenizer)</p></li>
+<li><p>A calleable huggingface language model (the default <strong>embedding function</strong> will take the final layer outputs of this for the first token, expected to be a <code class="code docutils literal notranslate"><span class="pre">[CLS]</span></code> token. Importantly, this means by default it expects a BERT transformer. Any other type will require using the custom approach below)</p></li>
+<li><p>A calleable classifier that returns an output value for each class (this is directly used for the default <strong>soft classification function</strong>, and the default <strong>classification function</strong> argmaxes the output.)</p></li>
+</ol>
+<p>An example model that would work in this approach is shown below, as in the first example notebook:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BERTClass</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">BERTClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">language_model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classification_head</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">768</span><span class="p">,</span> <span class="mi">20</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">ids</span><span class="p">,</span> <span class="n">mask</span><span class="p">):</span>
+        <span class="n">output_1</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">language_model</span><span class="p">(</span><span class="n">ids</span><span class="p">,</span> <span class="n">mask</span><span class="p">)</span>
+        <span class="n">output</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classification_head</span><span class="p">(</span><span class="n">output_1</span><span class="p">[</span><span class="mi">0</span><span class="p">][:,</span> <span class="mi">0</span><span class="p">,</span> <span class="p">:])</span>
+        <span class="k">return</span> <span class="n">output</span>
+</pre></div>
+</div>
+<p>To instantiate the wrapper, we pass in the data and necessary model pieces, and then call
+<code class="code docutils literal notranslate"><span class="pre">prepare()</span></code> to run the necesary computations and cache the results.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tx2.wrapper</span> <span class="kn">import</span> <span class="n">Wrapper</span>
+
+<span class="c1"># initialize</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">BERTClass</span><span class="p">()</span>
+<span class="n">tokenizer</span> <span class="o">=</span> <span class="n">AutoTokenizer</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">)</span>
+<span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span><span class="p">,</span> <span class="n">encodings</span> <span class="o">=</span> <span class="c1"># load dataframes and encodings dictionary</span>
+
+<span class="c1"># train model</span>
+
+<span class="c1"># create wrapper</span>
+<span class="n">wrapper</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span>
+    <span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span><span class="p">,</span> <span class="n">encodings</span><span class="p">,</span>
+    <span class="n">input_col_name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
+    <span class="n">target_col_name</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+    <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
+    <span class="n">language_model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">language_model</span><span class="p">,</span>
+    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">)</span>
+<span class="n">wrapper</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that in the example above, we expect the dataframes to have a “text” column that contains the
+input text, and a “target” column that contains the integer target class. <code class="code docutils literal notranslate"><span class="pre">encodings</span></code> is a
+dictionary that contains class labels/names as keys, with each value as the integer representation for it,
+e.g. for the 20 newsgroups dataset:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">&#39;alt.atheism&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">&#39;comp.graphics&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">&#39;comp.os.ms-windows.misc&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">&#39;comp.sys.ibm.pc.hardware&#39;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+    <span class="s1">&#39;comp.sys.mac.hardware&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>
+    <span class="s1">&#39;comp.windows.x&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>
+    <span class="s1">&#39;misc.forsale&#39;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+    <span class="s1">&#39;rec.autos&#39;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
+    <span class="s1">&#39;rec.motorcycles&#39;</span><span class="p">:</span> <span class="mi">8</span><span class="p">,</span>
+    <span class="s1">&#39;rec.sport.baseball&#39;</span><span class="p">:</span> <span class="mi">9</span><span class="p">,</span>
+    <span class="s1">&#39;rec.sport.hockey&#39;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">&#39;sci.crypt&#39;</span><span class="p">:</span> <span class="mi">11</span><span class="p">,</span>
+    <span class="s1">&#39;sci.electronics&#39;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+    <span class="s1">&#39;sci.med&#39;</span><span class="p">:</span> <span class="mi">13</span><span class="p">,</span>
+    <span class="s1">&#39;sci.space&#39;</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+    <span class="s1">&#39;soc.religion.christian&#39;</span><span class="p">:</span> <span class="mi">15</span><span class="p">,</span>
+    <span class="s1">&#39;talk.politics.guns&#39;</span><span class="p">:</span> <span class="mi">16</span><span class="p">,</span>
+    <span class="s1">&#39;talk.politics.mideast&#39;</span><span class="p">:</span> <span class="mi">17</span><span class="p">,</span>
+    <span class="s1">&#39;talk.politics.misc&#39;</span><span class="p">:</span> <span class="mi">18</span><span class="p">,</span>
+    <span class="s1">&#39;talk.religion.misc&#39;</span><span class="p">:</span> <span class="mi">19</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-approach">
+<h3>Custom Approach<a class="headerlink" href="#custom-approach" title="Permalink to this headline">¶</a></h3>
+<p>If a different type of transformer or different way of constructing your model makes
+any of the default functions infeasible or incorrect, it is possible to manually specify
+any of the four functions the wrapper relies on. This can be done by defining the function
+and then assigning it to the corresponding wrapper attributes:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.embedding_function" title="tx2.wrapper.Wrapper.embedding_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.embedding_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classification_function" title="tx2.wrapper.Wrapper.classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.soft_classification_function" title="tx2.wrapper.Wrapper.soft_classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.soft_classification_function</span></code></a></p></li>
+<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a></p></li>
+</ul>
+<p>As an example, one could change the embedding mechanism to average the output token embeddings rather than
+expecting a <code class="code docutils literal notranslate"><span class="pre">[CLS]</span></code> token.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transformer</span> <span class="o">=</span> <span class="c1"># load/train language model</span>
+
+<span class="k">def</span> <span class="nf">average_embedding</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
+     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">transformer</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;input_id&#39;</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;attention_mask&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="n">wrapper</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">wrapper</span><span class="o">.</span><span class="n">embedding_function</span> <span class="o">=</span> <span class="n">average_embedding</span>
+<span class="n">wrapper</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Note that while the wrapper’s <code class="code docutils literal notranslate"><span class="pre">embed()</span></code>, <code class="code docutils literal notranslate"><span class="pre">classify()</span></code>, and <code class="code docutils literal notranslate"><span class="pre">soft_clasify()</span></code>
+all take an array of texts as input, the corresponding backend wrapper attributes are functions
+that expect <em>encoded inputs</em>, as returned from <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a>.
+By default, if you do not specify a custom <code class="code docutils literal notranslate"><span class="pre">encode_function</span></code>, the wrapper runs <code class="code docutils literal notranslate"><span class="pre">encode_plus</span></code>
+on the tokenizer specified in the constructor with the <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encoder_options" title="tx2.wrapper.Wrapper.encoder_options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encoder_options</span></code></a> passed in.
+The results are returned in a dictionary with <code class="code docutils literal notranslate"><span class="pre">&quot;input_ids&quot;</span></code> and <code class="code docutils literal notranslate"><span class="pre">&quot;attention_mask&quot;</span></code> as keys.</p>
+<p>Depending on what custom functions you define determines which model pieces you do or do not need to pass to the
+constructor:</p>
+<ul class="simple">
+<li><p>If you define a <code class="code docutils literal notranslate"><span class="pre">encode_function</span></code>, you do not need to pass anything to <code class="code docutils literal notranslate"><span class="pre">tokenizer</span></code>.</p></li>
+<li><p>If you define a <code class="code docutils literal notranslate"><span class="pre">classification_function</span></code> <strong>and</strong> <code class="code docutils literal notranslate"><span class="pre">soft_classification_function</span></code>, you do not need to pass anything to <code class="code docutils literal notranslate"><span class="pre">classifier</span></code>.</p></li>
+<li><p>If you define a <code class="code docutils literal notranslate"><span class="pre">embedding_function</span></code>, you do not need to pass anything to <code class="code docutils literal notranslate"><span class="pre">language_model</span></code>.</p></li>
+</ul>
+</div>
+<div class="section" id="input-data-flow">
+<h3>Input Data Flow<a class="headerlink" href="#input-data-flow" title="Permalink to this headline">¶</a></h3>
+<p>To help understand how custom functions fit in, below is an example of how data is converted and passed through
+the wrapper when the wrapper’s <code class="code docutils literal notranslate"><span class="pre">classify()</span></code> is called.</p>
+<img alt="_images/wrapper_data_flow.png" src="_images/wrapper_data_flow.png" />
+<ol class="arabic simple">
+<li><p>The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classify" title="tx2.wrapper.Wrapper.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classify()</span></code></a> function is called with an array of texts.</p></li>
+<li><p>The input texts are placed into a pytorch dataset child class and dataloader.</p></li>
+<li><p>For each input text the dataset calls the  <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a>.</p></li>
+<li><p>For each batched set in the dataloader (containing the outputs from 2), the batch array of encoded inputs are passed into <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classification_function" title="tx2.wrapper.Wrapper.classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code></a>.</p></li>
+<li><p>Output predictions are aggregated and sent back up/returned from the <code class="code docutils literal notranslate"><span class="pre">classify()</span></code> call.</p></li>
+</ol>
+</div>
+</div>
+<div class="section" id="dashboard-setup">
+<h2>Dashboard Setup<a class="headerlink" href="#dashboard-setup" title="Permalink to this headline">¶</a></h2>
+<p>The dashboard class is relatively straight forward - initialize it with the prepared transformer wrapper and any
+settings for which sections to display, make any desired widget alterations, and then call <code class="code docutils literal notranslate"><span class="pre">render()</span></code>
+or manually pull the components and directly display them with <code class="code docutils literal notranslate"><span class="pre">IPython.display.display()</span></code>. (For more details see the
+<a class="reference internal" href="dashboard_widgets.html#dashboard-widgets"><span class="std std-ref">Dashboard Widgets</span></a>.)</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tx2.wrapper</span> <span class="kn">import</span> <span class="n">Wrapper</span>
+<span class="kn">from</span> <span class="nn">tx2.dashboard</span> <span class="kn">import</span> <span class="n">Dashboard</span>
+
+<span class="c1"># load and train transformer and data</span>
+
+<span class="n">wrapper</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
+<span class="n">wrapper</span><span class="o">.</span><span class="n">prepare</span><span class="p">()</span>
+
+<span class="n">dash</span> <span class="o">=</span> <span class="n">Dashboard</span><span class="p">(</span><span class="n">wrapper</span><span class="p">)</span>
+<span class="n">dash</span><span class="o">.</span><span class="n">render</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The dashboard constructor contains six booleans which control what sections get displayed when you call <code class="code docutils literal notranslate"><span class="pre">render()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Dashboard</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">transformer_wrapper</span><span class="p">:</span> <span class="n">wrapper</span><span class="o">.</span><span class="n">Wrapper</span><span class="p">,</span>
+        <span class="n">show_umap</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_salience</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_word_count</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_cluster_salience</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_cluster_sample_btns</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_wordclouds</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+    <span class="p">):</span>
+</pre></div>
+</div>
+<p>The <code class="code docutils literal notranslate"><span class="pre">show_wordclouds</span></code> option is <code class="code docutils literal notranslate"><span class="pre">False</span></code> by default as the cluster-based <code class="code docutils literal notranslate"><span class="pre">show_word_count</span></code> and
+<code class="code docutils literal notranslate"><span class="pre">show_cluster_salience</span></code> tend to convey more useful and representative information than the wordclouds.</p>
+<div class="section" id="tips">
+<h3>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h3>
+<p>Note that for the plots to display correctly, you need to run the <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code> magic.</p>
+<p>For the matplotlib plots themselves to remain interactive (with zoom/pan controls), you can instead use
+<code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">notebook</span></code>. To remove the headers from each figure, you can run an HTML magic block to magic
+them away:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span><span class="n">html</span>
+<span class="o">&lt;</span><span class="n">style</span><span class="o">&gt;</span>
+<span class="n">div</span><span class="o">.</span><span class="n">ui</span><span class="o">-</span><span class="n">dialog</span><span class="o">-</span><span class="n">titlebar</span> <span class="p">{</span><span class="n">display</span><span class="p">:</span> <span class="n">none</span><span class="p">;}</span>
+<span class="o">&lt;/</span><span class="n">style</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Sometimes with <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code>, various graphs will duplicate every time they’re re-rendered, which can
+be fixed by calling <code class="code docutils literal notranslate"><span class="pre">plt.ioff()</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="dashboard_widgets.html" class="btn btn-neutral float-right" title="Dashboard Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="TX2 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        
+        &copy; Copyright 2020, Nathan Martindale, Scott Stewart
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
