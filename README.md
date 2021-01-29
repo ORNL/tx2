@@ -29,7 +29,9 @@ conda install pytorch pandas scikit-learn matplotlib ipywidgets
 
 ## Documentation
 
-The documentation pages can be built from scratch with sphinx as needed.
+The documentation can be viewed at [https://ornl.github.io/tx2/](https://ornl.github.io/tx2/).
+
+The documentation can also be built from scratch with sphinx as needed.
 
 Install all required dependencies: 
 ```bash
