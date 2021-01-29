@@ -81,7 +81,9 @@ def prepare_wordclouds(
 ):
     """TODO"""
     for cluster in clusters:
-        _cached_wordclouds[cluster] = gen_wordcloud(clusters[cluster], test_df, input_col_name)
+        _cached_wordclouds[cluster] = gen_wordcloud(
+            clusters[cluster], test_df, input_col_name
+        )
 
 
 def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
@@ -154,7 +156,9 @@ def plot_wordclouds(dashboard):
 def plot_metrics(pred_y, target_y, encodings):
     temp_dict = {"pred": pred_y, "target": target_y}
     temp_df = pd.DataFrame.from_dict(temp_dict)
-    per_class, macros, micros = calc.prediction_scores(temp_df, "target", "pred", encodings)
+    per_class, macros, micros = calc.prediction_scores(
+        temp_df, "target", "pred", encodings
+    )
 
     per_df_rows = []
     for metric in "precision", "recall", "f1":
@@ -163,21 +167,26 @@ def plot_metrics(pred_y, target_y, encodings):
             row[utils.get_cat_by_index(key, encodings)] = per_class[key][metric]
 
         per_df_rows.append(row)
-        
-    per_df = pd.DataFrame(per_df_rows).style.background_gradient(cmap='RdYlGn', vmax=1.0, vmin=0.0)
+
+    per_df = pd.DataFrame(per_df_rows).style.background_gradient(
+        cmap="RdYlGn", vmax=1.0, vmin=0.0
+    )
 
     aggregate_rows = []
     for metric in "precision", "recall", "f1":
-        aggregate_rows.append({
-            "metric": metric,
-            "macro": macros[metric],
-            "micro": micros[metric],
-        })
+        aggregate_rows.append(
+            {
+                "metric": metric,
+                "macro": macros[metric],
+                "micro": micros[metric],
+            }
+        )
 
-    agg_df = pd.DataFrame(aggregate_rows).style.background_gradient(cmap='RdYlGn', vmax=1.0, vmin=0.0)
-    
+    agg_df = pd.DataFrame(aggregate_rows).style.background_gradient(
+        cmap="RdYlGn", vmax=1.0, vmin=0.0
+    )
+
     return per_df, agg_df
-    
 
 
 def plot_confusion_matrix(pred_y, target_y, encodings, figsize=(8, 8)):

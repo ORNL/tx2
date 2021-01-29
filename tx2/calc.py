@@ -266,11 +266,11 @@ def prediction_scores(
         tn = df[(targets != value) & (preds != value)].shape[0]
         accuracy = (tp + tn) / (tp + tn + fn + fp)
         if tp == 0 and fp == 0:
-            precision = 1.0 # ?
+            precision = 1.0  # ?
         else:
             precision = tp / (tp + fp)
         if tp == 0 and fn == 0:
-            recall = 1.0 # ?
+            recall = 1.0  # ?
         else:
             recall = tp / (tp + fn)
         if (precision + recall) > 0:

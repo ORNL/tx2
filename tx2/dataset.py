@@ -1,5 +1,6 @@
 from torch.utils.data import Dataset
 
+
 class EncodedDataset(Dataset):
     def __init__(self, texts, wrapper):
         self.texts = texts

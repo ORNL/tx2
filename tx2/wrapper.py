@@ -514,7 +514,7 @@ class Wrapper:
         # check for cache path
         if os.path.isdir(self.cache_path):
             os.makedirs(self.cache_path, exist_ok=True)
-        
+
         # check for predictions
         logging.info("Checking for cached predictions...")
         if check(self.predictions_path, self.overwrite):

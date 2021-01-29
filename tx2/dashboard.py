@@ -364,13 +364,12 @@ class Dashboard:
             visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
 
         # TODO: new:
-        self.scoring_group = VBox([
-            HBox([
-                self.out_confusion_matrix,
-                self.out_aggregate_metrics
-            ]),
-            self.out_perclass_metric
-        ])
+        self.scoring_group = VBox(
+            [
+                HBox([self.out_confusion_matrix, self.out_aggregate_metrics]),
+                self.out_perclass_metric,
+            ]
+        )
         visible_sections.append(self.scoring_group)
 
         self.dashboard_layout = VBox(visible_sections)
@@ -432,9 +431,7 @@ class Dashboard:
 
         display_per_df, display_agg_df = visualization.plot_metrics(
             self.transformer_wrapper.predictions,
-            self.transformer_wrapper.test_df[
-                self.transformer_wrapper.target_col_name
-            ],
+            self.transformer_wrapper.test_df[self.transformer_wrapper.target_col_name],
             self.transformer_wrapper.encodings,
         )
 
@@ -484,7 +481,11 @@ class Dashboard:
         if self.show_wordclouds and len(self.highlight_indices) == 0:
             with self.out_wordcloud_big:
                 clear_output(wait=True)
-                display(visualization.plot_big_wordcloud(int(index), self.transformer_wrapper.clusters))
+                display(
+                    visualization.plot_big_wordcloud(
+                        int(index), self.transformer_wrapper.clusters
+                    )
+                )
 
     def on_text_area_change(self, change):
         self.html_status.value = (
