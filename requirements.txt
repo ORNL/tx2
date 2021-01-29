@@ -1,0 +1,13 @@
+sklearn
+nltk
+pandas
+numpy
+torch
+tqdm
+umap-learn
+matplotlib
+ipywidgets
+
+autodocsumm
+sphinx
+sphinx-rtd-theme
