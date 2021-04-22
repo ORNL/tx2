@@ -1,7 +1,7 @@
 """Class and code for rendering the ipywidgets dashboard."""
 import matplotlib.pyplot as plt
 import ipywidgets as widgets
-from ipywidgets import HBox, Layout, VBox
+from ipywidgets import HBox, Layout, VBox, Tab
 from IPython.display import display, clear_output
 import functools
 import random
@@ -307,6 +307,9 @@ class Dashboard:
         # VISUAL CLUSTERS
         # ------------
 
+        self.tabs = Tab()
+        tab_children = {}
+
         # cluster stuff
         self.cluster_freq_group = VBox(
             [
@@ -336,19 +339,31 @@ class Dashboard:
         )
 
         cluster_sections = []
-        if (
-            self.show_word_count
-            or self.show_cluster_salience
-            or self.show_wordclouds
-            or self.show_cluster_sample_btns
-        ):
-            cluster_sections.append(self.lbl_sampling)
+        # if (
+        #     self.show_word_count
+        #     or self.show_cluster_salience
+        #     or self.show_wordclouds
+        #     or self.show_cluster_sample_btns
+        # ):
+        #     cluster_sections.append(self.lbl_sampling)
+        
+        bar_cluster_sections = []
         if self.show_word_count:
-            cluster_sections.append(self.cluster_freq_group)
+            bar_cluster_sections.append(self.cluster_freq_group)
         if self.show_cluster_salience:
-            cluster_sections.append(self.cluster_salience_group)
+            bar_cluster_sections.append(self.cluster_salience_group)
+
+        if len(bar_cluster_sections) > 0:
+            tab_children["Cluster Words"] = HBox([
+                VBox(bar_cluster_sections, layout=Layout(width="80%")),
+                self.sampling_group
+            ])
+            
         if self.show_wordclouds:
-            cluster_sections.append(self.word_cloud_group)
+            tab_children["Word clouds"] = HBox([
+                VBox([self.word_cloud_group], layout=Layout(width="80%")),
+                self.sampling_group
+            ])
 
         self.cluster_group = VBox(cluster_sections, layout=Layout(width="80%"))
 
@@ -360,17 +375,25 @@ class Dashboard:
         if self.show_salience:
             visible_sections.append(self.manual_text_entry_and_salience_layout)
 
-        if self.show_cluster_sample_btns:
-            visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
+        # TODO
+        #if self.show_cluster_sample_btns:
+            #visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
+            #visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
 
-        # TODO: new:
         self.scoring_group = VBox(
             [
                 HBox([self.out_confusion_matrix, self.out_aggregate_metrics]),
                 self.out_perclass_metric,
             ]
         )
-        visible_sections.append(self.scoring_group)
+        tab_children["Scoring"] = self.scoring_group
+        #visible_sections.append(self.scoring_group)
+
+        self.tabs.children = list(tab_children.values())
+        for index, key in enumerate(tab_children.keys()):
+            self.tabs.set_title(index, key)
+        visible_sections.append(self.tabs)
+        
 
         self.dashboard_layout = VBox(visible_sections)
 
