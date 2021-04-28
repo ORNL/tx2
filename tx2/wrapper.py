@@ -512,8 +512,11 @@ class Wrapper:
         logging.debug("Testing data shape: %s", self.test_df.shape)
 
         # check for cache path
-        if os.path.isdir(self.cache_path):
+        if not os.path.isdir(self.cache_path):
+            logging.info("Cache path not found, creating...")
             os.makedirs(self.cache_path, exist_ok=True)
+        else:
+            logging.info("Cache path found")
 
         # check for predictions
         logging.info("Checking for cached predictions...")
