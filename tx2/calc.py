@@ -3,7 +3,7 @@
 from nltk.corpus import stopwords
 import numpy as np
 import pandas as pd
-from sklearn.cluster import DBSCAN, KMeans
+from sklearn.cluster import DBSCAN, KMeans, AffinityPropagation, Birch, OPTICS
 from sklearn.feature_extraction.text import CountVectorizer
 from typing import Dict, List, Tuple, Any
 
@@ -31,6 +31,13 @@ def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[
         alg = DBSCAN
     elif clustering_alg == "kmeans":
         alg = KMeans
+    elif clustering_alg == "affinity":
+        alg = AffinityPropagation
+    elif clustering_alg == "birch":
+        alg = Birch
+    elif clustering_alg == "optics":
+        alg = OPTICS
+    
 
     clustering = alg(**clustering_args).fit(projections)
     clusters = {}
