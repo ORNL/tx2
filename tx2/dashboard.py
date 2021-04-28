@@ -25,6 +25,7 @@ class Dashboard:
         show_cluster_salience=True,
         show_cluster_sample_btns=True,
         show_wordclouds=False,
+        show_scoring=True,
     ):
         """Constructor.
 
@@ -35,6 +36,7 @@ class Dashboard:
         :param show_cluster_salience: Show the top aggregate-salience "important" words per cluster graphs.
         :param show_cluster_sample_btns: Show the sampling buttons for each cluster.
         :param show_wordclouds: Show the wordclouds for each cluster.
+        :param show_scoring: Show aggregate scoring metrics, confusion matrices, etc.
         """
 
         self.transformer_wrapper = transformer_wrapper
@@ -58,6 +60,8 @@ class Dashboard:
         """Show the sampling buttons for each cluster."""
         self.show_wordclouds = show_wordclouds
         """Show the wordclouds for each cluster."""
+        self.show_scoring = show_scoring
+        """Show aggregate scoring metrics, confusion matrices, etc."""
 
         # colors (rgb codes for category20)
         self.colors = [
@@ -95,16 +99,16 @@ class Dashboard:
     def _initialize_widgets(self):
 
         # labels
-        self.lbl_wordcloud = widgets.HTML(value="<h3>Cluster Word Cloud</h3>")
-        """Large HTML label for the large cluster word cloud. ("Cluster Word Cloud")"""
+        self.lbl_wordcloud = widgets.HTML(value="<h3>Cluster Word Clouds</h3>")
+        """Large HTML label for the large cluster word cloud. ("Cluster Word Clouds")"""
         self.lbl_projection_graph = widgets.HTML(value="<h3>UMAP Embedding Graph</h3>")
         """Large HTML label for the UMAP embedding graph. ("UMAP Embedding Graph")"""
         self.lbl_entry_text = widgets.HTML(value="<h3>Entry Text</h3>")
         """Large HTML label for the entry text box. ("Entry Text")"""
         self.lbl_salience = widgets.HTML(value="<h3>Word Salience Map</h3>")
         """Large HTML label for text salience map. ("Word Salience Map")"""
-        self.lbl_sampling = widgets.HTML(value="<h3>Visual Cluster Sampling</h3>")
-        """Large HTML label for cluster visualizations. ("Visual Cluster Sampling")"""
+        self.lbl_cluster_words = widgets.HTML(value="<h3>Visual Cluster Words</h3>")
+        """Large HTML label for cluster bar graph visualizations. ("Visual Cluster Words")"""
         self.lbl_class_labels = widgets.HTML(value="<p><b>Model Classification</b></p>")
         """HTML label for the predicted model output. ("Model Classification")"""
         self.lbl_status_labels = widgets.HTML(value="<p><b>Status</b></p>")
@@ -121,6 +125,10 @@ class Dashboard:
             value="<p><b>Important Words</b></p><p style='font-size: 10px'>Which words cause the largest change in predictions throughout the cluster, x-axis denoting the relative total change caused by word removal from all entries in the cluster.</p>"
         )
         """HTML label and description for the per-cluster important word bar graphs. ("Important Words")"""
+        self.html_wordcloud_explanation = widgets.HTML(
+            value="<p style='font-size: 10px'>If a keyword search is entered above, the main wordcloud will display word frequency from the currently highlighted points.</p>"
+        )
+        """HTML description label for main word cloud."""
         self.lbl_sample_btns = widgets.HTML(value="<p><b>Sampling Buttons</b></p>")
         """HTML label for cluster sampling buttons. ("Sampling Buttons")"""
 
@@ -304,7 +312,7 @@ class Dashboard:
         )
 
         # ------------
-        # VISUAL CLUSTERS
+        # TABS
         # ------------
 
         self.tabs = Tab()
@@ -326,10 +334,19 @@ class Dashboard:
         self.word_cloud_group = VBox(
             [
                 self.lbl_wordcloud,
+                self.html_wordcloud_explanation,
                 self.out_wordcloud_big,
                 self.out_wordcloud_set,
             ]
         )
+        self.scoring_group = VBox(
+            [
+                HBox([self.out_confusion_matrix, self.out_aggregate_metrics]),
+                self.out_perclass_metric,
+            ]
+        )
+
+        # this can be included in both the word graphs and word clouds tabs
         self.sampling_group = VBox(
             [
                 self.lbl_sample_btns,
@@ -338,62 +355,53 @@ class Dashboard:
             layout=Layout(width="20%"),
         )
 
-        cluster_sections = []
-        # if (
-        #     self.show_word_count
-        #     or self.show_cluster_salience
-        #     or self.show_wordclouds
-        #     or self.show_cluster_sample_btns
-        # ):
-        #     cluster_sections.append(self.lbl_sampling)
-        
-        bar_cluster_sections = []
+        bar_cluster_sections = [self.lbl_cluster_words]
         if self.show_word_count:
             bar_cluster_sections.append(self.cluster_freq_group)
         if self.show_cluster_salience:
             bar_cluster_sections.append(self.cluster_salience_group)
 
         if len(bar_cluster_sections) > 0:
-            tab_children["Cluster Words"] = HBox([
-                VBox(bar_cluster_sections, layout=Layout(width="80%")),
-                self.sampling_group
-            ])
-            
+            tab_children["Cluster words"] = HBox(
+                [
+                    VBox(bar_cluster_sections, layout=Layout(width="80%")),
+                    self.sampling_group,
+                ]
+            )
+
+        # TODO: condition on show_cluster_sample_btns
         if self.show_wordclouds:
-            tab_children["Word clouds"] = HBox([
-                VBox([self.word_cloud_group], layout=Layout(width="80%")),
-                self.sampling_group
-            ])
+            tab_children["Word clouds"] = HBox(
+                [
+                    VBox([self.word_cloud_group], layout=Layout(width="80%")),
+                    self.sampling_group,
+                ]
+            )
 
-        self.cluster_group = VBox(cluster_sections, layout=Layout(width="80%"))
+        if self.show_scoring:
+            tab_children["Scoring"] = self.scoring_group
 
+        # set tabs and fix titles
+        self.tabs.children = list(tab_children.values())
+        for index, key in enumerate(tab_children.keys()):
+            self.tabs.set_title(index, key)
+
+        # ------------
+        # COMBINE VISIBLE
+        # ------------
+
+        # Combine all visible groups and sections
         visible_sections = []
 
         if self.show_umap:
             visible_sections.append(self.projection_layout)
+
         visible_sections.append(self.drop_text_picker)
+
         if self.show_salience:
             visible_sections.append(self.manual_text_entry_and_salience_layout)
 
-        # TODO
-        #if self.show_cluster_sample_btns:
-            #visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
-            #visible_sections.append(HBox([self.cluster_group, self.sampling_group]))
-
-        self.scoring_group = VBox(
-            [
-                HBox([self.out_confusion_matrix, self.out_aggregate_metrics]),
-                self.out_perclass_metric,
-            ]
-        )
-        tab_children["Scoring"] = self.scoring_group
-        #visible_sections.append(self.scoring_group)
-
-        self.tabs.children = list(tab_children.values())
-        for index, key in enumerate(tab_children.keys()):
-            self.tabs.set_title(index, key)
         visible_sections.append(self.tabs)
-        
 
         self.dashboard_layout = VBox(visible_sections)
 
@@ -408,7 +416,7 @@ class Dashboard:
         self.btn_misclass_sample.on_click(self.on_sample_misclass_button_clicked)
 
     def render(self):
-        """ Return combined layout widget """
+        """Return combined layout widget"""
         if self.show_wordclouds:
             visualization.prepare_wordclouds(
                 self.transformer_wrapper.clusters,
@@ -522,7 +530,6 @@ class Dashboard:
         )
 
         prediction = self.transformer_wrapper.classify([new_text])[0]
-        #         print(prediction)
         prediction_label = utils.get_cat_by_index(
             prediction, self.transformer_wrapper.encodings
         )
@@ -550,8 +557,6 @@ class Dashboard:
 
     @utils.debounce(0.5)
     def on_search_term_change(self, change):
-        # self.highlight_indices
-        print("value:", self.text_search_terms.value)
         if self.text_search_terms.value != "":
             self.highlight_indices = self.transformer_wrapper.search_test_df(
                 self.text_search_terms.value
