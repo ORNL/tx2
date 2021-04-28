@@ -630,6 +630,12 @@ class Dashboard:
         visualization.plot_embedding_projections(self.text_entry.value, self)
 
     def on_savefigs_button_clicked(self, change):
+        self.html_status.value = (
+            "<p>"
+            + visualization.get_nice_html_label("Saving...", "#FF0000")
+            + "</p>"
+        )
+        
         # make directory in cache for current dump
         folder_name = datetime.now().strftime("%Y-%m-%d")
         count = 0
@@ -642,3 +648,7 @@ class Dashboard:
         
         for key, value in self.current_figures.items():
             value.savefig(f"{folder}/{key}.png", format="png", transparent=False)
+            
+        self.html_status.value = (
+            "<p>" + visualization.get_nice_html_label("Ready!", "#008000") + "</p>"
+        )
