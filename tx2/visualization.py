@@ -79,7 +79,12 @@ _cached_wordclouds = {}
 def prepare_wordclouds(
     clusters: Dict[str, List[int]], test_df: pd.DataFrame, input_col_name: str
 ):
-    """TODO"""
+    """Pre-render the wordcloud for each cluster, this makes switching the main wordcloud figure faster.
+    
+    :param clusters: Dictionary of clusters where the values are the lists of dataframe indices for the entries in each cluster.
+    :param test_df: The dataframe to draw the indices from.
+    :param input_col_name: The name of the column containing the text.
+    """
     for cluster in clusters:
         _cached_wordclouds[cluster] = gen_wordcloud(
             clusters[cluster], test_df, input_col_name
@@ -87,7 +92,12 @@ def prepare_wordclouds(
 
 
 def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
-    """TODO Creates and returns a wordcloud image that can be rendered with plt.imshow """
+    """Creates and returns a wordcloud image that can be rendered with :code:`plt.imshow`.
+
+    :param indices: The list of indices in the dataframe to draw text from to create the wordcloud.
+    :param df: The dataframe to draw the indices from.
+    :param input_col_name: The name of the column containing the text.
+    """
     stopwords = set(STOPWORDS)
     stopwords.update(["via", "this"])
     text = " ".join([text for text in df[input_col_name].iloc[indices]])
@@ -97,8 +107,12 @@ def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
     return cloud
 
 
-def plot_big_wordcloud(index, clusters):
-    """TODO"""
+def plot_big_wordcloud(index: int, clusters: Dict[str, list[int]]):
+    """Render the word cloud that the currently selected point is in.
+    
+    :param index: The index of the point to find the cluster of.
+    :param clusters: The dictionary of clusters where the values are the lists of indices of entries in that cluster.
+    """
     fig, ax = plt.subplots(figsize=(8, 5))
     cluster = utils.which_cluster(index, clusters)
     ax.imshow(_cached_wordclouds[cluster], interpolation="bilinear")
@@ -112,7 +126,11 @@ def plot_big_wordcloud(index, clusters):
 
 
 def plot_passed_wordcloud(cloud, name):
-    """TODO"""
+    """Render the given word cloud.
+    
+    :param cloud: The word cloud to render.
+    :param name: The title to render with the word cloud.
+    """
     fig, ax = plt.subplots(figsize=(8, 5))
     ax.imshow(cloud, interpolation="bilinear")
     ax.xaxis.set_ticks([])
@@ -124,8 +142,11 @@ def plot_passed_wordcloud(cloud, name):
     return fig
 
 
-def plot_wordclouds(dashboard):
-    """TODO Render grid of all wordclouds """
+def plot_wordclouds(dashboard: tx2.dashboard.Dashboard):
+    """Render the grid of all wordclouds.
+    
+    :param dashboard: The current dashboard, needed in order to grab the cluster data.
+    """
     num_cols = 4
     num_rows = math.ceil(len(dashboard.transformer_wrapper.clusters) / num_cols)
 
@@ -153,7 +174,14 @@ def plot_wordclouds(dashboard):
     return fig
 
 
-def plot_metrics(pred_y, target_y, encodings):
+def plot_metrics(pred_y: List[int], target_y: List[int], encodings: Dict[str, int]):
+    """Get colored dataframes with macro and micro scores for the given predictions on an aggregate level and per class.
+    
+    :param pred_y: Predicted labels.
+    :param target_y: Actual labels.
+    :param encodings: Dictionary of string label -> numeric label.
+    :return: The per-class metrics dataframe and the aggregate metrics dataframe.
+    """
     temp_dict = {"pred": pred_y, "target": target_y}
     temp_df = pd.DataFrame.from_dict(temp_dict)
     per_class, macros, micros = calc.prediction_scores(
@@ -189,7 +217,14 @@ def plot_metrics(pred_y, target_y, encodings):
     return per_df, agg_df
 
 
-def plot_confusion_matrix(pred_y, target_y, encodings, figsize=(8, 8)):
+def plot_confusion_matrix(pred_y: List[int], target_y: List[int], encodings: Dict[str, int], figsize=(8, 8)):
+    """Get the confusion matrix for given predictions.
+    
+    :param pred_y: Predicted labels.
+    :param target_y: Actual labels.
+    :param encodings: Dictionary of string label -> numeric label.
+    :param figsize: the size with which to 
+    """
     labels = []
     encoded = []
     for i in range(len(encodings.keys())):
@@ -234,7 +269,7 @@ def plot_confusion_matrix(pred_y, target_y, encodings, figsize=(8, 8)):
 def _get_scatter_points_from_embeddings(
     dashboard, embeddings: List[List[int]], df: pd.DataFrame, label_col_name: str
 ):
-    """TODO DOES NOT DISPLAY GRAPH, just a helper for splitting out the UMAP embeddings """
+    """DOES NOT DISPLAY GRAPH, just a helper for splitting out the UMAP embeddings."""
 
     colors = []
     for index, row in df.iterrows():
@@ -254,7 +289,6 @@ def _get_scatter_points_from_embeddings(
 
 @utils.debounce(1.0)
 def plot_embedding_projections(text, dashboard, prediction=None):
-    """TODO"""
     dashboard.html_graph_status.value = (
         "<p>" + tx2.visualization.get_nice_html_label("Graphing...", "#FF0000") + "</p>"
     )
@@ -421,7 +455,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
 
 
 def plot_clusters(clusters, cluster_values):
-    """TODO"""
+    """Plot highest word values for each cluster."""
     num_cols = 4
 
     num_rows = math.ceil(len(clusters) / num_cols)
@@ -451,7 +485,7 @@ def plot_clusters(clusters, cluster_values):
 
 
 def plot_clusters_stacked(clusters, cluster_words_classified, encodings, colors):
-    """TODO"""
+    """Plot highest word values for each cluster, colored according to entry classification"""
     num_cols = 4
 
     num_rows = math.ceil(len(clusters) / num_cols)

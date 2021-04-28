@@ -217,7 +217,7 @@ The :code:`show_wordclouds` option is :code:`False` by default as the cluster-ba
 Tips
 ----
 
-Note that for the plots to display correctly, you need to run the :code:`%matplotlib inline` magic.
+Note that for the plots to display correctly, you need to run the :code:`%matplotlib agg` or :code:`%matplotlib inline` magic.
 
 For the matplotlib plots themselves to remain interactive (with zoom/pan controls), you can instead use
 :code:`%matplotlib notebook`. To remove the headers from each figure, you can run an HTML magic block to magic
@@ -231,4 +231,4 @@ them away:
     </style>
 
 Sometimes with :code:`%matplotlib inline`, various graphs will duplicate every time they're re-rendered, which can
-be fixed by calling :code:`plt.ioff()`.
+be fixed by calling :code:`plt.ioff()` or using :code:`%matplotlib agg` instead.
