@@ -309,16 +309,17 @@ class Wrapper:
 
         self.salience_computed = True
 
-    def _compute_visual_clusters(self, **dbscan_args):
+    def _compute_visual_clusters(self, clustering_alg, **clustering_args):
         """Find clusters from 2d projections."""
         if not self.salience_computed:
             raise RuntimeError("Salience maps have not been computed")
 
-        dbscan_args = utils.set_defaults(dbscan_args, eps=1, min_samples=5)
+        if clustering_alg == "dbscan":
+            clustering_args = utils.set_defaults(clustering_args, eps=1, min_samples=5)
 
         logging.info("Clustering projections...")
         self.clusters = calc.cluster_projections(
-            self.projections_testing, **dbscan_args
+            self.projections_testing, clustering_alg, **clustering_args
         )
         if len(self.clusters) > 20:
             logging.error(
@@ -408,24 +409,26 @@ class Wrapper:
         )
         return loader
 
-    def recompute_visual_clusterings(self, dbscan_args={}):
+    def recompute_visual_clusterings(self, clustering_alg="dbscan", clustering_args={}):
         """Re-run the clustering algorithm. Note that this automatically overrides any
         previously cached data for clusters.
 
-        :param dbscan_args: Dictionary of arguments to pass into DBSCAN algorithm on instantiation.
+        :param clustering_alg: The algorithm to use for clustering.
+        :param clustering_args: Dictionary of arguments to pass into the clustering algorithm on instantiation.
         """
-        self._compute_visual_clusters(**dbscan_args)
+        self._compute_visual_clusters(clustering_alg, **clustering_args)
 
-    def recompute_projections(self, umap_args={}, dbscan_args={}):
+    def recompute_projections(self, umap_args={}, clustering_alg="dbscan", clustering_args={}):
         """Re-run both projection training and clustering algorithms. Note that this
         automatically overrides both previously saved projections as well as clustering
         data.
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param dbscan_args: Dictionary of arguments to pass into DBSCAN algorithm on instantiation.
+        :param clustering_alg: The algorithm to use for clustering.
+        :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         self._train_projector(**umap_args)
-        self._compute_visual_clusters(**dbscan_args)
+        self._compute_visual_clusters(**clustering_args)
 
     def encode(self, text: str):
         """Encode/tokenize passed text into a format expected by transformer.

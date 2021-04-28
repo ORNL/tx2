@@ -3,14 +3,14 @@
 from nltk.corpus import stopwords
 import numpy as np
 import pandas as pd
-from sklearn.cluster import DBSCAN
+from sklearn.cluster import DBSCAN, KMeans
 from sklearn.feature_extraction.text import CountVectorizer
 from typing import Dict, List, Tuple, Any
 
 from tx2 import utils
 
 
-def cluster_projections(projections, **dbscan_args) -> Dict[str, List[int]]:
+def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[str, List[int]]:
     """Runs a clustering algorithm (currently only dbscan supported) on the
     provided embedded or projected points, and provides a dictionary of data point
     indices.
@@ -26,7 +26,13 @@ def cluster_projections(projections, **dbscan_args) -> Dict[str, List[int]]:
     """
     # TODO: at some point add ability to use different unsupervised clustering algs
 
-    clustering = DBSCAN(**dbscan_args).fit(projections)
+    alg = None
+    if clustering_alg == "dbscan":
+        alg = DBSCAN
+    elif clustering_alg == "kmeans":
+        alg = KMeans
+
+    clustering = alg(**clustering_args).fit(projections)
     clusters = {}
     for index, entry in enumerate(clustering.labels_):
         if str(entry) not in clusters:
