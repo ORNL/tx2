@@ -377,7 +377,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     ):
         text_projection = dashboard.transformer_wrapper.project([text])[0]
         if prediction is None:
-            classification = dashboard.transformer_wrapper.classify([text])
+            classification = dashboard.transformer_wrapper.classify([text])[0]
             pred_color = dashboard.colors[classification]
         else:
             pred_color = dashboard.colors[prediction]

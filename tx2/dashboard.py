@@ -46,7 +46,7 @@ class Dashboard:
         self.prior_reference_point = None
         self.prior_reference_text = None
         self.highlight_indices = []
-        
+
         # keep track of all currently rendered figures for saving purposes
         self.current_figures = {}
 
@@ -300,7 +300,7 @@ class Dashboard:
                 ),
             ]
         )
-        
+
         # ------------
         # OVERALL CONTROLLS
         # ------------
@@ -631,11 +631,9 @@ class Dashboard:
 
     def on_savefigs_button_clicked(self, change):
         self.html_status.value = (
-            "<p>"
-            + visualization.get_nice_html_label("Saving...", "#FF0000")
-            + "</p>"
+            "<p>" + visualization.get_nice_html_label("Saving...", "#FF0000") + "</p>"
         )
-        
+
         # make directory in cache for current dump
         folder_name = datetime.now().strftime("%Y-%m-%d")
         count = 0
@@ -645,10 +643,10 @@ class Dashboard:
         folder_name += "-" + str(count)
         folder = self.transformer_wrapper.cache_path + "/" + folder_name
         os.makedirs(folder)
-        
+
         for key, value in self.current_figures.items():
             value.savefig(f"{folder}/{key}.png", format="png", transparent=False)
-            
+
         self.html_status.value = (
             "<p>" + visualization.get_nice_html_label("Ready!", "#008000") + "</p>"
         )
