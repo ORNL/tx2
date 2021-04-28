@@ -1,15 +1,15 @@
 """Class and code for rendering the ipywidgets dashboard."""
-import matplotlib.pyplot as plt
+from datetime import datetime
+import functools
+import os
+import random
+
 import ipywidgets as widgets
 from ipywidgets import HBox, Layout, VBox, Tab
 from IPython.display import display, clear_output
-import functools
-import random
+import matplotlib.pyplot as plt
 
 from tx2 import utils, visualization, wrapper
-
-
-# TODO: documentation image diagramming widget names and layout boxes
 
 
 class Dashboard:
@@ -46,6 +46,9 @@ class Dashboard:
         self.prior_reference_point = None
         self.prior_reference_text = None
         self.highlight_indices = []
+        
+        # keep track of all currently rendered figures for saving purposes
+        self.current_figures = {}
 
         # display options
         self.show_umap = show_umap
@@ -150,6 +153,10 @@ class Dashboard:
             description="Sample misclassified", layout={"width": "175px"}
         )
         """Sample from misclassified button, this randomly selects one of the points the classifier missed."""
+        self.btn_savefigs = widgets.Button(
+            description="Save all figures", layout={"width": "175px"}
+        )
+        """Button to save a copy of all currently rendered figures to the cache folder."""
 
         self.html_text_render = widgets.HTML()
         """HTML for salience map."""
@@ -293,6 +300,17 @@ class Dashboard:
                 ),
             ]
         )
+        
+        # ------------
+        # OVERALL CONTROLLS
+        # ------------
+
+        self.controls_layout = HBox(
+            [
+                self.drop_text_picker,
+                self.btn_savefigs,
+            ]
+        )
 
         # ------------
         # TEXT ENTRY/SALIENCE
@@ -396,7 +414,7 @@ class Dashboard:
         if self.show_umap:
             visible_sections.append(self.projection_layout)
 
-        visible_sections.append(self.drop_text_picker)
+        visible_sections.append(self.controls_layout)
 
         if self.show_salience:
             visible_sections.append(self.manual_text_entry_and_salience_layout)
@@ -414,6 +432,7 @@ class Dashboard:
         self.text_search_terms.observe(self.on_search_term_change, names="value")
         self.btn_search_sample.on_click(self.on_sample_button_clicked)
         self.btn_misclass_sample.on_click(self.on_sample_misclass_button_clicked)
+        self.btn_savefigs.on_click(self.on_savefigs_button_clicked)
 
     def render(self):
         """Return combined layout widget"""
@@ -425,7 +444,9 @@ class Dashboard:
             )
             with self.out_wordcloud_set:
                 clear_output(wait=True)
-                display(visualization.plot_wordclouds(self))
+                fig_wordcloud_grid = visualization.plot_wordclouds(self)
+                self.current_figures["wordcloud_grid"] = fig_wordcloud_grid
+                display(fig_wordcloud_grid)
 
         plt.ioff()
 
@@ -437,28 +458,29 @@ class Dashboard:
                 self.transformer_wrapper.encodings,
                 self.colors,
             )
+            self.current_figures["cluster_word_frequency"] = fig
             display(fig)
 
         with self.out_cluster_word_attention:
             clear_output(wait=True)
-            display(
-                visualization.plot_clusters(
-                    self.transformer_wrapper.clusters,
-                    self.transformer_wrapper.cluster_profiles,
-                )
+            fig = visualization.plot_clusters(
+                self.transformer_wrapper.clusters,
+                self.transformer_wrapper.cluster_profiles,
             )
+            self.current_figures["cluster_word_salience"] = fig
+            display(fig)
 
         with self.out_confusion_matrix:
             clear_output(wait=True)
-            display(
-                visualization.plot_confusion_matrix(
-                    self.transformer_wrapper.predictions,
-                    self.transformer_wrapper.test_df[
-                        self.transformer_wrapper.target_col_name
-                    ],
-                    self.transformer_wrapper.encodings,
-                )
+            fig = visualization.plot_confusion_matrix(
+                self.transformer_wrapper.predictions,
+                self.transformer_wrapper.test_df[
+                    self.transformer_wrapper.target_col_name
+                ],
+                self.transformer_wrapper.encodings,
             )
+            self.current_figures["confusion_matrix"] = fig
+            display(fig)
 
         display_per_df, display_agg_df = visualization.plot_metrics(
             self.transformer_wrapper.predictions,
@@ -512,11 +534,11 @@ class Dashboard:
         if self.show_wordclouds and len(self.highlight_indices) == 0:
             with self.out_wordcloud_big:
                 clear_output(wait=True)
-                display(
-                    visualization.plot_big_wordcloud(
-                        int(index), self.transformer_wrapper.clusters
-                    )
+                fig = visualization.plot_big_wordcloud(
+                    int(index), self.transformer_wrapper.clusters
                 )
+                self.current_figures["active_wordcloud"] = fig
+                display(fig)
 
     def on_text_area_change(self, change):
         self.html_status.value = (
@@ -568,16 +590,16 @@ class Dashboard:
             if self.show_wordclouds:
                 with self.out_wordcloud_big:
                     clear_output(wait=True)
-                    display(
-                        visualization.plot_passed_wordcloud(
-                            visualization.gen_wordcloud(
-                                self.highlight_indices,
-                                self.transformer_wrapper.test_df,
-                                self.transformer_wrapper.input_col_name,
-                            ),
-                            "custom:" + self.text_search_terms.value,
-                        )
+                    fig = visualization.plot_passed_wordcloud(
+                        visualization.gen_wordcloud(
+                            self.highlight_indices,
+                            self.transformer_wrapper.test_df,
+                            self.transformer_wrapper.input_col_name,
+                        ),
+                        "custom:" + self.text_search_terms.value,
                     )
+                    self.current_figures["active_wordcloud"] = fig
+                    display(fig)
 
         visualization.plot_embedding_projections(self.text_entry.value, self)
 
@@ -606,3 +628,17 @@ class Dashboard:
 
     def on_change_focus_errors(self, change):
         visualization.plot_embedding_projections(self.text_entry.value, self)
+
+    def on_savefigs_button_clicked(self, change):
+        # make directory in cache for current dump
+        folder_name = datetime.now().strftime("%Y-%m-%d")
+        count = 0
+        for filename in os.listdir(self.transformer_wrapper.cache_path):
+            if filename.startswith(folder_name):
+                count += 1
+        folder_name += "-" + str(count)
+        folder = self.transformer_wrapper.cache_path + "/" + folder_name
+        os.makedirs(folder)
+        
+        for key, value in self.current_figures.items():
+            value.savefig(f"{folder}/{key}.png", format="png", transparent=False)

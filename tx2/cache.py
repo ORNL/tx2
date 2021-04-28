@@ -8,7 +8,7 @@ import numpy as np
 
 
 def check(filepath: str, overwrite: bool) -> bool:
-    """ Returns true if we have a cached version that we should load """
+    """Returns true if we have a cached version that we should load"""
     if os.path.exists(filepath) and not overwrite:
         logging.info("cached version '%s' found", filepath)
         return True
@@ -16,7 +16,7 @@ def check(filepath: str, overwrite: bool) -> bool:
 
 
 def read(filepath: str):
-    """ Wrapper for other readers for the super lazy """
+    """Wrapper for other readers for the super lazy"""
     if is_json(filepath):
         return read_json(filepath)
     elif is_pickle(filepath):
@@ -32,17 +32,17 @@ def write(obj, filepath: str):
 
 
 def is_json(filepath: str) -> bool:
-    """ Is this a json file? """
+    """Is this a json file?"""
     return filepath[-5:] == ".json"
 
 
 def is_pickle(filepath: str) -> bool:
-    """ Is this a pickle file? """
+    """Is this a pickle file?"""
     return filepath[-7:] == ".pkl.gz"
 
 
 def read_pickle(filepath: str):
-    """ Reads a pickle file and returns it """
+    """Reads a pickle file and returns it"""
     with open(filepath, "rb") as infile:
         obj = pickle.load(infile)
     return obj

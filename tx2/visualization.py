@@ -80,7 +80,7 @@ def prepare_wordclouds(
     clusters: Dict[str, List[int]], test_df: pd.DataFrame, input_col_name: str
 ):
     """Pre-render the wordcloud for each cluster, this makes switching the main wordcloud figure faster.
-    
+
     :param clusters: Dictionary of clusters where the values are the lists of dataframe indices for the entries in each cluster.
     :param test_df: The dataframe to draw the indices from.
     :param input_col_name: The name of the column containing the text.
@@ -107,9 +107,9 @@ def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
     return cloud
 
 
-def plot_big_wordcloud(index: int, clusters: Dict[str, list[int]]):
+def plot_big_wordcloud(index: int, clusters: Dict[str, List[int]]):
     """Render the word cloud that the currently selected point is in.
-    
+
     :param index: The index of the point to find the cluster of.
     :param clusters: The dictionary of clusters where the values are the lists of indices of entries in that cluster.
     """
@@ -127,7 +127,7 @@ def plot_big_wordcloud(index: int, clusters: Dict[str, list[int]]):
 
 def plot_passed_wordcloud(cloud, name):
     """Render the given word cloud.
-    
+
     :param cloud: The word cloud to render.
     :param name: The title to render with the word cloud.
     """
@@ -144,7 +144,7 @@ def plot_passed_wordcloud(cloud, name):
 
 def plot_wordclouds(dashboard: tx2.dashboard.Dashboard):
     """Render the grid of all wordclouds.
-    
+
     :param dashboard: The current dashboard, needed in order to grab the cluster data.
     """
     num_cols = 4
@@ -176,7 +176,7 @@ def plot_wordclouds(dashboard: tx2.dashboard.Dashboard):
 
 def plot_metrics(pred_y: List[int], target_y: List[int], encodings: Dict[str, int]):
     """Get colored dataframes with macro and micro scores for the given predictions on an aggregate level and per class.
-    
+
     :param pred_y: Predicted labels.
     :param target_y: Actual labels.
     :param encodings: Dictionary of string label -> numeric label.
@@ -217,13 +217,15 @@ def plot_metrics(pred_y: List[int], target_y: List[int], encodings: Dict[str, in
     return per_df, agg_df
 
 
-def plot_confusion_matrix(pred_y: List[int], target_y: List[int], encodings: Dict[str, int], figsize=(8, 8)):
+def plot_confusion_matrix(
+    pred_y: List[int], target_y: List[int], encodings: Dict[str, int], figsize=(8, 8)
+):
     """Get the confusion matrix for given predictions.
-    
+
     :param pred_y: Predicted labels.
     :param target_y: Actual labels.
     :param encodings: Dictionary of string label -> numeric label.
-    :param figsize: the size with which to 
+    :param figsize: the size with which to
     """
     labels = []
     encoded = []
@@ -448,6 +450,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     fig.tight_layout()
     with dashboard.out_projection_scatter:
         clear_output(wait=True)
+        dashboard.current_figures["umap"] = fig
         display(fig)
     dashboard.html_graph_status.value = (
         "<p>" + tx2.visualization.get_nice_html_label("Ready!", "#008000") + "</p>"

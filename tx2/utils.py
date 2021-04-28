@@ -15,7 +15,7 @@ def get_device() -> str:
 
 # used in visualization
 def which_cluster(index, clusters):
-    """TODO Get cluster label from index of point in one of the clusters """
+    """TODO Get cluster label from index of point in one of the clusters"""
     for cluster in clusters:
         if index in clusters[cluster]:
             return cluster
@@ -93,13 +93,13 @@ def debounce(wait):
 
 
 def get_cat_by_index(idx, encodings):
-    """ Return the name of the category for the given encoded index """
+    """Return the name of the category for the given encoded index"""
     for key in encodings.keys():
         if encodings[key] == idx:
             return key
 
 
 def get_pred_cat(pred, encodings):
-    """ Determine which category is predicted based on passed model output"""
+    """Determine which category is predicted based on passed model output"""
     idx = np.argmax(pred)
     return get_cat_by_index(idx, encodings)

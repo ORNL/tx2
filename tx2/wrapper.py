@@ -220,7 +220,7 @@ class Wrapper:
         :meth:`tx2.calc.frequent_words_by_class_in_cluster`."""
 
     def _run_predictions(self):
-        """"""
+        """ """
         logging.info("Running classifier...")
         self.predictions = self.classify(self.test_df[self.input_col_name])
         self.test_df["predicted_classes"] = self.predictions
