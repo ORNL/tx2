@@ -142,7 +142,7 @@ def plot_passed_wordcloud(cloud, name):
     return fig
 
 
-def plot_wordclouds(dashboard: tx2.dashboard.Dashboard):
+def plot_wordclouds(dashboard):
     """Render the grid of all wordclouds.
 
     :param dashboard: The current dashboard, needed in order to grab the cluster data.

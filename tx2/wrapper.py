@@ -314,7 +314,7 @@ class Wrapper:
         if not self.salience_computed:
             raise RuntimeError("Salience maps have not been computed")
 
-        if clustering_alg == "dbscan":
+        if clustering_alg == "DBSCAN":
             clustering_args = utils.set_defaults(clustering_args, eps=1, min_samples=5)
 
         logging.info("Clustering projections...")
@@ -409,22 +409,22 @@ class Wrapper:
         )
         return loader
 
-    def recompute_visual_clusterings(self, clustering_alg="dbscan", clustering_args={}):
+    def recompute_visual_clusterings(self, clustering_alg="DBSCAN", clustering_args={}):
         """Re-run the clustering algorithm. Note that this automatically overrides any
         previously cached data for clusters.
 
-        :param clustering_alg: The algorithm to use for clustering.
+        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
         :param clustering_args: Dictionary of arguments to pass into the clustering algorithm on instantiation.
         """
         self._compute_visual_clusters(clustering_alg, **clustering_args)
 
-    def recompute_projections(self, umap_args={}, clustering_alg="dbscan", clustering_args={}):
+    def recompute_projections(self, umap_args={}, clustering_alg="DBSCAN", clustering_args={}):
         """Re-run both projection training and clustering algorithms. Note that this
         automatically overrides both previously saved projections as well as clustering
         data.
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param clustering_alg: The algorithm to use for clustering.
+        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         self._train_projector(**umap_args)
@@ -504,12 +504,13 @@ class Wrapper:
         embeddings = self.embed(texts)
         return self.projector.transform(embeddings)
 
-    def prepare(self, umap_args={}, dbscan_args={}):
+    def prepare(self, umap_args={}, clustering_alg="DBSCAN", clustering_args={}):
         """Run all necessary precompute step to support the dashboard. **This function must
         be called before using in a dashboard instance.**
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param dbscan_args: Dictionary of arguments to pass into DBSCAN algorithm on instantiation.
+        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
+        :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         logging.debug("Training data shape: %s", self.train_df.shape)
         logging.debug("Testing data shape: %s", self.test_df.shape)
@@ -603,7 +604,7 @@ class Wrapper:
             self.cluster_word_freqs = read(self.cluster_words_path)
             self.cluster_class_word_sets = read(self.cluster_class_words_path)
         else:
-            self._compute_visual_clusters(**dbscan_args)
+            self._compute_visual_clusters(clustering_alg, **clustering_args)
 
     def search_test_df(self, search: str) -> List[int]:
         """Get a list of test dataframe indices that have any of the listed terms in the passed string.

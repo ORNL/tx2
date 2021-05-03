@@ -3,7 +3,7 @@
 from nltk.corpus import stopwords
 import numpy as np
 import pandas as pd
-from sklearn.cluster import DBSCAN, KMeans, AffinityPropagation, Birch, OPTICS
+from sklearn.cluster import DBSCAN, KMeans, AffinityPropagation, Birch, OPTICS, AgglomerativeClustering, SpectralClustering, SpectralBiclustering, SpectralCoclustering, MiniBatchKMeans, FeatureAgglomeration, MeanShift
 from sklearn.feature_extraction.text import CountVectorizer
 from typing import Dict, List, Tuple, Any
 
@@ -18,8 +18,9 @@ def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[
     :param projections: The data points to fit - should be numpy array of
         testing data points. Intended use is 2D UMAP projections, but should
         support any shape[1] size.
-    :param dbscan_args: Any options to pass to the dbscan algorithm, see
-        `sklearn's documentation <https://scikit-learn.org/stable/modules/generated/sklearn.cluster.DBSCAN.html>`_.
+    :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
+    :param clustering_args: Any options to pass to the clustering algorithm.
+        
 
     :return: A dictionary where each key is the cluster label and each value is
         an array of the indices from the projections array that are in that cluster.
@@ -27,17 +28,30 @@ def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[
     # TODO: at some point add ability to use different unsupervised clustering algs
 
     alg = None
-    if clustering_alg == "dbscan":
+    if clustering_alg == "DBSCAN":
         alg = DBSCAN
-    elif clustering_alg == "kmeans":
+    elif clustering_alg == "KMeans":
         alg = KMeans
-    elif clustering_alg == "affinity":
+    elif clustering_alg == "AffinityPropagation":
         alg = AffinityPropagation
-    elif clustering_alg == "birch":
+    elif clustering_alg == "Birch":
         alg = Birch
-    elif clustering_alg == "optics":
+    elif clustering_alg == "OPTICS":
         alg = OPTICS
-    
+    elif clustering_alg == "AgglomerativeClustering":
+        alg = AgglomerativeClustering
+    elif clustering_alg == "SpectralClustering":
+        alg = SpectralClustering
+    elif clustering_alg == "SpectralBiclustering":
+        alg = SpectralBiclustering
+    elif clustering_alg == "SpectralCoclustering":
+        alg = SpectralCoclustering
+    elif clustering_alg == "MiniBatchKMeans":
+        alg = MiniBatchKMeans
+    elif clustering_alg == "FeatureAgglomeration":
+        alg = FeatureAgglomeration
+    elif clustering_alg == "MeanShift":
+        alg = MeanShift
 
     clustering = alg(**clustering_args).fit(projections)
     clusters = {}
