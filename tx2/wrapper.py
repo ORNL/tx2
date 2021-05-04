@@ -413,7 +413,11 @@ class Wrapper:
         """Re-run the clustering algorithm. Note that this automatically overrides any
         previously cached data for clusters.
 
-        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
+        :param clustering_alg: The name of the clustering algorithm to use, a class name 
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+            "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
+            "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into the clustering algorithm on instantiation.
         """
         self._compute_visual_clusters(clustering_alg, **clustering_args)
@@ -426,7 +430,11 @@ class Wrapper:
         data.
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
+        :param clustering_alg: The name of the clustering algorithm to use, a class name 
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+            "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
+            "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         self._train_projector(**umap_args)
@@ -511,7 +519,11 @@ class Wrapper:
         be called before using in a dashboard instance.**
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
+        :param clustering_alg: The name of the clustering algorithm to use, a class name 
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+            "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
+            "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         logging.debug("Training data shape: %s", self.train_df.shape)
