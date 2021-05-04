@@ -305,7 +305,9 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             dashboard.transformer_wrapper.test_df,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=testing_x, y=testing_y, c=testing_c, alpha=0.8, s=dashboard.point_size)
+        ax.scatter(
+            x=testing_x, y=testing_y, c=testing_c, alpha=0.8, s=dashboard.point_size
+        )
     else:
         # render incorrect test data
         df_incorrect = dashboard.transformer_wrapper.test_df[
@@ -326,7 +328,13 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             df_incorrect,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=incorrect_x, y=incorrect_y, c=incorrect_c, alpha=0.8, s=dashboard.point_size)
+        ax.scatter(
+            x=incorrect_x,
+            y=incorrect_y,
+            c=incorrect_c,
+            alpha=0.8,
+            s=dashboard.point_size,
+        )
         testing_x, testing_y, testing_c = incorrect_x, incorrect_y, incorrect_c
 
         # render correct test data
@@ -348,7 +356,13 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             df_correct,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=correct_x, y=correct_y, c=correct_c, alpha=0.1, s=dashboard.unfocused_point_size)
+        ax.scatter(
+            x=correct_x,
+            y=correct_y,
+            c=correct_c,
+            alpha=0.1,
+            s=dashboard.unfocused_point_size,
+        )
 
     # render training data projections
     if dashboard.chk_show_train.value:
@@ -358,7 +372,13 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             dashboard.transformer_wrapper.train_df,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=training_x, y=training_y, c=training_c, alpha=0.1, s=dashboard.unfocused_point_size)
+        ax.scatter(
+            x=training_x,
+            y=training_y,
+            c=training_c,
+            alpha=0.1,
+            s=dashboard.unfocused_point_size,
+        )
 
     # render highlighted data points
     if len(dashboard.highlight_indices) > 0:

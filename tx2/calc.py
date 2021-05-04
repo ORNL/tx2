@@ -3,14 +3,29 @@
 from nltk.corpus import stopwords
 import numpy as np
 import pandas as pd
-from sklearn.cluster import DBSCAN, KMeans, AffinityPropagation, Birch, OPTICS, AgglomerativeClustering, SpectralClustering, SpectralBiclustering, SpectralCoclustering, MiniBatchKMeans, FeatureAgglomeration, MeanShift
+from sklearn.cluster import (
+    DBSCAN,
+    KMeans,
+    AffinityPropagation,
+    Birch,
+    OPTICS,
+    AgglomerativeClustering,
+    SpectralClustering,
+    SpectralBiclustering,
+    SpectralCoclustering,
+    MiniBatchKMeans,
+    FeatureAgglomeration,
+    MeanShift,
+)
 from sklearn.feature_extraction.text import CountVectorizer
 from typing import Dict, List, Tuple, Any
 
 from tx2 import utils
 
 
-def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[str, List[int]]:
+def cluster_projections(
+    projections, clustering_alg, **clustering_args
+) -> Dict[str, List[int]]:
     """Runs a clustering algorithm (currently only dbscan supported) on the
     provided embedded or projected points, and provides a dictionary of data point
     indices.
@@ -20,7 +35,7 @@ def cluster_projections(projections, clustering_alg, **clustering_args) -> Dict[
         support any shape[1] size.
     :param clustering_alg: The name of the clustering algorithm to use, a class name from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. (:code:`"DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans", "FeatureAgglomeration", "MeanShift"`
     :param clustering_args: Any options to pass to the clustering algorithm.
-        
+
 
     :return: A dictionary where each key is the cluster label and each value is
         an array of the indices from the projections array that are in that cluster.

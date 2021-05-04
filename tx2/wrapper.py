@@ -418,7 +418,9 @@ class Wrapper:
         """
         self._compute_visual_clusters(clustering_alg, **clustering_args)
 
-    def recompute_projections(self, umap_args={}, clustering_alg="DBSCAN", clustering_args={}):
+    def recompute_projections(
+        self, umap_args={}, clustering_alg="DBSCAN", clustering_args={}
+    ):
         """Re-run both projection training and clustering algorithms. Note that this
         automatically overrides both previously saved projections as well as clustering
         data.
