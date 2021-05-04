@@ -25,6 +25,7 @@ not work with tensorflow/keras models - we hope to address this limitation in th
    :caption: Usage
 
    basic_usage.rst
+   dashboard_interface.rst
    dashboard_widgets.rst
 
 .. toctree::
