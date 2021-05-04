@@ -26,6 +26,9 @@ class Dashboard:
         show_cluster_sample_btns=True,
         show_wordclouds=False,
         show_scoring=True,
+        point_size=5,
+        unfocused_point_size=20,
+        highlighted_point_size=75,
     ):
         """Constructor.
 
@@ -37,6 +40,9 @@ class Dashboard:
         :param show_cluster_sample_btns: Show the sampling buttons for each cluster.
         :param show_wordclouds: Show the wordclouds for each cluster.
         :param show_scoring: Show aggregate scoring metrics, confusion matrices, etc.
+        :param point_size: Size to render points in the UMAP plot.
+        :param unfocused_point_size: Size to render unfocused background points in the UMAP plot.
+        :param selected_point_size: Size to render highlighted and currently selected points in the UMAP plot.
         """
 
         self.transformer_wrapper = transformer_wrapper
@@ -92,6 +98,13 @@ class Dashboard:
         """The hex RGB colors to use in the scatter plot and word frequency graphs to represent each possible
         category. By default this is set to the 'Category20' palette. The number of clusters cannot exceed the
         number of colors in this array. (Currently it's automatically limited to the first 20 clusters.)"""
+
+        self.point_size = point_size
+        """Size to render points in the UMAP plot."""
+        self.unfocused_point_size = unfocused_point_size
+        """Size to render unfocused background points in the UMAP plot."""
+        self.highlighted_point_size = highlighted_point_size
+        """Size to render highlighted and currently selected points in the UMAP plot."""
 
         self._initialize_widgets()
         self._create_cluster_sample_buttons()

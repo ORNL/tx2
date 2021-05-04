@@ -254,6 +254,7 @@ def plot_confusion_matrix(
         "Predicted label\naccuracy={:0.4f}; misclassified={:0.4f}".format(acc, miss)
     )
     ax.set_ylabel("True label")
+    ax.grid(False)
 
     text_fg_threshold = cm.max() / 1.5
     for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
@@ -304,7 +305,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             dashboard.transformer_wrapper.test_df,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=testing_x, y=testing_y, c=testing_c, alpha=0.8, s=5)
+        ax.scatter(x=testing_x, y=testing_y, c=testing_c, alpha=0.8, s=dashboard.point_size)
     else:
         # render incorrect test data
         df_incorrect = dashboard.transformer_wrapper.test_df[
@@ -325,7 +326,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             df_incorrect,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=incorrect_x, y=incorrect_y, c=incorrect_c, alpha=0.8, s=5)
+        ax.scatter(x=incorrect_x, y=incorrect_y, c=incorrect_c, alpha=0.8, s=dashboard.point_size)
         testing_x, testing_y, testing_c = incorrect_x, incorrect_y, incorrect_c
 
         # render correct test data
@@ -347,7 +348,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             df_correct,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=correct_x, y=correct_y, c=correct_c, alpha=0.1, s=20)
+        ax.scatter(x=correct_x, y=correct_y, c=correct_c, alpha=0.1, s=dashboard.unfocused_point_size)
 
     # render training data projections
     if dashboard.chk_show_train.value:
@@ -357,7 +358,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             dashboard.transformer_wrapper.train_df,
             dashboard.transformer_wrapper.target_col_name,
         )
-        ax.scatter(x=training_x, y=training_y, c=training_c, alpha=0.1, s=15)
+        ax.scatter(x=training_x, y=training_y, c=training_c, alpha=0.1, s=dashboard.unfocused_point_size)
 
     # render highlighted data points
     if len(dashboard.highlight_indices) > 0:
@@ -365,7 +366,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             x=testing_x[dashboard.highlight_indices],
             y=testing_y[dashboard.highlight_indices],
             c=testing_c[dashboard.highlight_indices],
-            s=75,
+            s=dashboard.highlighted_point_size,
             edgecolors="red",
             linewidth=2,
         )
@@ -384,7 +385,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         ax.scatter(
             x=text_projection[0],
             y=text_projection[1],
-            s=75,
+            s=dashboard.highlighted_point_size,
             c=pred_color,
             edgecolors="black",
             linewidth=2,
@@ -395,7 +396,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         ax.scatter(
             x=dashboard.prior_reference_point[0][0],
             y=dashboard.prior_reference_point[0][1],
-            s=75,
+            s=dashboard.highlighted_point_size,
             c=dashboard.prior_reference_point[1],
             edgecolors="black",
             linewidth=2,
