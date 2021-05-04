@@ -17,6 +17,13 @@ Note that this dashboard is primarily for exploring how a transformer responds t
 set of data, and the larger this test set, the slower the dashboard may respond and the
 longer the wrapper's pre-computation steps will take.
 
+The flow of interactions between this library and a jupyter notebook is shown below:
+
+.. image:: interaction_flow.png
+
+All communication between TX2 and the transformer is done entirely through a set of 
+four interaction functions, discussed further in the sections below.
+
 Wrapper Setup
 =============
 
@@ -32,6 +39,10 @@ model. The wrapper relies on four different functions for computation:
 In all cases, the wrapper is instantiated, and then the wrapper's :code:`prepare()` function
 must be called. This runs through all necessary data computations that the
 dashboard relies on.
+
+An example diagram of a transformer model that provides the expected data for each of these functions is shown here:
+
+.. image:: example_interaction.png
 
 Default Approach
 ----------------
