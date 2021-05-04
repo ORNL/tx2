@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Basic Usage &mdash; TX2  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +54,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> TX2
+            <a href="index.html" class="icon icon-home"> TX2
           
 
           
@@ -146,6 +148,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -157,7 +161,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/basic_usage.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -184,6 +188,10 @@ layout and handling dashboard interactivity.</p>
 <p>Note that this dashboard is primarily for exploring how a transformer responds to a test
 set of data, and the larger this test set, the slower the dashboard may respond and the
 longer the wrapper’s pre-computation steps will take.</p>
+<p>The flow of interactions between this library and a jupyter notebook is shown below:</p>
+<img alt="_images/interaction_flow.png" src="_images/interaction_flow.png" />
+<p>All communication between TX2 and the transformer is done entirely through a set of
+four interaction functions, discussed further in the sections below.</p>
 <div class="section" id="wrapper-setup">
 <h2>Wrapper Setup<a class="headerlink" href="#wrapper-setup" title="Permalink to this headline">¶</a></h2>
 <p>There are two different general approaches for setting up the transformer
@@ -198,6 +206,8 @@ model. The wrapper relies on four different functions for computation:</p>
 <p>In all cases, the wrapper is instantiated, and then the wrapper’s <code class="code docutils literal notranslate"><span class="pre">prepare()</span></code> function
 must be called. This runs through all necessary data computations that the
 dashboard relies on.</p>
+<p>An example diagram of a transformer model that provides the expected data for each of these functions is shown here:</p>
+<img alt="_images/example_interaction.png" src="_images/example_interaction.png" />
 <div class="section" id="default-approach">
 <h3>Default Approach<a class="headerlink" href="#default-approach" title="Permalink to this headline">¶</a></h3>
 <p>In the default approach, defaults for the four functions are already handled internally, and
@@ -361,7 +371,7 @@ or manually pull the components and directly display them with <code class="code
 <code class="code docutils literal notranslate"><span class="pre">show_cluster_salience</span></code> tend to convey more useful and representative information than the wordclouds.</p>
 <div class="section" id="tips">
 <h3>Tips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h3>
-<p>Note that for the plots to display correctly, you need to run the <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code> magic.</p>
+<p>Note that for the plots to display correctly, you need to run the <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">agg</span></code> or <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code> magic.</p>
 <p>For the matplotlib plots themselves to remain interactive (with zoom/pan controls), you can instead use
 <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">notebook</span></code>. To remove the headers from each figure, you can run an HTML magic block to magic
 them away:</p>
@@ -372,7 +382,7 @@ them away:</p>
 </pre></div>
 </div>
 <p>Sometimes with <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">inline</span></code>, various graphs will duplicate every time they’re re-rendered, which can
-be fixed by calling <code class="code docutils literal notranslate"><span class="pre">plt.ioff()</span></code>.</p>
+be fixed by calling <code class="code docutils literal notranslate"><span class="pre">plt.ioff()</span></code> or using <code class="code docutils literal notranslate"><span class="pre">%matplotlib</span> <span class="pre">agg</span></code> instead.</p>
 </div>
 </div>
 </div>
@@ -382,37 +392,29 @@ be fixed by calling <code class="code docutils literal notranslate"><span class=
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="dashboard_widgets.html" class="btn btn-neutral float-right" title="Dashboard Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral float-left" title="TX2 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="dashboard_widgets.html" class="btn btn-neutral float-right" title="Dashboard Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="index.html" class="btn btn-neutral float-left" title="TX2 Documentation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Nathan Martindale, Scott Stewart
+        &#169; Copyright 2020, Nathan Martindale, Scott Stewart.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

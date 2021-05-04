@@ -3,9 +3,9 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
+  <meta charset="utf-8" />
   
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
   <title>Dashboard &mdash; TX2  documentation</title>
   
@@ -17,7 +17,10 @@
 
   
   
+
   
+  
+
   
 
   
@@ -30,7 +33,6 @@
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-        <script src="_static/language_data.js"></script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -52,7 +54,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home" alt="Documentation Home"> TX2
+            <a href="index.html" class="icon icon-home"> TX2
           
 
           
@@ -134,6 +136,8 @@
 
 
 
+
+
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
@@ -145,7 +149,7 @@
     
       <li class="wy-breadcrumbs-aside">
         
-            
+          
             <a href="_sources/dashboard.rst.txt" rel="nofollow"> View page source</a>
           
         
@@ -164,7 +168,7 @@
 <p>Class and code for rendering the ipywidgets dashboard.</p>
 <dl class="py class">
 <dt id="tx2.dashboard.Dashboard">
-<em class="property">class </em><code class="sig-prename descclassname">tx2.dashboard.</code><code class="sig-name descname">Dashboard</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">transformer_wrapper</span><span class="p">:</span> <span class="n"><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper">tx2.wrapper.Wrapper</a></span></em>, <em class="sig-param"><span class="n">show_umap</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_salience</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_word_count</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_cluster_salience</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_cluster_sample_btns</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_wordclouds</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span> </em><code class="sig-prename descclassname"><span class="pre">tx2.dashboard.</span></code><code class="sig-name descname"><span class="pre">Dashboard</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformer_wrapper</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><span class="pre">tx2.wrapper.Wrapper</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_umap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_salience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_word_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_cluster_salience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_cluster_sample_btns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_wordclouds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_scoring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unfocused_point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlighted_point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard" title="Permalink to this definition">¶</a></dt>
 <dd><p>Class that handles the setup, visualizations, and customization of the ipywidgets
 dashboard.</p>
 <p><strong>Methods:</strong></p>
@@ -189,35 +193,47 @@ dashboard.</p>
 <col style="width: 90%" />
 </colgroup>
 <tbody>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.transformer_wrapper" title="tx2.dashboard.Dashboard.transformer_wrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transformer_wrapper</span></code></a></p></td>
-<td><p>The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a> instance/interface into the transformer.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.colors" title="tx2.dashboard.Dashboard.colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colors</span></code></a></p></td>
+<td><p>The hex RGB colors to use in the scatter plot and word frequency graphs to represent each possible category.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.highlighted_point_size" title="tx2.dashboard.Dashboard.highlighted_point_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">highlighted_point_size</span></code></a></p></td>
+<td><p>Size to render highlighted and currently selected points in the UMAP plot.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.point_size" title="tx2.dashboard.Dashboard.point_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">point_size</span></code></a></p></td>
+<td><p>Size to render points in the UMAP plot.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_cluster_salience" title="tx2.dashboard.Dashboard.show_cluster_salience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_cluster_salience</span></code></a></p></td>
+<td><p>Show the top aggregate-salience “important” words per cluster graphs.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_cluster_sample_btns" title="tx2.dashboard.Dashboard.show_cluster_sample_btns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_cluster_sample_btns</span></code></a></p></td>
+<td><p>Show the sampling buttons for each cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_salience" title="tx2.dashboard.Dashboard.show_salience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_salience</span></code></a></p></td>
+<td><p>Show the current entry salience map “heatmap”.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_scoring" title="tx2.dashboard.Dashboard.show_scoring"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_scoring</span></code></a></p></td>
+<td><p>Show aggregate scoring metrics, confusion matrices, etc.</p></td>
 </tr>
 <tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_umap" title="tx2.dashboard.Dashboard.show_umap"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_umap</span></code></a></p></td>
 <td><p>Show the UMAP projection/embedding scatter plot.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_salience" title="tx2.dashboard.Dashboard.show_salience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_salience</span></code></a></p></td>
-<td><p>Show the current entry salience map “heatmap”.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_word_count" title="tx2.dashboard.Dashboard.show_word_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_word_count</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_word_count" title="tx2.dashboard.Dashboard.show_word_count"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_word_count</span></code></a></p></td>
 <td><p>Show the per-cluster top word frequency graphs.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_cluster_salience" title="tx2.dashboard.Dashboard.show_cluster_salience"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_cluster_salience</span></code></a></p></td>
-<td><p>Show the top aggregate-salience “important” words per cluster graphs.</p></td>
-</tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_cluster_sample_btns" title="tx2.dashboard.Dashboard.show_cluster_sample_btns"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_cluster_sample_btns</span></code></a></p></td>
-<td><p>Show the sampling buttons for each cluster.</p></td>
-</tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_wordclouds" title="tx2.dashboard.Dashboard.show_wordclouds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_wordclouds</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.show_wordclouds" title="tx2.dashboard.Dashboard.show_wordclouds"><code class="xref py py-obj docutils literal notranslate"><span class="pre">show_wordclouds</span></code></a></p></td>
 <td><p>Show the wordclouds for each cluster.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.colors" title="tx2.dashboard.Dashboard.colors"><code class="xref py py-obj docutils literal notranslate"><span class="pre">colors</span></code></a></p></td>
-<td><p>The hex RGB colors to use in the scatter plot and word frequency graphs to represent each possible category.</p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.transformer_wrapper" title="tx2.dashboard.Dashboard.transformer_wrapper"><code class="xref py py-obj docutils literal notranslate"><span class="pre">transformer_wrapper</span></code></a></p></td>
+<td><p>The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a> instance/interface into the transformer.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.dashboard.Dashboard.unfocused_point_size" title="tx2.dashboard.Dashboard.unfocused_point_size"><code class="xref py py-obj docutils literal notranslate"><span class="pre">unfocused_point_size</span></code></a></p></td>
+<td><p>Size to render unfocused background points in the UMAP plot.</p></td>
 </tr>
 </tbody>
 </table>
 <dl class="py method">
 <dt id="tx2.dashboard.Dashboard.__init__">
-<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">transformer_wrapper</span><span class="p">:</span> <span class="n"><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper">tx2.wrapper.Wrapper</a></span></em>, <em class="sig-param"><span class="n">show_umap</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_salience</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_word_count</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_cluster_salience</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_cluster_sample_btns</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">show_wordclouds</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard.__init__" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">__init__</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">transformer_wrapper</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><span class="pre">tx2.wrapper.Wrapper</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_umap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_salience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_word_count</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_cluster_salience</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_cluster_sample_btns</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_wordclouds</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_scoring</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unfocused_point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">highlighted_point_size</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard.__init__" title="Permalink to this definition">¶</a></dt>
 <dd><p>Constructor.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
@@ -229,6 +245,10 @@ dashboard.</p>
 <li><p><strong>show_cluster_salience</strong> – Show the top aggregate-salience “important” words per cluster graphs.</p></li>
 <li><p><strong>show_cluster_sample_btns</strong> – Show the sampling buttons for each cluster.</p></li>
 <li><p><strong>show_wordclouds</strong> – Show the wordclouds for each cluster.</p></li>
+<li><p><strong>show_scoring</strong> – Show aggregate scoring metrics, confusion matrices, etc.</p></li>
+<li><p><strong>point_size</strong> – Size to render points in the UMAP plot.</p></li>
+<li><p><strong>unfocused_point_size</strong> – Size to render unfocused background points in the UMAP plot.</p></li>
+<li><p><strong>selected_point_size</strong> – Size to render highlighted and currently selected points in the UMAP plot.</p></li>
 </ul>
 </dd>
 </dl>
@@ -236,58 +256,82 @@ dashboard.</p>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.colors">
-<code class="sig-name descname">colors</code><a class="headerlink" href="#tx2.dashboard.Dashboard.colors" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">colors</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.colors" title="Permalink to this definition">¶</a></dt>
 <dd><p>The hex RGB colors to use in the scatter plot and word frequency graphs to represent each possible
 category. By default this is set to the ‘Category20’ palette. The number of clusters cannot exceed the
 number of colors in this array. (Currently it’s automatically limited to the first 20 clusters.)</p>
 </dd></dl>
 
+<dl class="py attribute">
+<dt id="tx2.dashboard.Dashboard.highlighted_point_size">
+<code class="sig-name descname"><span class="pre">highlighted_point_size</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.highlighted_point_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Size to render highlighted and currently selected points in the UMAP plot.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tx2.dashboard.Dashboard.point_size">
+<code class="sig-name descname"><span class="pre">point_size</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.point_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Size to render points in the UMAP plot.</p>
+</dd></dl>
+
 <dl class="py method">
 <dt id="tx2.dashboard.Dashboard.render">
-<code class="sig-name descname">render</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard.render" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">render</span></code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#tx2.dashboard.Dashboard.render" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return combined layout widget</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_cluster_salience">
-<code class="sig-name descname">show_cluster_salience</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_cluster_salience" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_cluster_salience</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_cluster_salience" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the top aggregate-salience “important” words per cluster graphs.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_cluster_sample_btns">
-<code class="sig-name descname">show_cluster_sample_btns</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_cluster_sample_btns" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_cluster_sample_btns</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_cluster_sample_btns" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the sampling buttons for each cluster.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_salience">
-<code class="sig-name descname">show_salience</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_salience" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_salience</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_salience" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the current entry salience map “heatmap”.</p>
 </dd></dl>
 
 <dl class="py attribute">
+<dt id="tx2.dashboard.Dashboard.show_scoring">
+<code class="sig-name descname"><span class="pre">show_scoring</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_scoring" title="Permalink to this definition">¶</a></dt>
+<dd><p>Show aggregate scoring metrics, confusion matrices, etc.</p>
+</dd></dl>
+
+<dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_umap">
-<code class="sig-name descname">show_umap</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_umap" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_umap</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_umap" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the UMAP projection/embedding scatter plot.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_word_count">
-<code class="sig-name descname">show_word_count</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_word_count" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_word_count</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_word_count" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the per-cluster top word frequency graphs.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.show_wordclouds">
-<code class="sig-name descname">show_wordclouds</code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_wordclouds" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">show_wordclouds</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.show_wordclouds" title="Permalink to this definition">¶</a></dt>
 <dd><p>Show the wordclouds for each cluster.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.dashboard.Dashboard.transformer_wrapper">
-<code class="sig-name descname">transformer_wrapper</code><a class="headerlink" href="#tx2.dashboard.Dashboard.transformer_wrapper" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname"><span class="pre">transformer_wrapper</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.transformer_wrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a> instance/interface into the transformer.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tx2.dashboard.Dashboard.unfocused_point_size">
+<code class="sig-name descname"><span class="pre">unfocused_point_size</span></code><a class="headerlink" href="#tx2.dashboard.Dashboard.unfocused_point_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>Size to render unfocused background points in the UMAP plot.</p>
 </dd></dl>
 
 </dd></dl>
@@ -299,37 +343,29 @@ number of colors in this array. (Currently it’s automatically limited to the f
            
           </div>
           <footer>
-  
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="calc.html" class="btn btn-neutral float-right" title="Calc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="wrapper.html" class="btn btn-neutral float-left" title="Wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+        <a href="calc.html" class="btn btn-neutral float-right" title="Calc" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="wrapper.html" class="btn btn-neutral float-left" title="Wrapper" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
-  
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        
-        &copy; Copyright 2020, Nathan Martindale, Scott Stewart
+        &#169; Copyright 2020, Nathan Martindale, Scott Stewart.
 
     </p>
   </div>
     
     
     
-    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     
-    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     
     provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
-
         </div>
       </div>
 

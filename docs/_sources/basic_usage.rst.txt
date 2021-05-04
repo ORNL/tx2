@@ -17,6 +17,13 @@ Note that this dashboard is primarily for exploring how a transformer responds t
 set of data, and the larger this test set, the slower the dashboard may respond and the
 longer the wrapper's pre-computation steps will take.
 
+The flow of interactions between this library and a jupyter notebook is shown below:
+
+.. image:: interaction_flow.png
+
+All communication between TX2 and the transformer is done entirely through a set of 
+four interaction functions, discussed further in the sections below.
+
 Wrapper Setup
 =============
 
@@ -32,6 +39,10 @@ model. The wrapper relies on four different functions for computation:
 In all cases, the wrapper is instantiated, and then the wrapper's :code:`prepare()` function
 must be called. This runs through all necessary data computations that the
 dashboard relies on.
+
+An example diagram of a transformer model that provides the expected data for each of these functions is shown here:
+
+.. image:: example_interaction.png
 
 Default Approach
 ----------------
@@ -217,7 +228,7 @@ The :code:`show_wordclouds` option is :code:`False` by default as the cluster-ba
 Tips
 ----
 
-Note that for the plots to display correctly, you need to run the :code:`%matplotlib inline` magic.
+Note that for the plots to display correctly, you need to run the :code:`%matplotlib agg` or :code:`%matplotlib inline` magic.
 
 For the matplotlib plots themselves to remain interactive (with zoom/pan controls), you can instead use
 :code:`%matplotlib notebook`. To remove the headers from each figure, you can run an HTML magic block to magic
@@ -231,4 +242,4 @@ them away:
     </style>
 
 Sometimes with :code:`%matplotlib inline`, various graphs will duplicate every time they're re-rendered, which can
-be fixed by calling :code:`plt.ioff()`.
+be fixed by calling :code:`plt.ioff()` or using :code:`%matplotlib agg` instead.
