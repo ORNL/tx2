@@ -438,7 +438,7 @@ class Wrapper:
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
         self._train_projector(**umap_args)
-        self._compute_visual_clusters(**clustering_args)
+        self._compute_visual_clusters(clustering_alg, **clustering_args)
 
     def encode(self, text: str):
         """Encode/tokenize passed text into a format expected by transformer.
