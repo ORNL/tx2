@@ -166,6 +166,7 @@ class Wrapper:
 
         # other defaults
         self.max_clusters = 20
+        """Maximum number of clusters to retain. Note that this cannot exceed the number of colors in the dashboard."""
         self.batch_size = 2
         """The batch size to use in backend dataloader creation."""
         self.max_len = 256

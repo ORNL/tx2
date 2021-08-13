@@ -5,7 +5,7 @@ with open("README.md", 'r', encoding='utf-8') as infile:
 
 setup(
     name="tx2",
-    version="2021.6",
+    version="2021.8.0",
     description="Transformer eXplainability and eXploration",
     long_description=long_description,
     long_description_content_type="text/markdown",

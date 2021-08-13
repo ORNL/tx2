@@ -1,6 +1,7 @@
 # TX2
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![PyPI version](https://badge.fury.io/py/tx2.svg)](https://badge.fury.io/py/tx2)
 
 Welcome to TX2! This library is intended to aid in the explorability and explainability of
 transformer classification networks, or transformer language models with sequence classification
@@ -24,8 +25,27 @@ pip install tx2
 NOTE: depending on the environment, it may be better to install some of the dependencies separately before
 pip installing tx2, e.g. in conda:
 ```bash
-conda install pytorch pandas scikit-learn matplotlib ipywidgets 
+conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets numpy
 ```
+
+## Examples
+
+Example jupyter notebooks demonstrating and testing the usage of this library can be
+found in the [examples
+folder](https://github.com/ORNL/tx2/tree/master/examples).
+
+Note that these notebooks can take a while to run the first time, especially
+if a GPU is not in use.
+
+Packages you'll need to install for the notebooks to work (in addition to the
+conda installs above):
+
+```bash
+pip install tqdm transformers 
+```
+
+Running through each full notebook will produce the ipywidget dashboard near the
+end.
 
 ## Documentation
 
