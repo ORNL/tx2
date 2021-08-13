@@ -1,0 +1,113 @@
+# TX2
+@misc{tx2,
+	title = {Transformer eXplainability and eXploration },
+	author = {Martindale, Nathan and Stewart, Scott L.},
+	abstractNote = {The Transformer eXplainability and eXploration library is intended to aid in the explorability and explainability of transformer classification networks, or transformer language models with sequence classification heads. The basic function of this library is to take a trained transformer and test/train dataset and produce an ipywidget dashboard which can be displayed in a jupyter notebook or in jupyter lab.},
+	url = {https://doi.org/10.11578/dc.20210129.1},
+	howpublished = {[Computer Software] \url{https://doi.org/10.11578/dc.20210129.1}},
+	year = {2021},
+	month = {jan}
+}
+
+
+# PAIR-LIT
+@misc{tenney2020lit,
+	title={The Language Interpretability Tool: Extensible, Interactive Visualizations and Analysis for {NLP} Models},
+	author={Ian Tenney and James Wexler and Jasmijn Bastings and Tolga Bolukbasi and Andy Coenen and Sebastian Gehrmann and Ellen Jiang and Mahima Pushkarna and Carey Radebaugh and Emily Reif and Ann Yuan},
+	booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+	year = "2020",
+	publisher = "Association for Computational Linguistics",
+	pages = "107--118",
+	url = "https://www.aclweb.org/anthology/2020.emnlp-demos.15",
+}
+
+
+@misc{jupyternotebook,
+	title = {Jupyter Notebook},
+	howpublished = {\url{https://github.com/jupyter/notebook}},
+}
+
+
+@incollection{pytorch,
+	title = {PyTorch: An Imperative Style, High-Performance Deep Learning Library},
+	author = {Paszke, Adam and Gross, Sam and Massa, Francisco and Lerer, Adam and Bradbury, James and Chanan, Gregory and Killeen, Trevor and Lin, Zeming and Gimelshein, Natalia and Antiga, Luca and Desmaison, Alban and Kopf, Andreas and Yang, Edward and DeVito, Zachary and Raison, Martin and Tejani, Alykhan and Chilamkurthy, Sasank and Steiner, Benoit and Fang, Lu and Bai, Junjie and Chintala, Soumith},
+	booktitle = {Advances in Neural Information Processing Systems 32},
+	editor = {H. Wallach and H. Larochelle and A. Beygelzimer and F. d\textquotesingle Alch\'{e}-Buc and E. Fox and R. Garnett},
+	pages = {8024--8035},
+	year = {2019},
+	publisher = {Curran Associates Inc.},
+	url = {http://papers.neurips.cc/paper/9015-pytorch-an-imperative-style-high-performance-deep-learning-library.pdf}
+}
+
+
+@inproceedings{hf-transformers,
+	title = "Transformers: State-of-the-Art Natural Language Processing",
+	author = "Thomas Wolf and Lysandre Debut and Victor Sanh and Julien Chaumond and Clement Delangue and Anthony Moi and Pierric Cistac and Tim Rault and Rémi Louf and Morgan Funtowicz and Joe Davison and Sam Shleifer and Patrick von Platen and Clara Ma and Yacine Jernite and Julien Plu and Canwen Xu and Teven Le Scao and Sylvain Gugger and Mariama Drame and Quentin Lhoest and Alexander M. Rush",
+	booktitle = "Proceedings of the 2020 Conference on Empirical Methods in Natural Language Processing: System Demonstrations",
+	month = oct,
+	year = "2020",
+	address = "Online",
+	publisher = "Association for Computational Linguistics",
+	url = "https://www.aclweb.org/anthology/2020.emnlp-demos.6",
+	pages = "38--45"
+}
+
+
+@misc{mcinnes2020umap,
+	title={UMAP: Uniform Manifold Approximation and Projection for Dimension Reduction},
+	author={Leland McInnes and John Healy and James Melville},
+	year={2020},
+	eprint={1802.03426},
+	archivePrefix={arXiv},
+	primaryClass={stat.ML}
+}
+
+
+# visualizing attention in transformers (bertviz)
+@inproceedings{vig2019multiscale,
+	title = "A Multiscale Visualization of Attention in the Transformer Model",
+	author = "Vig, Jesse",
+	booktitle = "Proceedings of the 57th Annual Meeting of the Association for Computational Linguistics: System Demonstrations",
+	month = jul,
+	year = "2019",
+	address = "Florence, Italy",
+	publisher = "Association for Computational Linguistics",
+	url = "https://www.aclweb.org/anthology/P19-3007",
+	doi = "10.18653/v1/P19-3007",
+	pages = "37--42",
+}
+
+@article{jain2019attention,
+	title={Attention is not explanation},
+	author={Jain, Sarthak and Wallace, Byron C},
+	journal={arXiv preprint arXiv:1902.10186},
+	year={2019}
+}
+
+@inproceedings{aken2020visbert,
+	author = {van Aken, Betty and Winter, Benjamin and L\"{o}ser, Alexander and Gers, Felix A.},
+	title = {VisBERT: Hidden-State Visualizations for Transformers},
+	year = {2020},
+	isbn = {9781450370240},
+	publisher = {Association for Computing Machinery},
+	address = {New York, NY, USA},
+	url = {https://doi.org/10.1145/3366424.3383542},
+	doi = {10.1145/3366424.3383542},
+	abstract = {Explainability and interpretability are two important concepts, the absence of which can and should impede the application of well-performing neural networks to real-world problems. At the same time, they are difficult to incorporate into the large, black-box models that achieve state-of-the-art results in a multitude of NLP tasks. Bidirectional Encoder Representations from Transformers (BERT) is one such black-box model. It has become a staple architecture to solve many different NLP tasks and has inspired a number of related Transformer models. Understanding how these models draw conclusions is crucial for both their improvement and application. We contribute to this challenge by presenting VisBERT, a tool for visualizing the contextual token representations within BERT for the task of (multi-hop) Question Answering. Instead of analyzing attention weights, we focus on the hidden states resulting from each encoder block within the BERT model. This way we can observe how the semantic representations are transformed throughout the layers of the model. VisBERT enables users to get insights about the model’s internal state and to explore its inference steps or potential shortcomings. The tool allows us to identify distinct phases in BERT’s transformations that are similar to a traditional NLP pipeline and offer insights during failed predictions.},
+	booktitle = {Companion Proceedings of the Web Conference 2020},
+	pages = {207–211},
+	numpages = {5},
+	location = {Taipei, Taiwan},
+	series = {WWW '20}
+}
+
+
+@misc{sklearn-clustering,
+	title = {sklearn.clustering},
+	howpublished = {\url{https://scikit-learn.org/stable/modules/clustering.html}},
+}
+
+@misc{black-linter,
+	title = {Black - The Uncompromising Code Formatter},
+	howpublished = {\url{https://github.com/psf/black}},
+}
