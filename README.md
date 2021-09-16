@@ -2,6 +2,7 @@
 
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/tx2.svg)](https://badge.fury.io/py/tx2)
+[![JOSS status](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94/status.svg)](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94)
 
 Welcome to TX2! This library is intended to aid in the explorability and explainability of
 transformer classification networks, or transformer language models with sequence classification
@@ -26,6 +27,12 @@ NOTE: depending on the environment, it may be better to install some of the depe
 pip installing tx2, e.g. in conda:
 ```bash
 conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets numpy
+```
+
+If you do not have access to a GPU on your machine, install the regular pytorch
+package:
+```bash
+conda install pytorch pandas scikit-learn matplotlib ipywidgets numpy
 ```
 
 ## Examples
