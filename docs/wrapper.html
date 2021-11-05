@@ -267,40 +267,43 @@ the front-end visualizations.</p>
 <tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.language_model" title="tx2.wrapper.Wrapper.language_model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">language_model</span></code></a></p></td>
 <td><p>A variable containing only the huggingface language model portion of the network.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.max_len" title="tx2.wrapper.Wrapper.max_len"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_len</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.max_clusters" title="tx2.wrapper.Wrapper.max_clusters"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_clusters</span></code></a></p></td>
+<td><p>Maximum number of clusters to retain.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.max_len" title="tx2.wrapper.Wrapper.max_len"><code class="xref py py-obj docutils literal notranslate"><span class="pre">max_len</span></code></a></p></td>
 <td><p>The maximum length of each text entry, based on the expected input size of the transformer.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.overwrite" title="tx2.wrapper.Wrapper.overwrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overwrite</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.overwrite" title="tx2.wrapper.Wrapper.overwrite"><code class="xref py py-obj docutils literal notranslate"><span class="pre">overwrite</span></code></a></p></td>
 <td><p>Whether to ignore cached calculations and overwrite them or not.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.predictions" title="tx2.wrapper.Wrapper.predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predictions</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.predictions" title="tx2.wrapper.Wrapper.predictions"><code class="xref py py-obj docutils literal notranslate"><span class="pre">predictions</span></code></a></p></td>
 <td><p>The predicted class for each entry in <code class="code docutils literal notranslate"><span class="pre">test_df</span></code>, as returned by <a class="reference internal" href="#tx2.wrapper.Wrapper.classify" title="tx2.wrapper.Wrapper.classify"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classify()</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projections_testing" title="tx2.wrapper.Wrapper.projections_testing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projections_testing</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projections_testing" title="tx2.wrapper.Wrapper.projections_testing"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projections_testing</span></code></a></p></td>
 <td><p>The two dimensional projections of <code class="code docutils literal notranslate"><span class="pre">embeddings_testing</span></code>, for each entry in <code class="code docutils literal notranslate"><span class="pre">test_df</span></code>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projections_training" title="tx2.wrapper.Wrapper.projections_training"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projections_training</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projections_training" title="tx2.wrapper.Wrapper.projections_training"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projections_training</span></code></a></p></td>
 <td><p>The two dimensional projections of <code class="code docutils literal notranslate"><span class="pre">embeddings_training</span></code>, for each entry in <code class="code docutils literal notranslate"><span class="pre">train_df</span></code>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projector" title="tx2.wrapper.Wrapper.projector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projector</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.projector" title="tx2.wrapper.Wrapper.projector"><code class="xref py py-obj docutils literal notranslate"><span class="pre">projector</span></code></a></p></td>
 <td><p>The trained UMAP projector.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.salience_maps" title="tx2.wrapper.Wrapper.salience_maps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">salience_maps</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.salience_maps" title="tx2.wrapper.Wrapper.salience_maps"><code class="xref py py-obj docutils literal notranslate"><span class="pre">salience_maps</span></code></a></p></td>
 <td><p>The salience map for each entry in <code class="code docutils literal notranslate"><span class="pre">test_df</span></code> as calculated by <a class="reference internal" href="calc.html#tx2.calc.salience_map" title="tx2.calc.salience_map"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.calc.salience_map()</span></code></a>.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.soft_classification_function" title="tx2.wrapper.Wrapper.soft_classification_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">soft_classification_function</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.soft_classification_function" title="tx2.wrapper.Wrapper.soft_classification_function"><code class="xref py py-obj docutils literal notranslate"><span class="pre">soft_classification_function</span></code></a></p></td>
 <td><p>A function to take a single set of inputs and return the (non arg-maxed) output layer of the network.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.target_col_name" title="tx2.wrapper.Wrapper.target_col_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">target_col_name</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.target_col_name" title="tx2.wrapper.Wrapper.target_col_name"><code class="xref py py-obj docutils literal notranslate"><span class="pre">target_col_name</span></code></a></p></td>
 <td><p>The name of the column in both dataframes with the classification target.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.test_df" title="tx2.wrapper.Wrapper.test_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_df</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.test_df" title="tx2.wrapper.Wrapper.test_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">test_df</span></code></a></p></td>
 <td><p>Dataframe containing all testing data instances.</p></td>
 </tr>
-<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.tokenizer" title="tx2.wrapper.Wrapper.tokenizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tokenizer</span></code></a></p></td>
+<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.tokenizer" title="tx2.wrapper.Wrapper.tokenizer"><code class="xref py py-obj docutils literal notranslate"><span class="pre">tokenizer</span></code></a></p></td>
 <td><p>The huggingface tokenizer to use for encoding text input.</p></td>
 </tr>
-<tr class="row-even"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.train_df" title="tx2.wrapper.Wrapper.train_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_df</span></code></a></p></td>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tx2.wrapper.Wrapper.train_df" title="tx2.wrapper.Wrapper.train_df"><code class="xref py py-obj docutils literal notranslate"><span class="pre">train_df</span></code></a></p></td>
 <td><p>Dataframe containing all training data instances.</p></td>
 </tr>
 </tbody>
@@ -517,6 +520,12 @@ function will utilize the tokenizer given in the constructor if available.</p>
 <dt id="tx2.wrapper.Wrapper.language_model">
 <code class="sig-name descname"><span class="pre">language_model</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.language_model" title="Permalink to this definition">¶</a></dt>
 <dd><p>A variable containing only the huggingface language model portion of the network.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt id="tx2.wrapper.Wrapper.max_clusters">
+<code class="sig-name descname"><span class="pre">max_clusters</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.max_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Maximum number of clusters to retain. Note that this cannot exceed the number of colors in the dashboard.</p>
 </dd></dl>
 
 <dl class="py attribute">

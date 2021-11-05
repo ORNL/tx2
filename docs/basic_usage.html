@@ -178,7 +178,7 @@
             
   <div class="section" id="basic-usage">
 <h1>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h1>
-<p>TX2 consists of two classes: <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a>
+<p>TX2 consists of two classes: <code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code>
 and <a class="reference internal" href="dashboard.html#tx2.dashboard.Dashboard" title="tx2.dashboard.Dashboard"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.dashboard.Dashboard</span></code></a>.</p>
 <p>The wrapper class wraps around the transformer/classification
 model and acts as an interface between the dashboard and the transformer.
@@ -221,7 +221,10 @@ to work correctly:</p>
 <li><p>A calleable classifier that returns an output value for each class (this is directly used for the default <strong>soft classification function</strong>, and the default <strong>classification function</strong> argmaxes the output.)</p></li>
 </ol>
 <p>An example model that would work in this approach is shown below, as in the first example notebook:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">BERTClass</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoModel</span>
+
+<span class="k">class</span> <span class="nc">BERTClass</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
     <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="nb">super</span><span class="p">(</span><span class="n">BERTClass</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">language_model</span> <span class="o">=</span> <span class="n">AutoModel</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">&quot;bert-base-cased&quot;</span><span class="p">)</span>
@@ -235,7 +238,9 @@ to work correctly:</p>
 </div>
 <p>To instantiate the wrapper, we pass in the data and necessary model pieces, and then call
 <code class="code docutils literal notranslate"><span class="pre">prepare()</span></code> to run the necesary computations and cache the results.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">tx2.wrapper</span> <span class="kn">import</span> <span class="n">Wrapper</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">transformers</span> <span class="kn">import</span> <span class="n">AutoTokenizer</span>
+
+<span class="kn">from</span> <span class="nn">tx2.wrapper</span> <span class="kn">import</span> <span class="n">Wrapper</span>
 
 <span class="c1"># initialize</span>
 <span class="n">model</span> <span class="o">=</span> <span class="n">BERTClass</span><span class="p">()</span>
@@ -291,14 +296,16 @@ any of the default functions infeasible or incorrect, it is possible to manually
 any of the four functions the wrapper relies on. This can be done by defining the function
 and then assigning it to the corresponding wrapper attributes:</p>
 <ul class="simple">
-<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.embedding_function" title="tx2.wrapper.Wrapper.embedding_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.embedding_function</span></code></a></p></li>
-<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classification_function" title="tx2.wrapper.Wrapper.classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code></a></p></li>
-<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.soft_classification_function" title="tx2.wrapper.Wrapper.soft_classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.soft_classification_function</span></code></a></p></li>
-<li><p><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.embedding_function</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.soft_classification_function</span></code></p></li>
+<li><p><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></p></li>
 </ul>
 <p>As an example, one could change the embedding mechanism to average the output token embeddings rather than
 expecting a <code class="code docutils literal notranslate"><span class="pre">[CLS]</span></code> token.</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">transformer</span> <span class="o">=</span> <span class="c1"># load/train language model</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">transformer</span> <span class="o">=</span> <span class="c1"># load/train language model</span>
 
 <span class="k">def</span> <span class="nf">average_embedding</span><span class="p">(</span><span class="n">inputs</span><span class="p">):</span>
      <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">transformer</span><span class="p">(</span><span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;input_id&#39;</span><span class="p">],</span> <span class="n">inputs</span><span class="p">[</span><span class="s1">&#39;attention_mask&#39;</span><span class="p">])[</span><span class="mi">0</span><span class="p">])</span>
@@ -310,9 +317,9 @@ expecting a <code class="code docutils literal notranslate"><span class="pre">[C
 </div>
 <p>Note that while the wrapper’s <code class="code docutils literal notranslate"><span class="pre">embed()</span></code>, <code class="code docutils literal notranslate"><span class="pre">classify()</span></code>, and <code class="code docutils literal notranslate"><span class="pre">soft_clasify()</span></code>
 all take an array of texts as input, the corresponding backend wrapper attributes are functions
-that expect <em>encoded inputs</em>, as returned from <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a>.
+that expect <em>encoded inputs</em>, as returned from <code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code>.
 By default, if you do not specify a custom <code class="code docutils literal notranslate"><span class="pre">encode_function</span></code>, the wrapper runs <code class="code docutils literal notranslate"><span class="pre">encode_plus</span></code>
-on the tokenizer specified in the constructor with the <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encoder_options" title="tx2.wrapper.Wrapper.encoder_options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encoder_options</span></code></a> passed in.
+on the tokenizer specified in the constructor with the <code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encoder_options</span></code> passed in.
 The results are returned in a dictionary with <code class="code docutils literal notranslate"><span class="pre">&quot;input_ids&quot;</span></code> and <code class="code docutils literal notranslate"><span class="pre">&quot;attention_mask&quot;</span></code> as keys.</p>
 <p>Depending on what custom functions you define determines which model pieces you do or do not need to pass to the
 constructor:</p>
@@ -328,10 +335,10 @@ constructor:</p>
 the wrapper when the wrapper’s <code class="code docutils literal notranslate"><span class="pre">classify()</span></code> is called.</p>
 <img alt="_images/wrapper_data_flow.png" src="_images/wrapper_data_flow.png" />
 <ol class="arabic simple">
-<li><p>The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classify" title="tx2.wrapper.Wrapper.classify"><code class="xref py py-func docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classify()</span></code></a> function is called with an array of texts.</p></li>
+<li><p>The <code class="xref py py-func docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classify()</span></code> function is called with an array of texts.</p></li>
 <li><p>The input texts are placed into a pytorch dataset child class and dataloader.</p></li>
-<li><p>For each input text the dataset calls the  <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.encode_function" title="tx2.wrapper.Wrapper.encode_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code></a>.</p></li>
-<li><p>For each batched set in the dataloader (containing the outputs from 2), the batch array of encoded inputs are passed into <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper.classification_function" title="tx2.wrapper.Wrapper.classification_function"><code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code></a>.</p></li>
+<li><p>For each input text the dataset calls the  <code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.encode_function</span></code>.</p></li>
+<li><p>For each batched set in the dataloader (containing the outputs from 2), the batch array of encoded inputs are passed into <code class="xref py py-attr docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.classification_function</span></code>.</p></li>
 <li><p>Output predictions are aggregated and sent back up/returned from the <code class="code docutils literal notranslate"><span class="pre">classify()</span></code> call.</p></li>
 </ol>
 </div>

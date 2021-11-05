@@ -21,7 +21,7 @@ The flow of interactions between this library and a jupyter notebook is shown be
 
 .. image:: interaction_flow.png
 
-All communication between TX2 and the transformer is done entirely through a set of 
+All communication between TX2 and the transformer is done entirely through a set of
 four interaction functions, discussed further in the sections below.
 
 Wrapper Setup
@@ -61,6 +61,9 @@ An example model that would work in this approach is shown below, as in the firs
 
 .. code-block:: python
 
+    import torch
+    from transformers import AutoModel
+
     class BERTClass(torch.nn.Module):
         def __init__(self):
             super(BERTClass, self).__init__()
@@ -77,6 +80,8 @@ To instantiate the wrapper, we pass in the data and necessary model pieces, and 
 :code:`prepare()` to run the necesary computations and cache the results.
 
 .. code-block:: python
+
+    from transformers import AutoTokenizer
 
     from tx2.wrapper import Wrapper
 
@@ -145,6 +150,8 @@ As an example, one could change the embedding mechanism to average the output to
 expecting a :code:`[CLS]` token.
 
 .. code-block:: python
+
+    import numpy as np
 
     transformer = # load/train language model
 
