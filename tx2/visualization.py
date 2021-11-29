@@ -76,6 +76,7 @@ def render_html_text(text, transformer_wrapper: tx2.wrapper.Wrapper) -> str:
 _cached_wordclouds = {}
 
 
+# TODO: this only needs the clusters dict and the test texts
 def prepare_wordclouds(
     clusters: Dict[str, List[int]], test_df: pd.DataFrame, input_col_name: str
 ):
@@ -91,6 +92,7 @@ def prepare_wordclouds(
         )
 
 
+# TODO: This only needs a numpy array of texts as input, already filtered.
 def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
     """Creates and returns a wordcloud image that can be rendered with :code:`plt.imshow`.
 
@@ -269,6 +271,7 @@ def plot_confusion_matrix(
     return fig
 
 
+# TODO: just needs dashboard, embeddings, and texts list, also clean up. 
 def _get_scatter_points_from_embeddings(
     dashboard, embeddings: List[List[int]], df: pd.DataFrame, label_col_name: str
 ):
@@ -280,7 +283,7 @@ def _get_scatter_points_from_embeddings(
             colors.append(dashboard.colors[0])
         else:
             colors.append(dashboard.colors[row[label_col_name]])
-
+    
     x = []
     y = []
     for result in embeddings:
