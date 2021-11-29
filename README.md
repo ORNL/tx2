@@ -26,7 +26,8 @@ pip install tx2
 NOTE: depending on the environment, it may be better to install some of the dependencies separately before
 pip installing tx2, e.g. in conda:
 ```bash
-conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets numpy
+conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets numpy -c
+conda-forge
 ```
 
 If you do not have access to a GPU on your machine, install the regular pytorch
@@ -34,6 +35,8 @@ package:
 ```bash
 conda install pytorch pandas scikit-learn matplotlib ipywidgets numpy
 ```
+
+Note that `pytorch-gpu` can only be found in the `conda-forge` channel.
 
 ## Examples
 
@@ -48,7 +51,7 @@ Packages you'll need to install for the notebooks to work (in addition to the
 conda installs above):
 
 ```bash
-pip install tqdm transformers 
+pip install tqdm transformers>=4.1.1
 ```
 
 Running through each full notebook will produce the ipywidget dashboard near the
