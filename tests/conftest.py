@@ -1,6 +1,11 @@
 import numpy as np
+import os
 import pandas as pd
 import pytest
+import torch
+
+from sklearn.feature_extraction.text import CountVectorizer
+from sklearn.linear_model import LogisticRegression
 
 
 @pytest.fixture
@@ -39,3 +44,37 @@ def dummy_embeddings():
 @pytest.fixture
 def dummy_encodings():
     return {"awesome": 0, "not-awesome": 1}
+
+
+@pytest.fixture
+def dummy_model(dummy_df):
+
+    class model:
+        def __init__(self, df):
+            self.vectorizer = CountVectorizer(stop_words='english')
+            
+            x = self.vectorizer.fit_transform(df.text)
+
+            self.clf = LogisticRegression()
+            self.clf.fit(x, df.target)
+            
+        def custom_encode(self, text):
+            transformed = torch.tensor(self.vectorizer.transform([text]).toarray())
+            return torch.squeeze(transformed)
+
+        def custom_classify(self, inputs):
+            return torch.tensor(self.clf.predict(inputs))
+
+        def custom_embedding(self, inputs):
+            return inputs
+
+        def custom_softclassify(self, inputs):
+            return torch.tensor(self.clf.predict_proba(inputs))
+        
+    return model(dummy_df)
+    
+
+@pytest.fixture(scope='session')
+def clear_files_teardown():
+    yield None
+    os.system("rm -rf data/")

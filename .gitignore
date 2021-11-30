@@ -1,6 +1,12 @@
 .idea/*
 **/*.pyc
 **/.ipynb_checkpoints/*
+**/*.stats
 
 docs/build/*
 !docs/build/.gitkeep
+docs/.buildinfo
+
+tx2.egg-info
+dist/*
+build/*

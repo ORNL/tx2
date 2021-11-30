@@ -89,15 +89,15 @@ def prepare_wordclouds(
         _cached_wordclouds[cluster] = gen_wordcloud(test_texts[clusters[cluster]])
 
 
-def gen_wordcloud(text_array: Union[np.ndarray, pd.Series]):
+def gen_wordcloud(texts: Union[np.ndarray, pd.Series]):
     """Creates and returns a wordcloud image that can be rendered with :code:`plt.imshow`.
 
-    :param text_array: Collection of strings to get text statistics from.
+    :param texts: Collection of strings to get text statistics from.
     :return: The generated wordcloud image.
     """
     stopwords = set(STOPWORDS)
     stopwords.update(["via", "this"])
-    text = " ".join(list(text_array))
+    text = " ".join(list(texts))
     cloud = WordCloud(
         stopwords=set(STOPWORDS), background_color="white", width=800, height=400
     ).generate(text)

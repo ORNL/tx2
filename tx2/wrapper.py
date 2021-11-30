@@ -1,19 +1,18 @@
 """The wrapper class around a transformer and its functionality."""
 
 import logging
-import numpy as np
 import os
+from typing import Dict, List, Union
+
+import numpy as np
 import pandas as pd
 import torch
-
+import umap
 # TODO: not crazy about this, but library agnosticism later
 from torch.utils.data import DataLoader
-
 from tqdm.autonotebook import tqdm
-from typing import List, Dict
-import umap
 
-from tx2 import utils, calc, dataset
+from tx2 import calc, dataset, utils
 from tx2.cache import check, read, write
 
 
@@ -28,11 +27,11 @@ class Wrapper:
 
     def __init__(
         self,
-        train_df: pd.DataFrame,
-        test_df: pd.DataFrame,
+        train_texts: Union[np.ndarray, pd.Series],
+        train_labels: Union[np.ndarray, pd.Series],
+        test_texts: Union[np.ndarray, pd.Series],
+        test_labels: Union[np.ndarray, pd.Series],
         encodings: Dict[str, int],
-        input_col_name: str,
-        target_col_name: str,
         classifier=None,
         language_model=None,
         tokenizer=None,
@@ -41,12 +40,11 @@ class Wrapper:
     ):
         """Constructor.
 
-        :param train_df: A dataframe containing all training instances.
-        :param test_df: Dataframe containing test instances.
+        :param train_texts: A set of text entries that were used during the model's training process.
+        :param train_labels: The set of class labels for train_texts.
+        :param test_texts: The set of text entries that the model hadn't seen during training.
+        :param test_labels: The set of class labels for test_texts.
         :param encodings: A dictionary associating class label names with integer values.
-        :param input_col_name: The name of the column in both dataframes with the input text.
-        :param target_col_name: The name of the column in both dataframes with the classification
-            target.
         :param classifier: A class/network containing a language model and classification head.
             **Running this variable as a function by default should send the passed inputs through
             the entire network and return the argmaxed classification index (reverse encoding)**.
@@ -58,11 +56,15 @@ class Wrapper:
             pass it here. Note that **this argument is not required**, if the user intends to
             manually specify classification functions.
         :param tokenizer: A `huggingface tokenizer
-            <https://huggingface.co/transformers/main_classes/tokenizer.html>`_.
+            <https://huggingface.co/transformers/main_classes/tokenizer.html>`_. Note that **this
+            argument is not required**, if the user intends to manually specify encode and
+            classification functions.
         :param cache_path: The directory path to cache intermediate outputs from the
             :meth:`tx2.wrapper.Wrapper.prepare` function. This allows the wrapper to precompute
             needed values for the dashboard to reduce render time and allow rerunning all wrapper
-            code without needing to recompute.
+            code without needing to recompute. Note that every wrapper/dashboard instance is expected
+            to have a unique cache path, otherwise filenames will conflict. You will need to set
+            this if you intend to use more than one dashboard.
         :param overwrite: Whether to ignore the cache and overwrite previous results or not.
         """
 
@@ -98,14 +100,25 @@ class Wrapper:
         """A function to take a single text entry and return an encoded version of it. The default
         function will utilize the tokenizer given in the constructor if available."""
 
-        self.train_df = train_df.reset_index(drop=True)
-        """Dataframe containing all training data instances."""
-        self.test_df = test_df.reset_index(drop=True)
-        """Dataframe containing all testing data instances."""
-        self.input_col_name = input_col_name
-        """The column name of the input text for both dataframes."""
-        self.target_col_name = target_col_name
-        """The name of the column in both dataframes with the classification target."""
+        self.train_texts = train_texts
+        """Collection of all text entries used during models training process."""
+        self.train_labels = train_labels
+        """Collection of all class labels used during models training process."""
+        self.test_texts = test_texts
+        """Collection of all text entries used during models testing process."""
+        self.test_labels = test_labels
+        """Collection of all class labels used during models testing process."""
+
+        # convert any bad indices
+        if type(train_texts) == pd.Series:
+            self.train_texts = self.train_texts.reset_index(drop=True)
+        if type(train_labels) == pd.Series:
+            self.train_labels = self.train_labels.reset_index(drop=True)
+        if type(test_texts) == pd.Series:
+            self.test_texts = self.test_texts.reset_index(drop=True)
+        if type(test_labels) == pd.Series:
+            self.test_labels = self.test_labels.reset_index(drop=True)
+
         self.encodings = encodings
         """A dictionary associating class label names with integer values.
         
@@ -189,23 +202,23 @@ class Wrapper:
 
         # Precomputed data store (just here for documentation purposes)
         self.predictions = None
-        """The predicted class for each entry in :code:`test_df`, as returned by
+        """The predicted class for each entry in :code:`test_texts`, as returned by
         :meth:`tx2.wrapper.Wrapper.classify`."""
         self.embeddings_training = None
-        """Precomputed embeddings for each entry in :code:`train_df`, as returned by 
+        """Precomputed embeddings for each entry in :code:`train_texts`, as returned by 
         :meth:`tx2.wrapper.Wrapper.embed`."""
         self.embeddings_testing = None
-        """Precomputed embeddings for each entry in :code:`test_df`, as returned by 
+        """Precomputed embeddings for each entry in :code:`test_texts`, as returned by 
         :meth:`tx2.wrapper.Wrapper.embed`."""
         self.projector = None
         """The trained UMAP projector. See `umap-learn documentation 
         <https://umap-learn.readthedocs.io/en/latest/>`_."""
         self.projections_training = None
-        """The two dimensional projections of :code:`embeddings_training`, for each entry in :code:`train_df`."""
+        """The two dimensional projections of :code:`embeddings_training`, for each entry in :code:`train_texts`."""
         self.projections_testing = None
-        """The two dimensional projections of :code:`embeddings_testing`, for each entry in :code:`test_df`."""
+        """The two dimensional projections of :code:`embeddings_testing`, for each entry in :code:`test_texts`."""
         self.salience_maps = None
-        """The salience map for each entry in :code:`test_df` as calculated by :meth:`tx2.calc.salience_map`."""
+        """The salience map for each entry in :code:`test_texts` as calculated by :meth:`tx2.calc.salience_map`."""
         self.clusters = None
         """A dictionary of cluster names, each associated with a list of indices of points in that cluster, as 
          calculated by :meth:`tx2.calc.cluster_projections`."""
@@ -223,8 +236,8 @@ class Wrapper:
     def _run_predictions(self):
         """ """
         logging.info("Running classifier...")
-        self.predictions = self.classify(self.test_df[self.input_col_name])
-        self.test_df["predicted_classes"] = self.predictions
+        self.predictions = self.classify(self.test_texts)
+        # self.test_df["predicted_classes"] = self.predictions
 
         logging.info("Saving predictions...")
         write(self.predictions, self.predictions_path)
@@ -262,8 +275,8 @@ class Wrapper:
         # TODO: is data loader necessary?
         logging.info("Embedding training and testing datasets")
 
-        self.embeddings_training = self.embed(self.train_df[self.input_col_name])
-        self.embeddings_testing = self.embed(self.test_df[self.input_col_name])
+        self.embeddings_training = self.embed(self.train_texts)
+        self.embeddings_testing = self.embed(self.test_texts)
 
         logging.info("Saving embeddings...")
         write(self.embeddings_training, self.embeddings_training_path)
@@ -273,10 +286,9 @@ class Wrapper:
     # TODO: move out?
     def _determine_cluster_label(self, cluster, cluster_profiles, cluster_name):
         """Determine the center point to render a cluster label at"""
-        projections = self.project(
-            self.test_df[self.input_col_name].iloc[cluster].reset_index(drop=True)
-        )
+        projections = self.project(self.test_texts[cluster].reset_index(drop=True))
 
+        # TODO: clean up
         x = []
         y = []
         for point in projections:
@@ -297,9 +309,7 @@ class Wrapper:
 
         logging.info("Computing salience maps...")
         self.salience_maps = []
-        for entry in tqdm(
-            self.test_df[self.input_col_name], total=self.test_df.shape[0]
-        ):
+        for entry in tqdm(self.test_texts, total=len(self.test_texts)):
             deltas = calc.salience_map(
                 self.soft_classify, entry[: self.max_len], self.encodings
             )
@@ -358,15 +368,13 @@ class Wrapper:
         self.cluster_class_word_sets = {}
         for cluster in self.clusters:
             freq_words = calc.frequent_words_in_cluster(
-                self.test_df, self.clusters[cluster], self.input_col_name
+                self.test_texts[self.clusters[cluster]]
             )[:10]
             words_by_class = calc.frequent_words_by_class_in_cluster(
-                self.test_df,
                 freq_words,
                 self.encodings,
-                self.clusters[cluster],
-                self.input_col_name,
-                self.target_col_name,
+                self.test_texts[self.clusters[cluster]],
+                self.test_labels[self.clusters[cluster]],
             )
             self.cluster_word_freqs[cluster] = freq_words
             self.cluster_class_word_sets[cluster] = words_by_class
@@ -414,9 +422,9 @@ class Wrapper:
         """Re-run the clustering algorithm. Note that this automatically overrides any
         previously cached data for clusters.
 
-        :param clustering_alg: The name of the clustering algorithm to use, a class name 
-            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
-            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+        :param clustering_alg: The name of the clustering algorithm to use, a class name
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_.
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering",
             "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
             "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into the clustering algorithm on instantiation.
@@ -431,9 +439,9 @@ class Wrapper:
         data.
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param clustering_alg: The name of the clustering algorithm to use, a class name 
-            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
-            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+        :param clustering_alg: The name of the clustering algorithm to use, a class name
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_.
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering",
             "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
             "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
@@ -520,15 +528,15 @@ class Wrapper:
         be called before using in a dashboard instance.**
 
         :param umap_args: Dictionary of arguments to pass into the UMAP model on instantiation.
-        :param clustering_alg: The name of the clustering algorithm to use, a class name 
-            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_. 
-            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering", 
+        :param clustering_alg: The name of the clustering algorithm to use, a class name
+            from sklearn.cluster, see `sklearn's documentation <https://scikit-learn.org/stable/modules/classes.html#module-sklearn.cluster>`_.
+            ("DBSCAN", "KMeans", "AffinityPropagation", "Birch", "OPTICS", "AgglomerativeClustering",
             "SpectralClustering", "SpectralBiclustering", "SpectralCoclustering", "MiniBatchKMeans",
             "FeatureAgglomeration", "MeanShift")
         :param clustering_args: Dictionary of arguments to pass into clustering algorithm on instantiation.
         """
-        logging.debug("Training data shape: %s", self.train_df.shape)
-        logging.debug("Testing data shape: %s", self.test_df.shape)
+        logging.debug("Training data shape: %s", self.train_texts.shape)
+        logging.debug("Testing data shape: %s", self.test_texts.shape)
 
         # check for cache path
         if not os.path.isdir(self.cache_path):
@@ -541,7 +549,7 @@ class Wrapper:
         logging.info("Checking for cached predictions...")
         if check(self.predictions_path, self.overwrite):
             self.predictions = read(self.predictions_path)
-            self.test_df["predicted_classes"] = self.predictions
+            # self.test_df["predicted_classes"] = self.predictions
         else:
             self._run_predictions()
         logging.debug("Predictions example:")
@@ -630,17 +638,15 @@ class Wrapper:
         """
         search_array = search.split("&")
 
-        index_df = self.test_df[
-            self.test_df[self.input_col_name].str.contains(search_array[0], regex=True)
-        ].index
+        temp_df = pd.DataFrame.from_dict({"text": self.test_texts})
+
+        index_df = temp_df[temp_df.text.str.contains(search_array[0], regex=True)].index
 
         if len(search_array) > 1:
             for i in range(1, len(search_array)):
                 index_df = index_df.intersection(
-                    self.test_df[
-                        self.test_df[self.input_col_name].str.contains(
-                            search_array[0], regex=True
-                        )
+                    temp_df[
+                        temp_df.text.str.contains(search_array[0], regex=True)
                     ].index
                 )
 
