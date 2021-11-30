@@ -145,9 +145,11 @@ def plot_wordclouds(dashboard):
     :param dashboard: The current dashboard, needed in order to grab the cluster data.
     """
     num_cols = 4
-    num_rows = math.ceil(len(dashboard.transformer_wrapper.clusters) / num_cols)
+    num_rows = max(math.ceil(len(dashboard.transformer_wrapper.clusters) / num_cols), 2) 
+    # NOTE: we set a minimum row count of 2, because otherwise axs below won't be a nested array.
 
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(8, num_rows * 1.5))
+    print(axs.shape)
 
     for index, cluster in enumerate(dashboard.transformer_wrapper.clusters):
         ax_x = int(index / num_cols)
@@ -520,9 +522,6 @@ def plot_clusters_stacked(clusters, cluster_words_classified, encodings, colors)
         ax_y = index % num_cols
 
         ax = axs[ax_x][ax_y]
-        #         print(cluster_words_classified)
-        #         print(cluster_words_classified.keys())
-        #         print(cluster)
         words = list(cluster_words_classified[cluster].keys())[:10]
         y_labels = words
         y_pos = np.arange(len(y_labels))

@@ -15,6 +15,14 @@ def dummy_df():
 
 
 @pytest.fixture
+def dummy_np_data(dummy_df):
+    texts = np.array(dummy_df.text)
+    targets = np.array(dummy_df.target)
+
+    return texts, targets
+
+
+@pytest.fixture
 def dummy_clusters():
     return {"0": [0, 1], "1": [2, 3]}
 
