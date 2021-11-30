@@ -1,18 +1,19 @@
 """Helper functions for constructing visualizations."""
 
-from IPython.display import display, clear_output
 import itertools
 import math
+from typing import Dict, List, Union
+
 import matplotlib.pyplot as plt
-from matplotlib.lines import Line2D
 import numpy as np
 import pandas as pd
+from IPython.display import clear_output, display
+from matplotlib.lines import Line2D
 from sklearn.metrics import confusion_matrix
-from wordcloud import WordCloud, STOPWORDS
-from typing import Dict, List
+from wordcloud import STOPWORDS, WordCloud
 
-from tx2 import calc, utils
 import tx2.wrapper
+from tx2 import calc, utils
 
 
 # if foreground_color is None, it will automatically decide white or black by color
@@ -76,33 +77,27 @@ def render_html_text(text, transformer_wrapper: tx2.wrapper.Wrapper) -> str:
 _cached_wordclouds = {}
 
 
-# TODO: this only needs the clusters dict and the test texts
 def prepare_wordclouds(
-    clusters: Dict[str, List[int]], test_df: pd.DataFrame, input_col_name: str
+    clusters: Dict[str, List[int]], test_texts: Union[np.ndarray, pd.Series]
 ):
     """Pre-render the wordcloud for each cluster, this makes switching the main wordcloud figure faster.
 
     :param clusters: Dictionary of clusters where the values are the lists of dataframe indices for the entries in each cluster.
-    :param test_df: The dataframe to draw the indices from.
-    :param input_col_name: The name of the column containing the text.
+    :param test_texts: The full test corpus.
     """
     for cluster in clusters:
-        _cached_wordclouds[cluster] = gen_wordcloud(
-            clusters[cluster], test_df, input_col_name
-        )
+        _cached_wordclouds[cluster] = gen_wordcloud(test_texts[clusters[cluster]])
 
 
-# TODO: This only needs a numpy array of texts as input, already filtered.
-def gen_wordcloud(indices: List[int], df: pd.DataFrame, input_col_name: str):
+def gen_wordcloud(text_array: Union[np.ndarray, pd.Series]):
     """Creates and returns a wordcloud image that can be rendered with :code:`plt.imshow`.
 
-    :param indices: The list of indices in the dataframe to draw text from to create the wordcloud.
-    :param df: The dataframe to draw the indices from.
-    :param input_col_name: The name of the column containing the text.
+    :param text_array: Collection of strings to get text statistics from.
+    :return: The generated wordcloud image.
     """
     stopwords = set(STOPWORDS)
     stopwords.update(["via", "this"])
-    text = " ".join([text for text in df[input_col_name].iloc[indices]])
+    text = " ".join(list(text_array))
     cloud = WordCloud(
         stopwords=set(STOPWORDS), background_color="white", width=800, height=400
     ).generate(text)
@@ -271,26 +266,24 @@ def plot_confusion_matrix(
     return fig
 
 
-# TODO: just needs dashboard, embeddings, and texts list, also clean up. 
 def _get_scatter_points_from_embeddings(
-    dashboard, embeddings: List[List[int]], df: pd.DataFrame, label_col_name: str
+    colors_array,
+    embeddings: np.ndarray,
+    target_classes: Union[np.ndarray, pd.Series] = None,
 ):
     """DOES NOT DISPLAY GRAPH, just a helper for splitting out the UMAP embeddings."""
 
-    colors = []
-    for index, row in df.iterrows():
-        if label_col_name is None:
-            colors.append(dashboard.colors[0])
-        else:
-            colors.append(dashboard.colors[row[label_col_name]])
-    
-    x = []
-    y = []
-    for result in embeddings:
-        x.append(result[0])
-        y.append(result[1])
+    if target_classes is None:
+        colors = np.array(colors_array[0] * len(embeddings))
+    else:
+        colors = np.array(
+            [colors_array[class_val] for class_val in list(target_classes)]
+        )
 
-    return np.array(x), np.array(y), np.array(colors)
+    x = embeddings[:, 0]
+    y = embeddings[:, 1]
+
+    return x, y, colors
 
 
 @utils.debounce(1.0)
@@ -303,7 +296,8 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     # render all test data projections
     if not dashboard.chk_focus_errors.value:
         testing_x, testing_y, testing_c = _get_scatter_points_from_embeddings(
-            dashboard,
+            dashboard.colors,
+            # TODO TODO TODO TODO TODO 
             dashboard.transformer_wrapper.projections_testing,
             dashboard.transformer_wrapper.test_df,
             dashboard.transformer_wrapper.target_col_name,
