@@ -1,24 +1,16 @@
 """Helper calculation functions for the wrapper and dashboard."""
 
-from nltk.corpus import stopwords
+from typing import Any, Dict, List, Tuple, Union
+
 import numpy as np
 import pandas as pd
-from sklearn.cluster import (
-    DBSCAN,
-    KMeans,
-    AffinityPropagation,
-    Birch,
-    OPTICS,
-    AgglomerativeClustering,
-    SpectralClustering,
-    SpectralBiclustering,
-    SpectralCoclustering,
-    MiniBatchKMeans,
-    FeatureAgglomeration,
-    MeanShift,
-)
+from nltk.corpus import stopwords
+from sklearn.cluster import (DBSCAN, OPTICS, AffinityPropagation,
+                             AgglomerativeClustering, Birch,
+                             FeatureAgglomeration, KMeans, MeanShift,
+                             MiniBatchKMeans, SpectralBiclustering,
+                             SpectralClustering, SpectralCoclustering)
 from sklearn.feature_extraction.text import CountVectorizer
-from typing import Dict, List, Tuple, Any
 
 from tx2 import utils
 
@@ -127,23 +119,19 @@ def aggregate_cluster_salience_maps(
 
 
 def frequent_words_in_cluster(
-    df: pd.DataFrame,
-    cluster_indices: List[int],
-    input_col_name: str,
+    texts: Union[np.ndarray, pd.Series],
 ) -> List[Tuple[str, int]]:
     """Finds the most frequently occurring words for each cluster given.
 
-    :param df: The dataframe containing the test data.
-    :param cluster_indices: The list of indices of the points in the desired cluster.
-    :param input_col_name: The name of the column in :code:`df` that contains the input text.
+    :param texts: The filtered list of texts to find the frequent words for
 
     :return: A list of tuples, each tuple containing the word and the number of times
         it appears in that cluster.
     """
     counter = CountVectorizer(stop_words=stopwords.words("english"))
-    cv_fit = counter.fit_transform(df.iloc[cluster_indices][input_col_name].values)
+    cv_fit = counter.fit_transform(texts)
     freq_words = sorted(
-        zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0)),
+        zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0)),
         key=lambda x: x[1],
         reverse=True,
     )
@@ -152,26 +140,20 @@ def frequent_words_in_cluster(
 
 
 def frequent_words_by_class_in_cluster(
-    df: pd.DataFrame,
     freq_words: List[Tuple[str, int]],
     encodings: Dict[str, int],
-    cluster_indices: List[int],
-    input_col_name: str,
-    classification_col_name: str,
+    cluster_texts: Union[np.ndarray, pd.Series],
+    cluster_text_labels: Union[np.ndarray, pd.Series],
 ) -> Dict[str, Dict[Any, int]]:
     """Takes the frequent words of a cluster and splits the counts up based on the
     classification of the entry they fall under. (This gives a rough distribution for
     what category the words fall under within the cluster.)
 
-    :param df: The dataframe containing the test data
     :param freq_words: An array of tuples of the words and their number of occurences,
         see :meth:`tx2.calc.frequent_words_in_cluster`
     :param encodings: The dictionary of class/category encodings.
-    :param cluster_indices: The list of indices of the points in the desired cluster.
-    :param classification_col_name: The name of the column in :code:`df` that contains
-        the target class value.
-    :param input_col_name: The name of the column in :code:`df` that contains the
-        input text.
+    :param cluster_texts: The set of texts from the desired cluster entries.
+    :param cluster_text_labels: The set of classification labels for the texts from the desired cluster entries.
 
     :return: A dictionary with each word as the key. The value for each is a dictionary
         with a "total" key and a key for each encoded class, the value of which is the
@@ -185,17 +167,18 @@ def frequent_words_by_class_in_cluster(
         if pair[0] in vocab:
             word_dict[pair[0]] = {"total": pair[1]}
 
-    working_df = df.loc[cluster_indices]
+    temp_dict = {"text": cluster_texts, "target": cluster_text_labels}
+    working_df = pd.DataFrame.from_dict(temp_dict)
 
     # iterate through each classification and get the number of entries with that word in it
     for classification in encodings.values():
-        local_df = working_df[working_df[classification_col_name] == classification]
+        local_df = working_df[working_df.target == classification]
         counter = CountVectorizer(
             stop_words=stopwords.words("english"), vocabulary=vocab
         )
-        cv_fit = counter.fit_transform(local_df[input_col_name].values)
+        cv_fit = counter.fit_transform(local_df.text.values)
         class_freq_words = list(
-            zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0))
+            zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0))
         )
         for pair in class_freq_words:
             word_dict[pair[0]][str(classification)] = pair[1]
@@ -293,6 +276,7 @@ def normalize_salience_map(salience) -> Dict[str, float]:
     return normalised_d
 
 
+# NOTE: df here is fine
 def prediction_scores(
     df: pd.DataFrame, target_col_name: str, predicted_col_name: str, encodings
 ):

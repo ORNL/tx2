@@ -1,8 +1,11 @@
 import numpy as np
 from pytest_mock import mocker
-from tx2.visualization import (_get_scatter_points_from_embeddings,
-                               gen_wordcloud, prepare_wordclouds, plot_wordclouds, plot_big_wordcloud, plot_passed_wordcloud)
 from tx2.dashboard import Dashboard
+from tx2.visualization import (_get_scatter_points_from_embeddings,
+                               gen_wordcloud, plot_big_wordcloud,
+                               plot_confusion_matrix, plot_metrics,
+                               plot_passed_wordcloud, plot_wordclouds,
+                               prepare_wordclouds)
 
 
 def test_gen_wordcloud_no_crash(dummy_df):
@@ -68,10 +71,21 @@ def test_plot_passed_wordcloud_no_crash(dummy_df):
 
 
 def test_plot_wordclouds_no_crash(dummy_df, dummy_clusters):
-    dashboard = type('Dashboard', (object,), {})()
-    dashboard.transformer_wrapper = type('Wrapper', (object,), {})()
+    dashboard = type("Dashboard", (object,), {})()
+    dashboard.transformer_wrapper = type("Wrapper", (object,), {})()
     dashboard.transformer_wrapper.clusters = dummy_clusters
     # forgive me for I have sinned...(I couldn't figure out how to do the equivalent with mocker)
 
     prepare_wordclouds(dummy_clusters, dummy_df.text)
     plot_wordclouds(dashboard)
+
+
+def test_plot_metrics_no_crash(dummy_df, dummy_encodings):
+    plot_metrics(dummy_df.target, dummy_df.target, dummy_encodings)
+
+
+def test_plot_confusion_matrix_no_crash(dummy_df, dummy_encodings):
+    plot_confusion_matrix(dummy_df.target, dummy_df.target, dummy_encodings)
+
+
+# TODO - plot clusters and plot clusters stacked (fix calc functions first)

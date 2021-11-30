@@ -8,8 +8,8 @@ def dummy_df():
     rows = [
         {"text": "testing row 0", "target": 0},
         {"text": "testing row 1", "target": 0},
-        {"text": "testing row 2", "target": 1},
-        {"text": "testing row 3", "target": 1},
+        {"text": "testing row 2, awesome", "target": 1},
+        {"text": "testing row 3, awesome", "target": 1},
     ]
     return pd.DataFrame(rows)
 
@@ -34,3 +34,8 @@ def dummy_embeddings():
         np.array([0.1, -0.1, 0.5, 0.4]),
         np.array([0.2, -0.1, -0.8, -0.9]),
     )
+
+
+@pytest.fixture
+def dummy_encodings():
+    return {"awesome": 0, "not-awesome": 1}
