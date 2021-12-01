@@ -12,3 +12,4 @@ autodocsumm
 sphinx
 sphinx-rtd-theme
 pytest
+pytest-mock

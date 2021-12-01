@@ -245,10 +245,9 @@ class Dashboard:
 
     def _populate_dropdown_indices(self):
         text_options = []
-        for index, row in self.transformer_wrapper.test_df.iterrows():
-            text_options.append(
-                (index, [index, row[self.transformer_wrapper.input_col_name]])
-            )
+
+        for i, text in enumerate(self.transformer_wrapper.test_texts):
+            text_options.append((i, [i, text]))
 
         self.drop_text_picker.options = text_options
 
@@ -452,8 +451,7 @@ class Dashboard:
         if self.show_wordclouds:
             visualization.prepare_wordclouds(
                 self.transformer_wrapper.clusters,
-                self.transformer_wrapper.test_df,
-                self.transformer_wrapper.input_col_name,
+                self.transformer_wrapper.test_texts,
             )
             with self.out_wordcloud_set:
                 clear_output(wait=True)
@@ -487,9 +485,7 @@ class Dashboard:
             clear_output(wait=True)
             fig = visualization.plot_confusion_matrix(
                 self.transformer_wrapper.predictions,
-                self.transformer_wrapper.test_df[
-                    self.transformer_wrapper.target_col_name
-                ],
+                self.transformer_wrapper.test_labels,
                 self.transformer_wrapper.encodings,
             )
             self.current_figures["confusion_matrix"] = fig
@@ -497,7 +493,7 @@ class Dashboard:
 
         display_per_df, display_agg_df = visualization.plot_metrics(
             self.transformer_wrapper.predictions,
-            self.transformer_wrapper.test_df[self.transformer_wrapper.target_col_name],
+            self.transformer_wrapper.test_labels,
             self.transformer_wrapper.encodings,
         )
 
@@ -521,9 +517,7 @@ class Dashboard:
             + "</p>"
         )
         index = self.drop_text_picker.value[0]
-        class_num = self.transformer_wrapper.test_df.iloc[index][
-            self.transformer_wrapper.target_col_name
-        ]
+        class_num = self.transformer_wrapper.test_labels[index]
         label = utils.get_cat_by_index(class_num, self.transformer_wrapper.encodings)
         self.html_target.value = (
             "<p>Target: "
@@ -531,9 +525,7 @@ class Dashboard:
             + "</p>"
         )
 
-        new_text = self.transformer_wrapper.test_df.iloc[index][
-            self.transformer_wrapper.input_col_name
-        ]
+        new_text = self.transformer_wrapper.test_texts[index]
         # below: THIS IS TECHNICALLY INCORRECT, shows the color of correct class instead of
         # predicted, but still need index. Leaving this her and then just modifying color in
         # on_text_area_change
@@ -605,9 +597,7 @@ class Dashboard:
                     clear_output(wait=True)
                     fig = visualization.plot_passed_wordcloud(
                         visualization.gen_wordcloud(
-                            self.highlight_indices,
-                            self.transformer_wrapper.test_df,
-                            self.transformer_wrapper.input_col_name,
+                            self.transformer_wrapper.test_texts[self.highlight_indices],
                         ),
                         "custom:" + self.text_search_terms.value,
                     )
@@ -621,10 +611,10 @@ class Dashboard:
         self.drop_text_picker.index = result_index
 
     def on_sample_misclass_button_clicked(self, change):
-        indices = self.transformer_wrapper.test_df[
-            self.transformer_wrapper.test_df[self.transformer_wrapper.target_col_name]
-            != self.transformer_wrapper.test_df.predicted_classes
-        ].index
+        temp_df = pd.DataFrame.from_dict({"predicted": self.transformer_wrapper.predictions, "target": self.transformer_wrapper.test_labels})
+
+        
+        indices = temp_df[temp_df.target != temp_df.predicted].index
         result_index = random.choice(list(indices))
         self.drop_text_picker.index = result_index
 

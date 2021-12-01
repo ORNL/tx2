@@ -7,6 +7,8 @@ import torch
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.linear_model import LogisticRegression
 
+from tx2.wrapper import Wrapper
+
 
 @pytest.fixture
 def dummy_df():
@@ -72,6 +74,26 @@ def dummy_model(dummy_df):
             return torch.tensor(self.clf.predict_proba(inputs))
         
     return model(dummy_df)
+
+
+@pytest.fixture(scope='function')
+def dummy_wrapper(dummy_df, dummy_encodings, dummy_model, clear_files_teardown):
+    wrapper = Wrapper(
+        train_texts=dummy_df.text,
+        train_labels=dummy_df.target,
+        test_texts=dummy_df.text,
+        test_labels=dummy_df.target,
+        encodings=dummy_encodings,
+    )
+    
+    wrapper.encode_function = dummy_model.custom_encode
+    wrapper.classification_function = dummy_model.custom_classify
+    wrapper.embedding_function = dummy_model.custom_embedding
+    wrapper.soft_classification_function = dummy_model.custom_softclassify
+    
+    wrapper.prepare(umap_args=dict(n_neighbors=2))
+
+    return wrapper
     
 
 @pytest.fixture(scope='session')
