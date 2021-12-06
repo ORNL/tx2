@@ -57,6 +57,9 @@ pip install tqdm transformers>=4.1.1
 Running through each full notebook will produce the ipywidget dashboard near the
 end.
 
+The tests in this repository do not depend on transformers, so raw library
+functionality can be tested by running `pytest` in the project root.
+
 ## Documentation
 
 The documentation can be viewed at [https://ornl.github.io/tx2/](https://ornl.github.io/tx2/).
