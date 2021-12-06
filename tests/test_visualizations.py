@@ -63,6 +63,13 @@ def test_get_scatterpoints_wo_labels(dummy_df, dummy_embeddings):
     assert (y == dummy_embeddings[2]).all()
     assert (colors == np.zeros([len(dummy_df)])).all()
 
+    
+def test_get_scatterpoints_empty(dummy_df, dummy_embeddings):
+    x, y, colors = _get_scatter_points_from_embeddings([0, 1], np.array([]))
+    assert len(x) == 0
+    assert len(y) == 0
+    assert len(colors) == 0
+
 
 def test_plot_big_wordcloud_no_crash(dummy_df, dummy_clusters):
     prepare_wordclouds(dummy_clusters, dummy_df.text)
@@ -103,6 +110,14 @@ def test_plot_embedding_projections_w_training_no_crash(mocker, dummy_wrapper, d
     dash = Dashboard(dummy_wrapper)
     dash.chk_show_train = type("checkbox", (object,), {})()
     dash.chk_show_train.value = True
+    plot_embedding_projections(dummy_df.text.iloc[0], dash)
+
+    
+def test_plot_embedding_projections_w_errorfocus_no_crash(mocker, dummy_wrapper, dummy_df):
+    tx2.utils.DISABLE_DEBOUNCE = True
+    dash = Dashboard(dummy_wrapper)
+    dash.chk_focus_errors = type("checkbox", (object,), {})()
+    dash.chk_focus_errors.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
     
 

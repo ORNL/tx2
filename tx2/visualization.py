@@ -275,6 +275,9 @@ def _get_scatter_points_from_embeddings(
 ):
     """DOES NOT DISPLAY GRAPH, just a helper for splitting out the UMAP embeddings."""
 
+    if len(embeddings) == 0:
+        return np.array([]), np.array([]), np.array([])
+
     if target_classes is None:
         colors = np.array(colors_array[0] * len(embeddings))
     else:
