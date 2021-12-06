@@ -11,6 +11,20 @@ from tx2.wrapper import Wrapper
 
 
 @pytest.fixture
+def replacement_debounce():
+    """This is so that we can replace utils.debounce and actually get
+    error messages."""
+    def undebounce(wait):
+        def decorator(fn):
+            def undebounced(*args, **kwargs):
+                print("WE'RE DOING IT LIVE")
+                fn(*args, **kwargs)
+            return undebounced
+        return decorator
+    return undebounce
+
+
+@pytest.fixture
 def dummy_df():
     rows = [
         {"text": "testing row 0", "target": 0},

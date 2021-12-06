@@ -4,6 +4,10 @@ from threading import Timer
 from torch import cuda
 
 
+DISABLE_DEBOUNCE = False
+"""The main embedding plot is debounced to prevent excessive calling while editing text. Note that exceptions don't propagate due to threading when this occurs. Set this global to True to receive exceptions."""
+
+
 def get_device() -> str:
     """Determine the device to put pytorch tensors on
 
@@ -59,11 +63,16 @@ class Timer:
     def __init__(self, timeout, callback):
         self._timeout = timeout
         self._callback = callback
-        self._task = asyncio.ensure_future(self._job())
 
     async def _job(self):
         await asyncio.sleep(self._timeout)
         self._callback()
+
+    def start(self):
+        if DISABLE_DEBOUNCE:
+            self._callback()
+        else:
+            self._task = asyncio.ensure_future(self._job())
 
     def cancel(self):
         self._task.cancel()
@@ -86,6 +95,7 @@ def debounce(wait):
             if timer is not None:
                 timer.cancel()
             timer = Timer(wait, call_it)
+            timer.start()
 
         return debounced
 

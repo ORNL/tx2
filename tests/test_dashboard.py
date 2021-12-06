@@ -1,3 +1,5 @@
+import pytest
+
 from tx2.dashboard import Dashboard
 
 

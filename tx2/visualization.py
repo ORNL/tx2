@@ -145,7 +145,7 @@ def plot_wordclouds(dashboard):
     :param dashboard: The current dashboard, needed in order to grab the cluster data.
     """
     num_cols = 4
-    num_rows = max(math.ceil(len(dashboard.transformer_wrapper.clusters) / num_cols), 2) 
+    num_rows = max(math.ceil(len(dashboard.transformer_wrapper.clusters) / num_cols), 2)
     # NOTE: we set a minimum row count of 2, because otherwise axs below won't be a nested array.
 
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(8, num_rows * 1.5))
@@ -299,22 +299,23 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     if not dashboard.chk_focus_errors.value:
         testing_x, testing_y, testing_c = _get_scatter_points_from_embeddings(
             dashboard.colors,
-            # TODO TODO TODO TODO TODO 
             dashboard.transformer_wrapper.projections_testing,
-            dashboard.transformer_wrapper.test_df,
-            dashboard.transformer_wrapper.target_col_name,
+            dashboard.transformer_wrapper.test_labels,
         )
         ax.scatter(
             x=testing_x, y=testing_y, c=testing_c, alpha=0.8, s=dashboard.point_size
         )
     else:
         # render incorrect test data
-        df_incorrect = dashboard.transformer_wrapper.test_df[
-            dashboard.transformer_wrapper.test_df[
-                dashboard.transformer_wrapper.target_col_name
-            ]
-            != dashboard.transformer_wrapper.test_df.predicted_classes
-        ]
+
+        df_temp = pd.DataFrame.from_dict(
+            {
+                "pred": dashboard.transformer_wrapper.predictions,
+                "target": dashboard.transformer_wrapper.test_labels,
+            }
+        )
+        df_incorrect = df_temp[df_temp.pred != df_temp.target]
+
         incorrect_indices = list(df_incorrect.index)
         incorrect_projections = [
             dashboard.transformer_wrapper.projections_testing[i]
@@ -323,9 +324,8 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         ]
         incorrect_x, incorrect_y, incorrect_c = _get_scatter_points_from_embeddings(
             dashboard,
-            incorrect_projections,
-            df_incorrect,
-            dashboard.transformer_wrapper.target_col_name,
+            np.array(incorrect_projections),
+            df_incorrect.target,
         )
         ax.scatter(
             x=incorrect_x,
@@ -337,12 +337,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         testing_x, testing_y, testing_c = incorrect_x, incorrect_y, incorrect_c
 
         # render correct test data
-        df_correct = dashboard.transformer_wrapper.test_df[
-            dashboard.transformer_wrapper.test_df[
-                dashboard.transformer_wrapper.target_col_name
-            ]
-            == dashboard.transformer_wrapper.test_df.predicted_classes
-        ]
+        df_correct = df_temp[df_temp.pred == df_temp.target]
         correct_indices = list(df_correct.index)
         correct_projections = [
             dashboard.transformer_wrapper.projections_testing[i]
@@ -352,8 +347,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         correct_x, correct_y, correct_c = _get_scatter_points_from_embeddings(
             dashboard,
             correct_projections,
-            df_correct,
-            dashboard.transformer_wrapper.target_col_name,
+            df_correct.target,
         )
         ax.scatter(
             x=correct_x,
@@ -368,8 +362,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         training_x, training_y, training_c = _get_scatter_points_from_embeddings(
             dashboard,
             dashboard.transformer_wrapper.projections_training,
-            dashboard.transformer_wrapper.train_df,
-            dashboard.transformer_wrapper.target_col_name,
+            dashboard.transformer_wrapper.train_labels,
         )
         ax.scatter(
             x=training_x,

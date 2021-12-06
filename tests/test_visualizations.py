@@ -1,11 +1,15 @@
 import numpy as np
+import pytest
 from pytest_mock import mocker
+
 from tx2.dashboard import Dashboard
 from tx2.visualization import (_get_scatter_points_from_embeddings,
                                gen_wordcloud, plot_big_wordcloud,
                                plot_confusion_matrix, plot_metrics,
                                plot_passed_wordcloud, plot_wordclouds,
-                               prepare_wordclouds)
+                               prepare_wordclouds, plot_embedding_projections)
+from tx2.dashboard import Dashboard
+import tx2.utils
 
 
 def test_gen_wordcloud_no_crash(dummy_df):
@@ -79,6 +83,13 @@ def test_plot_wordclouds_no_crash(dummy_df, dummy_clusters):
     prepare_wordclouds(dummy_clusters, dummy_df.text)
     plot_wordclouds(dashboard)
 
+
+def test_plot_embedding_projections_no_crash(mocker, replacement_debounce, dummy_wrapper, dummy_df):
+    tx2.utils.DISABLE_DEBOUNCE = True
+
+    dash = Dashboard(dummy_wrapper)
+    plot_embedding_projections(dummy_df.text.iloc[0], dash)
+    
 
 def test_plot_metrics_no_crash(dummy_df, dummy_encodings):
     plot_metrics(dummy_df.target, dummy_df.target, dummy_encodings)
