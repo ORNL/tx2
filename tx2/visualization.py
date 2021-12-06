@@ -299,7 +299,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     if not dashboard.chk_focus_errors.value:
         testing_x, testing_y, testing_c = _get_scatter_points_from_embeddings(
             dashboard.colors,
-            dashboard.transformer_wrapper.projections_testing,
+            np.array(dashboard.transformer_wrapper.projections_testing),
             dashboard.transformer_wrapper.test_labels,
         )
         ax.scatter(
@@ -346,7 +346,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
         ]
         correct_x, correct_y, correct_c = _get_scatter_points_from_embeddings(
             dashboard,
-            correct_projections,
+            np.array(correct_projections),
             df_correct.target,
         )
         ax.scatter(

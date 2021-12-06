@@ -84,6 +84,7 @@ def test_plot_wordclouds_no_crash(dummy_df, dummy_clusters):
     plot_wordclouds(dashboard)
 
 
+# TODO: also have to test mocking out checkbox values to check all sections
 def test_plot_embedding_projections_no_crash(mocker, replacement_debounce, dummy_wrapper, dummy_df):
     tx2.utils.DISABLE_DEBOUNCE = True
 
