@@ -3,11 +3,17 @@ import pytest
 from pytest_mock import mocker
 
 from tx2.dashboard import Dashboard
-from tx2.visualization import (_get_scatter_points_from_embeddings,
-                               gen_wordcloud, plot_big_wordcloud,
-                               plot_confusion_matrix, plot_metrics,
-                               plot_passed_wordcloud, plot_wordclouds,
-                               prepare_wordclouds, plot_embedding_projections)
+from tx2.visualization import (
+    _get_scatter_points_from_embeddings,
+    gen_wordcloud,
+    plot_big_wordcloud,
+    plot_confusion_matrix,
+    plot_metrics,
+    plot_passed_wordcloud,
+    plot_wordclouds,
+    prepare_wordclouds,
+    plot_embedding_projections,
+)
 from tx2.dashboard import Dashboard
 import tx2.utils
 
@@ -63,7 +69,7 @@ def test_get_scatterpoints_wo_labels(dummy_df, dummy_embeddings):
     assert (y == dummy_embeddings[2]).all()
     assert (colors == np.zeros([len(dummy_df)])).all()
 
-    
+
 def test_get_scatterpoints_empty(dummy_df, dummy_embeddings):
     x, y, colors = _get_scatter_points_from_embeddings([0, 1], np.array([]))
     assert len(x) == 0
@@ -97,29 +103,34 @@ def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
 
     dash = Dashboard(dummy_wrapper)
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
-    
+
+
 def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
     tx2.utils.DISABLE_DEBOUNCE = True
 
     dash = Dashboard(dummy_wrapper)
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
 
-    
-def test_plot_embedding_projections_w_training_no_crash(mocker, dummy_wrapper, dummy_df):
+
+def test_plot_embedding_projections_w_training_no_crash(
+    mocker, dummy_wrapper, dummy_df
+):
     tx2.utils.DISABLE_DEBOUNCE = True
     dash = Dashboard(dummy_wrapper)
     dash.chk_show_train = type("checkbox", (object,), {})()
     dash.chk_show_train.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
 
-    
-def test_plot_embedding_projections_w_errorfocus_no_crash(mocker, dummy_wrapper, dummy_df):
+
+def test_plot_embedding_projections_w_errorfocus_no_crash(
+    mocker, dummy_wrapper, dummy_df
+):
     tx2.utils.DISABLE_DEBOUNCE = True
     dash = Dashboard(dummy_wrapper)
     dash.chk_focus_errors = type("checkbox", (object,), {})()
     dash.chk_focus_errors.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
-    
+
 
 def test_plot_metrics_no_crash(dummy_df, dummy_encodings):
     plot_metrics(dummy_df.target, dummy_df.target, dummy_encodings)

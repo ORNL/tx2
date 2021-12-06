@@ -611,9 +611,13 @@ class Dashboard:
         self.drop_text_picker.index = result_index
 
     def on_sample_misclass_button_clicked(self, change):
-        temp_df = pd.DataFrame.from_dict({"predicted": self.transformer_wrapper.predictions, "target": self.transformer_wrapper.test_labels})
+        temp_df = pd.DataFrame.from_dict(
+            {
+                "predicted": self.transformer_wrapper.predictions,
+                "target": self.transformer_wrapper.test_labels,
+            }
+        )
 
-        
         indices = temp_df[temp_df.target != temp_df.predicted].index
         result_index = random.choice(list(indices))
         self.drop_text_picker.index = result_index

@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import torch
 import umap
+
 # TODO: not crazy about this, but library agnosticism later
 from torch.utils.data import DataLoader
 from tqdm.autonotebook import tqdm
