@@ -323,7 +323,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             if i in incorrect_indices
         ]
         incorrect_x, incorrect_y, incorrect_c = _get_scatter_points_from_embeddings(
-            dashboard,
+            dashboard.colors,
             np.array(incorrect_projections),
             df_incorrect.target,
         )
@@ -345,7 +345,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             if i in correct_indices
         ]
         correct_x, correct_y, correct_c = _get_scatter_points_from_embeddings(
-            dashboard,
+            dashboard.colors,
             np.array(correct_projections),
             df_correct.target,
         )
@@ -360,8 +360,8 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     # render training data projections
     if dashboard.chk_show_train.value:
         training_x, training_y, training_c = _get_scatter_points_from_embeddings(
-            dashboard,
-            dashboard.transformer_wrapper.projections_training,
+            dashboard.colors,
+            np.array(dashboard.transformer_wrapper.projections_training),
             dashboard.transformer_wrapper.train_labels,
         )
         ax.scatter(

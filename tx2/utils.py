@@ -75,7 +75,8 @@ class Timer:
             self._task = asyncio.ensure_future(self._job())
 
     def cancel(self):
-        self._task.cancel()
+        if not DISABLE_DEBOUNCE:
+            self._task.cancel()
 
 
 def debounce(wait):
@@ -92,7 +93,7 @@ def debounce(wait):
             def call_it():
                 fn(*args, **kwargs)
 
-            if timer is not None:
+            if timer is not None and not DISABLE_DEBOUNCE:
                 timer.cancel()
             timer = Timer(wait, call_it)
             timer.start()

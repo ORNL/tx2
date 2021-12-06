@@ -85,10 +85,24 @@ def test_plot_wordclouds_no_crash(dummy_df, dummy_clusters):
 
 
 # TODO: also have to test mocking out checkbox values to check all sections
-def test_plot_embedding_projections_no_crash(mocker, replacement_debounce, dummy_wrapper, dummy_df):
+def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
     tx2.utils.DISABLE_DEBOUNCE = True
 
     dash = Dashboard(dummy_wrapper)
+    plot_embedding_projections(dummy_df.text.iloc[0], dash)
+    
+def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
+    tx2.utils.DISABLE_DEBOUNCE = True
+
+    dash = Dashboard(dummy_wrapper)
+    plot_embedding_projections(dummy_df.text.iloc[0], dash)
+
+    
+def test_plot_embedding_projections_w_training_no_crash(mocker, dummy_wrapper, dummy_df):
+    tx2.utils.DISABLE_DEBOUNCE = True
+    dash = Dashboard(dummy_wrapper)
+    dash.chk_show_train = type("checkbox", (object,), {})()
+    dash.chk_show_train.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
     
 

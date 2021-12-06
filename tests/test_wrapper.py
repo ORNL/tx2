@@ -38,6 +38,7 @@ def test_wrapper_prepare_no_crash(dummy_df, dummy_encodings, dummy_model, clear_
         test_texts=dummy_df.text,
         test_labels=dummy_df.target,
         encodings=dummy_encodings,
+        cache_path="testdata"
     )
     
     wrapper.encode_function = dummy_model.custom_encode

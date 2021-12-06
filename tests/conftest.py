@@ -98,6 +98,7 @@ def dummy_wrapper(dummy_df, dummy_encodings, dummy_model, clear_files_teardown):
         test_texts=dummy_df.text,
         test_labels=dummy_df.target,
         encodings=dummy_encodings,
+        cache_path="testdata"
     )
     
     wrapper.encode_function = dummy_model.custom_encode
@@ -113,4 +114,4 @@ def dummy_wrapper(dummy_df, dummy_encodings, dummy_model, clear_files_teardown):
 @pytest.fixture(scope='session')
 def clear_files_teardown():
     yield None
-    os.system("rm -rf data/")
+    os.system("rm -rf testdata/")
