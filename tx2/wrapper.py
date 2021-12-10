@@ -36,6 +36,7 @@ class Wrapper:
         classifier=None,
         language_model=None,
         tokenizer=None,
+        cuda_device=None,
         cache_path="data",
         overwrite=False,
     ):
@@ -60,6 +61,9 @@ class Wrapper:
             <https://huggingface.co/transformers/main_classes/tokenizer.html>`_. Note that **this
             argument is not required**, if the user intends to manually specify encode and
             classification functions.
+        :param cuda_device: Set the device for pytorch to place tensors on, pass either "cpu" or 
+            "cuda". This variable is used by the default embedding function. If unspecified and a 
+            GPU is found, "cuda" will be used, otherwise it defaults to "cpu".
         :param cache_path: The directory path to cache intermediate outputs from the
             :meth:`tx2.wrapper.Wrapper.prepare` function. This allows the wrapper to precompute
             needed values for the dashboard to reduce render time and allow rerunning all wrapper
@@ -140,6 +144,12 @@ class Wrapper:
         """A variable containing only the huggingface language model portion of the network."""
         self.tokenizer = tokenizer
         """The huggingface tokenizer to use for encoding text input."""
+        self.cuda_device = cuda_device
+        """Set the device for pytorch to place tensors on, pass either "cpu" or "cuda". This 
+        variable is used by the default embedding function. If unspecified and a GPU is found, 
+        "cuda" will be used, otherwise it defaults to "cpu"."""
+        if self.cuda_device is None:
+            self.cuda_device = utils.get_device()
 
         self.cache_path = cache_path
         """The directory path to cache pre-calculated values."""
@@ -393,9 +403,9 @@ class Wrapper:
             **self.encoder_options,
         )
         return {
-            "input_ids": torch.tensor(encoded["input_ids"], device=utils.get_device()),
+            "input_ids": torch.tensor(encoded["input_ids"], device=self.cuda_device),
             "attention_mask": torch.tensor(
-                encoded["attention_mask"], device=utils.get_device()
+                encoded["attention_mask"], device=self.cuda_device
             ),
         }
 
