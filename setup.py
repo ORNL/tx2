@@ -5,7 +5,7 @@ with open("README.md", 'r', encoding='utf-8') as infile:
 
 setup(
     name="tx2",
-    version="2021.12.1",
+    version="2021.12.2",
     description="Transformer eXplainability and eXploration",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -21,7 +21,7 @@ setup(
     python_requires=">=3.6",
     packages=["tx2"],
     install_requires=[
-        "sklearn",
+        "scikit-learn~=1.0",
         "nltk",
         "pandas",
         "numpy",
