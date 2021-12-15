@@ -26,14 +26,13 @@ pip install tx2
 NOTE: depending on the environment, it may be better to install some of the dependencies separately before
 pip installing tx2, e.g. in conda:
 ```bash
-conda install pytorch-gpu pandas scikit-learn~=1.0 matplotlib ipywidgets numpy -c
-conda-forge
+conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets "numpy<=1.20" -c conda-forge
 ```
 
 If you do not have access to a GPU on your machine, install the regular pytorch
 package:
 ```bash
-conda install pytorch pandas scikit-learn~=1.0 matplotlib ipywidgets numpy
+conda install pytorch pandas scikit-learn matplotlib ipywidgets "numpy<=1.20"
 ```
 
 Note that `pytorch-gpu` can only be found in the `conda-forge` channel.

@@ -21,10 +21,10 @@ setup(
     python_requires=">=3.6",
     packages=["tx2"],
     install_requires=[
-        "scikit-learn~=1.0",
+        "scikit-learn<=1.2", # get_feature_names deprecated and removed by 1.2
         "nltk",
         "pandas",
-        "numpy",
+        "numpy<=1.20", # weird version conflicts with numba
         "torch",
         "tqdm",
         "umap-learn",
