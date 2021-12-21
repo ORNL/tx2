@@ -251,9 +251,11 @@ to work correctly:</p>
 
 <span class="c1"># create wrapper</span>
 <span class="n">wrapper</span> <span class="o">=</span> <span class="n">Wrapper</span><span class="p">(</span>
-    <span class="n">train_df</span><span class="p">,</span> <span class="n">test_df</span><span class="p">,</span> <span class="n">encodings</span><span class="p">,</span>
-    <span class="n">input_col_name</span><span class="o">=</span><span class="s2">&quot;text&quot;</span><span class="p">,</span>
-    <span class="n">target_col_name</span><span class="o">=</span><span class="s2">&quot;target&quot;</span><span class="p">,</span>
+    <span class="n">train_texts</span><span class="o">=</span><span class="n">train_df</span><span class="o">.</span><span class="n">text</span><span class="p">,</span>
+    <span class="n">train_labels</span><span class="o">=</span><span class="n">train_df</span><span class="o">.</span><span class="n">target</span><span class="p">,</span>
+    <span class="n">test_texts</span><span class="o">=</span><span class="n">test_df</span><span class="o">.</span><span class="n">text</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span>
+    <span class="n">test_labels</span><span class="o">=</span><span class="n">test_df</span><span class="o">.</span><span class="n">target</span><span class="p">[:</span><span class="mi">2000</span><span class="p">]</span>
+    <span class="n">encodings</span><span class="o">=</span><span class="n">encodings</span><span class="p">,</span>
     <span class="n">classifier</span><span class="o">=</span><span class="n">model</span><span class="p">,</span>
     <span class="n">language_model</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">language_model</span><span class="p">,</span>
     <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span><span class="p">)</span>
