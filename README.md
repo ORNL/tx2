@@ -85,17 +85,20 @@ as discussed in the Basic Usage page of the documentation.
 
 ## Citation
 
-To cite usage of TX2 in a publication, the DOI for this code is [https://doi.org/10.11578/dc.20210129.1](https://doi.org/10.11578/dc.20210129.1).
+To cite usage of TX2 in a publication, the DOI for this code is [https://doi.org/10.21105/joss.03652](https://doi.org/10.21105/joss.03652)
 
-bibtex: 
+bibtex:
 ```
-@misc{ doecode_50372,
-    title = {Transformer eXplainability and eXploration },
-    author = {Martindale, Nathan and Stewart, Scott L.},
-    abstractNote = {The Transformer eXplainability and eXploration library is intended to aid in the explorability and explainability of transformer classification networks, or transformer language models with sequence classification heads. The basic function of this library is to take a trained transformer and test/train dataset and produce an ipywidget dashboard which can be displayed in a jupyter notebook or in jupyter lab.},
-    url = {https://doi.org/10.11578/dc.20210129.1},
-    howpublished = {[Computer Software] \url{https://doi.org/10.11578/dc.20210129.1}},
-    year = {2021},
-    month = {jan}
+@article{Martindale2021,
+  doi = {10.21105/joss.03652},
+  url = {https://doi.org/10.21105/joss.03652},
+  year = {2021},
+  publisher = {The Open Journal},
+  volume = {6},
+  number = {68},
+  pages = {3652},
+  author = {Nathan Martindale and Scott L. Stewart},
+  title = {TX$^2$: Transformer eXplainability and eXploration},
+  journal = {Journal of Open Source Software}
 }
 ```
