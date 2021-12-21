@@ -1,32 +1,71 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dashboard Widgets &mdash; TX2  documentation</title><link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+  
+  <title>Dashboard Widgets &mdash; TX2  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  <script id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    <script src="_static/js/theme.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Wrapper" href="wrapper.html" />
     <link rel="prev" title="Dashboard Interface" href="dashboard_interface.html" /> 
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
+
+   
   <div class="wy-grid-for-nav">
+    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
+          
+
+          
             <a href="index.html" class="icon icon-home"> TX2
+          
+
+          
           </a>
+
+          
+            
+            
+          
+
+          
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -34,7 +73,18 @@
     <input type="hidden" name="area" value="default" />
   </form>
 </div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
               <p class="caption"><span class="caption-text">Usage</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
@@ -54,39 +104,80 @@
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
 
+            
+          
         </div>
+        
       </div>
     </nav>
 
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">TX2</a>
+        
       </nav>
 
+
       <div class="wy-nav-content">
+        
         <div class="rst-content">
-          <div role="navigation" aria-label="Page navigation">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
   <ul class="wy-breadcrumbs">
+    
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
       <li>Dashboard Widgets</li>
+    
+    
       <li class="wy-breadcrumbs-aside">
+        
+          
             <a href="_sources/dashboard_widgets.rst.txt" rel="nofollow"> View page source</a>
+          
+        
       </li>
+    
   </ul>
+
+  
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+            
   <div class="section" id="dashboard-widgets">
-<span id="id1"></span><h1>Dashboard Widgets<a class="headerlink" href="#dashboard-widgets" title="Permalink to this headline"></a></h1>
+<span id="id1"></span><h1>Dashboard Widgets<a class="headerlink" href="#dashboard-widgets" title="Permalink to this headline">¶</a></h1>
 <p>This page lists and shows the different widgets that compose
 the full dashboard. While <code class="code docutils literal notranslate"><span class="pre">Dashboard.render()</span></code> returns
 the entire dashboard by default, all components can be customized
 or manually accessed in order to construct the layout together
 yourself.</p>
 <div class="section" id="initialization">
-<h2>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline"></a></h2>
+<h2>Initialization<a class="headerlink" href="#initialization" title="Permalink to this headline">¶</a></h2>
 <p>Note that all widgets are initialized when a new Dashboard
 instance is constructed. Any changes made to the class widgets
 before calling <code class="code docutils literal notranslate"><span class="pre">render()</span></code> will persist in the returned
@@ -112,14 +203,14 @@ You would manually render the results for this, rather than calling <code class=
 </div>
 </div>
 <div class="section" id="widgets">
-<h2>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline"></a></h2>
+<h2>Widgets<a class="headerlink" href="#widgets" title="Permalink to this headline">¶</a></h2>
 <p>The below images show the individual widgets in each portion of the dashboard.
 All names are attributes that can be directly referenced from the wrapper instance.</p>
 <img alt="_images/screen1_components.png" src="_images/screen1_components.png" />
 <img alt="_images/screen2_components.png" src="_images/screen2_components.png" />
 </div>
 <div class="section" id="sections">
-<h2>Sections<a class="headerlink" href="#sections" title="Permalink to this headline"></a></h2>
+<h2>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h2>
 <p>Below shows different collections of components that are wrapped in HBox/VBox
 layouts - these can alo be directly referenced from the wrapper instance.</p>
 <img alt="_images/screen1_sections.png" src="_images/screen1_sections.png" />
@@ -129,33 +220,50 @@ layouts - these can alo be directly referenced from the wrapper instance.</p>
 
 
            </div>
+           
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="dashboard_interface.html" class="btn btn-neutral float-left" title="Dashboard Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
         <a href="wrapper.html" class="btn btn-neutral float-right" title="Wrapper" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="dashboard_interface.html" class="btn btn-neutral float-left" title="Dashboard Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
 
   <div role="contentinfo">
-    <p>&#169; Copyright 2020, Nathan Martindale, Scott Stewart.</p>
-  </div>
+    <p>
+        &#169; Copyright 2020, Nathan Martindale, Scott Stewart.
 
-  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
         </div>
       </div>
+
     </section>
+
   </div>
-  <script>
+  
+
+  <script type="text/javascript">
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
+
+  
+  
+    
+   
 
 </body>
 </html>
