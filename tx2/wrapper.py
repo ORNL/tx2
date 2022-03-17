@@ -200,7 +200,7 @@ class Wrapper:
         self.encoder_options = dict(
             add_special_tokens=True,
             max_length=self.max_len,
-            pad_to_max_length=True,
+            padding='max_length',
             truncation=True,
             return_token_type_ids=True,
         )
@@ -410,9 +410,11 @@ class Wrapper:
         }
 
     def _default_classification_function(self, inputs):
-        return torch.argmax(
-            self.classifier(inputs["input_ids"], inputs["attention_mask"]), dim=1
-        )
+        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        # if type(output) == SequenceClassifierOutput # TODO: except we don't have access to this if we don't explicitly want a huggingface dependency.
+        if type(output) != torch.tensor:
+            output = output.logits
+        return torch.argmax(output, dim=1)
 
     def _default_embedding_function(self, inputs):
         return self.language_model(inputs["input_ids"], inputs["attention_mask"])[0][
@@ -420,7 +422,10 @@ class Wrapper:
         ]  # [CLS] token embedding
 
     def _default_soft_classification_function(self, inputs):
-        return self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        if type(output) != torch.tensor:
+            output = output.logits
+        return output
 
     def _prepare_input_data(self, texts):
         encoded_data = dataset.EncodedDataset(texts, self)
