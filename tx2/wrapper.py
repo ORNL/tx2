@@ -411,8 +411,7 @@ class Wrapper:
 
     def _default_classification_function(self, inputs):
         output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
-        # if type(output) == SequenceClassifierOutput # TODO: except we don't have access to this if we don't explicitly want a huggingface dependency.
-        if type(output) != torch.tensor:
+        if type(output) != torch.Tensor:
             output = output.logits
         return torch.argmax(output, dim=1)
 
@@ -423,7 +422,7 @@ class Wrapper:
 
     def _default_soft_classification_function(self, inputs):
         output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
-        if type(output) != torch.tensor:
+        if type(output) != torch.Tensor:
             output = output.logits
         return output
 
