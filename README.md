@@ -65,7 +65,7 @@ The documentation can be viewed at [https://ornl.github.io/tx2/](https://ornl.gi
 
 The documentation can also be built from scratch with sphinx as needed.
 
-Install all required dependencies: 
+Install all required dependencies:
 ```bash
 pip install -r requirements.txt
 ```

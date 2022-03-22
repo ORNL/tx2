@@ -7,7 +7,7 @@ This page contains brief descriptions of what the different buttons and checkbox
 UMAP Sidebar
 ============
 
-The graph controls and status messages for the currently selected points are in the sidebar of the UMAP plot. 
+The graph controls and status messages for the currently selected points are in the sidebar of the UMAP plot.
 The top two status indicators respectively show the busy/ready status for backend computation and plotting work.
 The model classification section shows the currently predicted label as well as the target (the colors match those used
 in the plot itself.)
@@ -26,7 +26,7 @@ The "sample from highlighted" button will randomly select a point from the highl
 Other controls
 ==============
 
-The "selected datapoint index" below the UMAP plot is a dropdown menu containing the index of each point in the testing 
+The "selected datapoint index" below the UMAP plot is a dropdown menu containing the index of each point in the testing
 set. Changing this selection will update the UMAP plot to highlight the current point, and the entry text and word salience
 map will update.
 

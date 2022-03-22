@@ -12,7 +12,6 @@
 #
 import os
 import sys
-import sphinx_rtd_theme
 
 # sys.path.insert(0, os.path.abspath('.'))
 # sys.path.insert(0, os.path.abspath('../'))
@@ -63,9 +62,7 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
 html_context = {
-    "css_files": [
-        "_static/theme_overrides.css",  # override wide tables in RTD theme
-    ],
+    "css_files": ["_static/theme_overrides.css"]  # override wide tables in RTD theme
 }
 
 

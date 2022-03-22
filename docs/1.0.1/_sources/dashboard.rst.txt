@@ -6,4 +6,3 @@ Dashboard
 .. autoclass:: tx2.dashboard.Dashboard
     :autosummary:
     :members:
-

@@ -4,68 +4,68 @@
 <html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8" />
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
-  <title>Wrapper &mdash; TX2  documentation</title>
-  
 
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Wrapper &mdash; TX2  documentation</title>
+
+
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
 
-  
-  
 
-  
-  
 
-  
 
-  
+
+
+
+
+
+
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
-    
+
+
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
         <script src="_static/jquery.js"></script>
         <script src="_static/underscore.js"></script>
         <script src="_static/doctools.js"></script>
-    
+
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
-    
+
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Dashboard" href="dashboard.html" />
-    <link rel="prev" title="Dashboard Widgets" href="dashboard_widgets.html" /> 
+    <link rel="prev" title="Dashboard Widgets" href="dashboard_widgets.html" />
 </head>
 
 <body class="wy-body-for-nav">
 
-   
+
   <div class="wy-grid-for-nav">
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-          
 
-          
+
+
             <a href="index.html" class="icon icon-home"> TX2
-          
 
-          
+
+
           </a>
 
-          
-            
-            
-          
 
-          
+
+
+
+
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -74,17 +74,17 @@
   </form>
 </div>
 
-          
+
         </div>
 
-        
+
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+
+
+
+
+
+
               <p class="caption"><span class="caption-text">Usage</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
@@ -99,29 +99,29 @@
 <li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
 </ul>
 
-            
-          
+
+
         </div>
-        
+
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" aria-label="top navigation">
-        
+
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">TX2</a>
-        
+
       </nav>
 
 
       <div class="wy-nav-content">
-        
+
         <div class="rst-content">
-        
-          
+
+
 
 
 
@@ -142,28 +142,28 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-    
+
       <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
-        
+
       <li>Wrapper</li>
-    
-    
+
+
       <li class="wy-breadcrumbs-aside">
-        
-          
+
+
             <a href="_sources/wrapper.rst.txt" rel="nofollow"> View page source</a>
-          
-        
+
+
       </li>
-    
+
   </ul>
 
-  
+
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+
   <div class="section" id="module-tx2.wrapper">
 <span id="wrapper"></span><h1>Wrapper<a class="headerlink" href="#module-tx2.wrapper" title="Permalink to this headline">¶</a></h1>
 <p>The wrapper class around a transformer and its functionality.</p>
@@ -371,7 +371,7 @@ this if you intend to use more than one dashboard.</p></li>
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.classifier">
 <code class="sig-name descname"><span class="pre">classifier</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.classifier" title="Permalink to this definition">¶</a></dt>
-<dd><p>A class containing the entire network, which can be called as a function taking the 
+<dd><p>A class containing the entire network, which can be called as a function taking the
 encoded input and returning the output classification.</p>
 </dd></dl>
 
@@ -401,7 +401,7 @@ word count up into the number of entries of each category containing that word, 
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.cluster_profiles">
 <code class="sig-name descname"><span class="pre">cluster_profiles</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.cluster_profiles" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dictionary of aggregate sorted salience maps for each cluster as calculated by 
+<dd><p>A dictionary of aggregate sorted salience maps for each cluster as calculated by
 <a class="reference internal" href="calc.html#tx2.calc.aggregate_cluster_salience_maps" title="tx2.calc.aggregate_cluster_salience_maps"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.calc.aggregate_cluster_salience_maps()</span></code></a>.</p>
 </dd></dl>
 
@@ -415,15 +415,15 @@ word count up into the number of entries of each category containing that word, 
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.clusters">
 <code class="sig-name descname"><span class="pre">clusters</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.clusters" title="Permalink to this definition">¶</a></dt>
-<dd><p>A dictionary of cluster names, each associated with a list of indices of points in that cluster, as 
+<dd><p>A dictionary of cluster names, each associated with a list of indices of points in that cluster, as
 calculated by <a class="reference internal" href="calc.html#tx2.calc.cluster_projections" title="tx2.calc.cluster_projections"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.calc.cluster_projections()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.cuda_device">
 <code class="sig-name descname"><span class="pre">cuda_device</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.cuda_device" title="Permalink to this definition">¶</a></dt>
-<dd><p>Set the device for pytorch to place tensors on, pass either “cpu” or “cuda”. This 
-variable is used by the default embedding function. If unspecified and a GPU is found, 
+<dd><p>Set the device for pytorch to place tensors on, pass either “cpu” or “cuda”. This
+variable is used by the default embedding function. If unspecified and a GPU is found,
 “cuda” will be used, otherwise it defaults to “cpu”.</p>
 </dd></dl>
 
@@ -451,7 +451,7 @@ model were not specified to the constructor, <strong>this variable must be assig
 function definition.</strong></p>
 <div class="admonition-example admonition">
 <p class="admonition-title">Example</p>
-<p>Below is a simplified example of creating a customized embed function. 
+<p>Below is a simplified example of creating a customized embed function.
 <code class="code docutils literal notranslate"><span class="pre">my_custom_embedding_function</span></code> will be used by the wrapper, and will be
 called with an array of pre-encoded inputs for a single entry, and is expected
 to return an array. (TODO: 1d or 2d?)</p>
@@ -468,14 +468,14 @@ to return an array. (TODO: 1d or 2d?)</p>
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.embeddings_testing">
 <code class="sig-name descname"><span class="pre">embeddings_testing</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.embeddings_testing" title="Permalink to this definition">¶</a></dt>
-<dd><p>Precomputed embeddings for each entry in <code class="code docutils literal notranslate"><span class="pre">test_texts</span></code>, as returned by 
+<dd><p>Precomputed embeddings for each entry in <code class="code docutils literal notranslate"><span class="pre">test_texts</span></code>, as returned by
 <a class="reference internal" href="#tx2.wrapper.Wrapper.embed" title="tx2.wrapper.Wrapper.embed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.embed()</span></code></a>.</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt id="tx2.wrapper.Wrapper.embeddings_training">
 <code class="sig-name descname"><span class="pre">embeddings_training</span></code><a class="headerlink" href="#tx2.wrapper.Wrapper.embeddings_training" title="Permalink to this definition">¶</a></dt>
-<dd><p>Precomputed embeddings for each entry in <code class="code docutils literal notranslate"><span class="pre">train_texts</span></code>, as returned by 
+<dd><p>Precomputed embeddings for each entry in <code class="code docutils literal notranslate"><span class="pre">train_texts</span></code>, as returned by
 <a class="reference internal" href="#tx2.wrapper.Wrapper.embed" title="tx2.wrapper.Wrapper.embed"><code class="xref py py-meth docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper.embed()</span></code></a>.</p>
 </dd></dl>
 
@@ -732,7 +732,7 @@ categories.</p>
 
 
            </div>
-           
+
           </div>
           <footer>
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
@@ -748,14 +748,14 @@ categories.</p>
 
     </p>
   </div>
-    
-    
-    
+
+
+
     Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
-    
+
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
-    
-    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
 
 </footer>
         </div>
@@ -764,7 +764,7 @@ categories.</p>
     </section>
 
   </div>
-  
+
 
   <script type="text/javascript">
       jQuery(function () {
@@ -772,10 +772,10 @@ categories.</p>
       });
   </script>
 
-  
-  
-    
-   
+
+
+
+
 
 </body>
 </html>

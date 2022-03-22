@@ -10,8 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Example notebook demonstrating using TX2 with a huggingface model with
   sequence classification head, rather than a custom torch implementation.
-
+- Pre-commit hooks.
 
 ### Changed
 - Add support for huggingface sequence classification head to default
   interaction functions.
+
+### Fixed
+- Code formatting to fix flake8-indicated issues.

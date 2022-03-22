@@ -10,7 +10,7 @@ def get_property(prop):
     return result.group(1)
 
 
-with open("README.md", 'r', encoding='utf-8') as infile:
+with open("README.md", "r", encoding="utf-8") as infile:
     long_description = infile.read()
 
 setup(
@@ -31,10 +31,10 @@ setup(
     python_requires=">=3.6",
     packages=["tx2"],
     install_requires=[
-        "scikit-learn<=1.2", # get_feature_names deprecated and removed by 1.2
+        "scikit-learn<=1.2",  # get_feature_names deprecated and removed by 1.2
         "nltk",
         "pandas",
-        "numpy<=1.20", # weird version conflicts with numba
+        "numpy<=1.20",  # weird version conflicts with numba
         "torch",
         "tqdm",
         "umap-learn",

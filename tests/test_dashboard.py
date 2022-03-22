@@ -1,5 +1,3 @@
-import pytest
-
 from tx2.dashboard import Dashboard
 import tx2.utils
 

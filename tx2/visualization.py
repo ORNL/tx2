@@ -202,11 +202,7 @@ def plot_metrics(pred_y: List[int], target_y: List[int], encodings: Dict[str, in
     aggregate_rows = []
     for metric in "precision", "recall", "f1":
         aggregate_rows.append(
-            {
-                "metric": metric,
-                "macro": macros[metric],
-                "micro": micros[metric],
-            }
+            {"metric": metric, "macro": macros[metric], "micro": micros[metric]}
         )
 
     agg_df = pd.DataFrame(aggregate_rows).style.background_gradient(
@@ -326,9 +322,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             if i in incorrect_indices
         ]
         incorrect_x, incorrect_y, incorrect_c = _get_scatter_points_from_embeddings(
-            dashboard.colors,
-            np.array(incorrect_projections),
-            df_incorrect.target,
+            dashboard.colors, np.array(incorrect_projections), df_incorrect.target
         )
         ax.scatter(
             x=incorrect_x,
@@ -348,9 +342,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
             if i in correct_indices
         ]
         correct_x, correct_y, correct_c = _get_scatter_points_from_embeddings(
-            dashboard.colors,
-            np.array(correct_projections),
-            df_correct.target,
+            dashboard.colors, np.array(correct_projections), df_correct.target
         )
         ax.scatter(
             x=correct_x,

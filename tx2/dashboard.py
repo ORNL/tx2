@@ -8,6 +8,7 @@ import ipywidgets as widgets
 from ipywidgets import HBox, Layout, VBox, Tab
 from IPython.display import display, clear_output
 import matplotlib.pyplot as plt
+import pandas as pd
 
 from tx2 import utils, visualization, wrapper
 
@@ -256,20 +257,12 @@ class Dashboard:
         # PROJECTIONS SIDEBAR
         # ------------
         self.status_box = VBox(
-            [
-                self.lbl_status_labels,
-                self.html_status,
-                self.html_graph_status,
-            ]
+            [self.lbl_status_labels, self.html_status, self.html_graph_status]
         )
         """Status section, containing :param:`lbl_status_labels`, :param:`html_status`, :param:`html_graph_status`."""
 
         self.labels_box = VBox(
-            [
-                self.lbl_class_labels,
-                self.html_target,
-                self.html_prediction,
-            ]
+            [self.lbl_class_labels, self.html_target, self.html_prediction]
         )
 
         self.projection_graph_controls_box = VBox(
@@ -304,12 +297,7 @@ class Dashboard:
         self.projection_layout = VBox(
             [
                 self.lbl_projection_graph,
-                HBox(
-                    [
-                        self.out_projection_scatter,
-                        self.projection_graph_sidebar,
-                    ]
-                ),
+                HBox([self.out_projection_scatter, self.projection_graph_sidebar]),
             ]
         )
 
@@ -317,12 +305,7 @@ class Dashboard:
         # OVERALL CONTROLLS
         # ------------
 
-        self.controls_layout = HBox(
-            [
-                self.drop_text_picker,
-                self.btn_savefigs,
-            ]
-        )
+        self.controls_layout = HBox([self.drop_text_picker, self.btn_savefigs])
 
         # ------------
         # TEXT ENTRY/SALIENCE
@@ -350,16 +333,10 @@ class Dashboard:
 
         # cluster stuff
         self.cluster_freq_group = VBox(
-            [
-                self.html_freq_words,
-                self.out_cluster_word_frequency,
-            ]
+            [self.html_freq_words, self.out_cluster_word_frequency]
         )
         self.cluster_salience_group = VBox(
-            [
-                self.html_important_words,
-                self.out_cluster_word_attention,
-            ]
+            [self.html_important_words, self.out_cluster_word_attention]
         )
         self.word_cloud_group = VBox(
             [
@@ -378,11 +355,7 @@ class Dashboard:
 
         # this can be included in both the word graphs and word clouds tabs
         self.sampling_group = VBox(
-            [
-                self.lbl_sample_btns,
-                self.cluster_buttons,
-            ],
-            layout=Layout(width="20%"),
+            [self.lbl_sample_btns, self.cluster_buttons], layout=Layout(width="20%")
         )
 
         bar_cluster_sections = [self.lbl_cluster_words]
@@ -450,8 +423,7 @@ class Dashboard:
         """Return combined layout widget"""
         if self.show_wordclouds:
             visualization.prepare_wordclouds(
-                self.transformer_wrapper.clusters,
-                self.transformer_wrapper.test_texts,
+                self.transformer_wrapper.clusters, self.transformer_wrapper.test_texts
             )
             with self.out_wordcloud_set:
                 clear_output(wait=True)
@@ -597,7 +569,7 @@ class Dashboard:
                     clear_output(wait=True)
                     fig = visualization.plot_passed_wordcloud(
                         visualization.gen_wordcloud(
-                            self.transformer_wrapper.test_texts[self.highlight_indices],
+                            self.transformer_wrapper.test_texts[self.highlight_indices]
                         ),
                         "custom:" + self.text_search_terms.value,
                     )
