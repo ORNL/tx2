@@ -118,3 +118,10 @@ def dummy_wrapper(dummy_df, dummy_encodings, dummy_model, clear_files_teardown):
 def clear_files_teardown():
     yield None
     os.system("rm -rf testdata/")
+
+
+@pytest.fixture(scope="session", autouse=True)
+def prep_nltk():
+    import nltk
+
+    nltk.download("stopwords")
