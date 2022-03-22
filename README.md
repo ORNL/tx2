@@ -3,6 +3,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/tx2.svg)](https://badge.fury.io/py/tx2)
 [![JOSS status](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94/status.svg)](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94)
+[![tests](https://github.com/ORNL/tx2/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/ORNL/tx2/actions/workflows/tests.yml)
 
 Welcome to TX2! This library is intended to aid in the explorability and explainability of
 transformer classification networks, or transformer language models with sequence classification
