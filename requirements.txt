@@ -13,3 +13,4 @@ sphinx
 sphinx-rtd-theme
 pytest
 pytest-mock
+wordcloud
