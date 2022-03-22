@@ -1,0 +1,11 @@
+#!/bin/bash
+# take the current version of the documentation and copy it over into the documentation folder
+
+rm -rf docs/latest
+echo "Copying documentation to 'docs/latest'..."
+cp -r sphinx/build/html docs/latest
+
+version=$(python scripts/get-version.py)
+echo "Copying documentation to 'docs/$version'..."
+rm -rf docs/$version
+cp -r sphinx/build/html docs/$version

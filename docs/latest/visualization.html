@@ -1,0 +1,427 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Visualization &mdash; TX2  documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Calc" href="calc.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> TX2
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Usage</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard_interface.html">Dashboard Interface</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard_widgets.html">Dashboard Widgets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calc.html">Calc</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Visualization</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TX2</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Visualization</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/visualization.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-tx2.visualization">
+<span id="visualization"></span><h1>Visualization<a class="headerlink" href="#module-tx2.visualization" title="Permalink to this headline">¶</a></h1>
+<p>Helper functions for constructing visualizations.</p>
+<p><strong>Functions:</strong></p>
+<table class="longtable docutils align-default">
+<colgroup>
+<col style="width: 10%" />
+<col style="width: 90%" />
+</colgroup>
+<tbody>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">contrasting_text_color</span></code>(hex_str)</p></td>
+<td><p>Get a contrasting foreground text color for specified background hex color</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">gen_wordcloud</span></code>(texts)</p></td>
+<td><p>Creates and returns a wordcloud image that can be rendered with <code class="code docutils literal notranslate"><span class="pre">plt.imshow</span></code>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">get_nice_html_label</span></code>(text, color[, …])</p></td>
+<td><p>Get a nice looking colored background label.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_big_wordcloud</span></code>(index, clusters)</p></td>
+<td><p>Render the word cloud that the currently selected point is in.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_clusters</span></code>(clusters, cluster_values)</p></td>
+<td><p>Plot highest word values for each cluster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_clusters_stacked</span></code>(clusters, …)</p></td>
+<td><p>Plot highest word values for each cluster, colored according to entry classification</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_confusion_matrix</span></code>(pred_y, target_y, …)</p></td>
+<td><p>Get the confusion matrix for given predictions.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_metrics</span></code>(pred_y, target_y, encodings)</p></td>
+<td><p>Get colored dataframes with macro and micro scores for the given predictions on an aggregate level and per class.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_passed_wordcloud</span></code>(cloud, name)</p></td>
+<td><p>Render the given word cloud.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">plot_wordclouds</span></code>(dashboard)</p></td>
+<td><p>Render the grid of all wordclouds.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">prepare_wordclouds</span></code>(clusters, test_texts)</p></td>
+<td><p>Pre-render the wordcloud for each cluster, this makes switching the main wordcloud figure faster.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">render_html_text</span></code>(text, transformer_wrapper)</p></td>
+<td><p>Get a text-salience highlighted HTML paragraph.</p></td>
+</tr>
+</tbody>
+</table>
+<dl class="py function">
+<dt id="tx2.visualization.contrasting_text_color">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">contrasting_text_color</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hex_str</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#tx2.visualization.contrasting_text_color" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a contrasting foreground text color for specified background hex color</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>hext_str</strong> – A hex string color (‘#XXXXXX’) for which to determine a black-or-white
+foreground color.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>‘#FFF’ or ‘#000’.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.gen_wordcloud">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">gen_wordcloud</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.gen_wordcloud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Creates and returns a wordcloud image that can be rendered with <code class="code docutils literal notranslate"><span class="pre">plt.imshow</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>texts</strong> – Collection of strings to get text statistics from.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The generated wordcloud image.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.get_nice_html_label">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">get_nice_html_label</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">foreground_color</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span> <span class="o"><span class="pre">=</span></span> <span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#tx2.visualization.get_nice_html_label" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a nice looking colored background label.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The text to display in the label.</p></li>
+<li><p><strong>color</strong> – The background color as a hex string (‘#XXXXXX’) for the label</p></li>
+<li><p><strong>foreground_color</strong> – Leave as None for an automatic black/white foreground color
+determination from <a class="reference internal" href="#tx2.visualization.contrasting_text_color" title="tx2.visualization.contrasting_text_color"><code class="xref py py-meth docutils literal notranslate"><span class="pre">contrasting_text_color()</span></code></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An HTML string for the label.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_big_wordcloud">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_big_wordcloud</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_big_wordcloud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the word cloud that the currently selected point is in.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>index</strong> – The index of the point to find the cluster of.</p></li>
+<li><p><strong>clusters</strong> – The dictionary of clusters where the values are the lists of indices of entries in that cluster.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_clusters">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_clusters</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_values</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_clusters" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot highest word values for each cluster.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_clusters_stacked">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_clusters_stacked</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cluster_words_classified</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encodings</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">colors</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_clusters_stacked" title="Permalink to this definition">¶</a></dt>
+<dd><p>Plot highest word values for each cluster, colored according to entry classification</p>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_confusion_matrix">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_confusion_matrix</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encodings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(8,</span> <span class="pre">8)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_confusion_matrix" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the confusion matrix for given predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pred_y</strong> – Predicted labels.</p></li>
+<li><p><strong>target_y</strong> – Actual labels.</p></li>
+<li><p><strong>encodings</strong> – Dictionary of string label -&gt; numeric label.</p></li>
+<li><p><strong>figsize</strong> – the size with which to</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_metrics">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_metrics</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pred_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_y</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encodings</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_metrics" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get colored dataframes with macro and micro scores for the given predictions on an aggregate level and per class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pred_y</strong> – Predicted labels.</p></li>
+<li><p><strong>target_y</strong> – Actual labels.</p></li>
+<li><p><strong>encodings</strong> – Dictionary of string label -&gt; numeric label.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The per-class metrics dataframe and the aggregate metrics dataframe.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_passed_wordcloud">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_passed_wordcloud</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cloud</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_passed_wordcloud" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the given word cloud.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cloud</strong> – The word cloud to render.</p></li>
+<li><p><strong>name</strong> – The title to render with the word cloud.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.plot_wordclouds">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">plot_wordclouds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dashboard</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.plot_wordclouds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Render the grid of all wordclouds.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>dashboard</strong> – The current dashboard, needed in order to grab the cluster data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.prepare_wordclouds">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">prepare_wordclouds</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">clusters</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">test_texts</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">,</span> </span><span class="pre">pandas.core.series.Series</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tx2.visualization.prepare_wordclouds" title="Permalink to this definition">¶</a></dt>
+<dd><p>Pre-render the wordcloud for each cluster, this makes switching the main wordcloud figure faster.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>clusters</strong> – Dictionary of clusters where the values are the lists of dataframe indices for the entries in each cluster.</p></li>
+<li><p><strong>test_texts</strong> – The full test corpus.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt id="tx2.visualization.render_html_text">
+<code class="sig-prename descclassname"><span class="pre">tx2.visualization.</span></code><code class="sig-name descname"><span class="pre">render_html_text</span></code><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">transformer_wrapper</span></span><span class="p"><span class="pre">:</span></span> <span class="n"><a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><span class="pre">tx2.wrapper.Wrapper</span></a></span></em><span class="sig-paren">)</span> &#x2192; <span class="pre">str</span><a class="headerlink" href="#tx2.visualization.render_html_text" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a text-salience highlighted HTML paragraph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>text</strong> – The text to run salience on and render.</p></li>
+<li><p><strong>transformer_wrapper</strong> – The <a class="reference internal" href="wrapper.html#tx2.wrapper.Wrapper" title="tx2.wrapper.Wrapper"><code class="xref py py-class docutils literal notranslate"><span class="pre">tx2.wrapper.Wrapper</span></code></a> instance.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An HTML string with span-styled-highlights on each relevant word.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="calc.html" class="btn btn-neutral float-left" title="Calc" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nathan Martindale, Scott Stewart.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

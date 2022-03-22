@@ -94,9 +94,11 @@ To instantiate the wrapper, we pass in the data and necessary model pieces, and 
 
     # create wrapper
     wrapper = Wrapper(
-        train_df, test_df, encodings,
-        input_col_name="text",
-        target_col_name="target",
+        train_texts=train_df.text,
+        train_labels=train_df.target,
+        test_texts=test_df.text[:2000]
+        test_labels=test_df.target[:2000]
+        encodings=encodings,
         classifier=model,
         language_model=model.language_model,
         tokenizer=tokenizer)

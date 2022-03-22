@@ -1,11 +1,21 @@
 from setuptools import setup
+import re
+
+
+def get_property(prop):
+    result = re.search(
+        r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop),
+        open("curifactory/__init__.py").read(),
+    )
+    return result.group(1)
+
 
 with open("README.md", 'r', encoding='utf-8') as infile:
     long_description = infile.read()
 
 setup(
     name="tx2",
-    version="1.0.0",
+    version=get_property("__version__"),
     description="Transformer eXplainability and eXploration",
     long_description=long_description,
     long_description_content_type="text/markdown",
