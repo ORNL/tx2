@@ -10,7 +10,7 @@ heads. The basic function of this library is to take a trained transformer and
 test/train dataset and produce an ipywidget dashboard as seen in the screenshot below,
 which can be displayed in a jupyter notebook or jupyter lab.
 
-![screenshot]( https://raw.githubusercontent.com/ORNL/tx2/master/docs/source/screenshot.png)
+![screenshot]( https://raw.githubusercontent.com/ORNL/tx2/master/sphinx/source/screenshot.png)
 
 NOTE: Currently this library's implementation is partially torch-dependent, and so will
 not work with tensorflow/keras models - we hope to address this limitation in the future!
