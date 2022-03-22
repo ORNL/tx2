@@ -4,8 +4,7 @@ import re
 
 def get_property(prop):
     result = re.search(
-        r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop),
-        open("curifactory/__init__.py").read(),
+        r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop), open("tx2/__init__.py").read()
     )
     return result.group(1)
 
