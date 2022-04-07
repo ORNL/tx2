@@ -4,7 +4,6 @@ from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
 import pandas as pd
-from nltk.corpus import stopwords
 from sklearn.cluster import (
     DBSCAN,
     OPTICS,
@@ -22,6 +21,10 @@ from sklearn.cluster import (
 from sklearn.feature_extraction.text import CountVectorizer
 
 from tx2 import utils
+
+import nltk
+nltk.download("stopwords")
+from nltk.corpus import stopwords
 
 
 def cluster_projections(
