@@ -47,3 +47,23 @@ def test_wrapper_prepare_no_crash(
     wrapper.soft_classification_function = dummy_model.custom_softclassify
 
     wrapper.prepare(umap_args=dict(n_neighbors=2))
+
+    
+def test_wrapper_np_prepare_no_crash(
+    dummy_np_data, dummy_encodings, dummy_model, clear_files_teardown
+):
+    wrapper = Wrapper(
+        train_texts=dummy_np_data[0],
+        train_labels=dummy_np_data[1],
+        test_texts=dummy_np_data[0],
+        test_labels=dummy_np_data[1],
+        encodings=dummy_encodings,
+        cache_path="testdata2",
+    )
+
+    wrapper.encode_function = dummy_model.custom_encode
+    wrapper.classification_function = dummy_model.custom_classify
+    wrapper.embedding_function = dummy_model.custom_embedding
+    wrapper.soft_classification_function = dummy_model.custom_softclassify
+
+    wrapper.prepare(umap_args=dict(n_neighbors=2))

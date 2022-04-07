@@ -297,9 +297,11 @@ class Wrapper:
     # TODO: move out?
     def _determine_cluster_label(self, cluster, cluster_profiles, cluster_name):
         """Determine the center point to render a cluster label at"""
-        projections = self.project(self.test_texts[cluster].reset_index(drop=True))
+        if type(self.test_texts) == pd.Series:
+            projections = self.project(self.test_texts[cluster].reset_index(drop=True))
+        else:
+            projections = self.project(self.test_texts[cluster])
 
-        # TODO: clean up
         x = []
         y = []
         for point in projections:
