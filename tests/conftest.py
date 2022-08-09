@@ -119,10 +119,3 @@ def clear_files_teardown():
     yield None
     os.system("rm -rf testdata/")
     os.system("rm -rf testdata2/")
-
-
-@pytest.fixture(scope="session", autouse=True)
-def prep_nltk():
-    import nltk
-
-    nltk.download("stopwords")

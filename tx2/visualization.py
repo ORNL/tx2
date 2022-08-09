@@ -10,10 +10,10 @@ import pandas as pd
 from IPython.display import clear_output, display
 from matplotlib.lines import Line2D
 from sklearn.metrics import confusion_matrix
-from wordcloud import STOPWORDS, WordCloud
+from wordcloud import WordCloud
 
 import tx2.wrapper
-from tx2 import calc, utils
+from tx2 import calc, utils, STOPWORDS
 
 
 # if foreground_color is None, it will automatically decide white or black by color
@@ -95,8 +95,6 @@ def gen_wordcloud(texts: Union[np.ndarray, pd.Series]):
     :param texts: Collection of strings to get text statistics from.
     :return: The generated wordcloud image.
     """
-    stopwords = set(STOPWORDS)
-    stopwords.update(["via", "this"])
     text = " ".join(list(texts))
     cloud = WordCloud(
         stopwords=set(STOPWORDS), background_color="white", width=800, height=400

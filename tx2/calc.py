@@ -20,11 +20,9 @@ from sklearn.cluster import (
 )
 from sklearn.feature_extraction.text import CountVectorizer
 
-from tx2 import utils
+from tx2 import utils, STOPWORDS
 
 import nltk
-nltk.download("stopwords")
-from nltk.corpus import stopwords
 
 
 def cluster_projections(
@@ -140,7 +138,7 @@ def frequent_words_in_cluster(
     :return: A list of tuples, each tuple containing the word and the number of times
         it appears in that cluster.
     """
-    counter = CountVectorizer(stop_words=stopwords.words("english"))
+    counter = CountVectorizer(stop_words=STOPWORDS)
     cv_fit = counter.fit_transform(texts)
     freq_words = sorted(
         # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
@@ -189,7 +187,7 @@ def frequent_words_by_class_in_cluster(
     for classification in encodings.values():
         local_df = working_df[working_df.target == classification]
         counter = CountVectorizer(
-            stop_words=stopwords.words("english"), vocabulary=vocab
+            stop_words=STOPWORDS, vocabulary=vocab
         )
         cv_fit = counter.fit_transform(local_df.text.values)
         # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
