@@ -1,0 +1,248 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Dashboard Interface &mdash; TX2  documentation</title>
+
+
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+
+
+
+
+
+
+
+
+
+
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+
+
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Dashboard Widgets" href="dashboard_widgets.html" />
+    <link rel="prev" title="Basic Usage" href="basic_usage.html" />
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+
+
+            <a href="index.html" class="icon icon-home"> TX2
+
+
+
+          </a>
+
+
+
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <p class="caption"><span class="caption-text">Usage</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dashboard Interface</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#umap-sidebar">UMAP Sidebar</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#other-controls">Other controls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard_widgets.html">Dashboard Widgets</a></li>
+</ul>
+<p class="caption"><span class="caption-text">API</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="wrapper.html">Wrapper</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dashboard.html">Dashboard</a></li>
+<li class="toctree-l1"><a class="reference internal" href="calc.html">Calc</a></li>
+<li class="toctree-l1"><a class="reference internal" href="visualization.html">Visualization</a></li>
+</ul>
+
+
+
+        </div>
+
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">TX2</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+
+      <li>Dashboard Interface</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+            <a href="_sources/dashboard_interface.rst.txt" rel="nofollow"> View page source</a>
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="dashboard-interface">
+<h1>Dashboard Interface<a class="headerlink" href="#dashboard-interface" title="Permalink to this headline">¶</a></h1>
+<p>This page contains brief descriptions of what the different buttons and checkboxes in the interface do.</p>
+<div class="section" id="umap-sidebar">
+<h2>UMAP Sidebar<a class="headerlink" href="#umap-sidebar" title="Permalink to this headline">¶</a></h2>
+<p>The graph controls and status messages for the currently selected points are in the sidebar of the UMAP plot.
+The top two status indicators respectively show the busy/ready status for backend computation and plotting work.
+The model classification section shows the currently predicted label as well as the target (the colors match those used
+in the plot itself.)</p>
+<p>For the checkboxes under graph controls:</p>
+<ul class="simple">
+<li><p>Show training data - lightly includes the training points in the plot (larger and more transparent points), for helping determine if there’s much difference between the training and testing distributions.</p></li>
+<li><p>Visual cluster nums - display the numerical labels for the computed clusters of the 2d projections. Theses labels are consistent with the plot titles in the cluster words bar graphs and wordclouds in the tabs below.</p></li>
+<li><p>Focus misclassifications - slightly blur out the points the transformer predicted correctly to make it easier to see which ones it got wrong.</p></li>
+</ul>
+<p>The sample misclassified button will randomly select a point that the transformer got wrong.</p>
+<p>The keyword search box allows you to type in a word and the plot will highlight in red the instances where that word appears.
+The “sample from highlighted” button will randomly select a point from the highlighted instances.</p>
+</div>
+<div class="section" id="other-controls">
+<h2>Other controls<a class="headerlink" href="#other-controls" title="Permalink to this headline">¶</a></h2>
+<p>The “selected datapoint index” below the UMAP plot is a dropdown menu containing the index of each point in the testing
+set. Changing this selection will update the UMAP plot to highlight the current point, and the entry text and word salience
+map will update.</p>
+<p>In the Cluster words and Word clouds tabs, the “sampling buttons” will randomly select an instance from the visual cluster
+of the corresponding label in square brackets on the button.</p>
+</div>
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="dashboard_widgets.html" class="btn btn-neutral float-right" title="Dashboard Widgets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="basic_usage.html" class="btn btn-neutral float-left" title="Basic Usage" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Nathan Martindale, Scott Stewart.
+
+    </p>
+  </div>
+
+
+
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+
+
+
+
+
+</body>
+</html>

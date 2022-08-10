@@ -1,15 +1,18 @@
 import numpy as np
-import pytest
-from pytest_mock import mocker
-
-from tx2.dashboard import Dashboard
-from tx2.visualization import (_get_scatter_points_from_embeddings,
-                               gen_wordcloud, plot_big_wordcloud,
-                               plot_confusion_matrix, plot_metrics,
-                               plot_passed_wordcloud, plot_wordclouds,
-                               prepare_wordclouds, plot_embedding_projections)
-from tx2.dashboard import Dashboard
 import tx2.utils
+from pytest_mock import mocker  # noqa: F401 -- flake8 doesn't register usage
+from tx2.dashboard import Dashboard
+from tx2.visualization import (
+    _get_scatter_points_from_embeddings,
+    gen_wordcloud,
+    plot_big_wordcloud,
+    plot_confusion_matrix,
+    plot_embedding_projections,
+    plot_metrics,
+    plot_passed_wordcloud,
+    plot_wordclouds,
+    prepare_wordclouds,
+)
 
 
 def test_gen_wordcloud_no_crash(dummy_df):
@@ -28,7 +31,11 @@ def test_prepare_wordclouds_np_no_crash(dummy_np_data, dummy_clusters):
     prepare_wordclouds(dummy_clusters, dummy_np_data[0])
 
 
-def test_prepare_wordclouds_calls_gen_correctly(mocker, dummy_df, dummy_clusters):
+def test_prepare_wordclouds_calls_gen_correctly(
+    mocker,  # noqa: F811 -- mocker has to be passed in as fixture
+    dummy_df,
+    dummy_clusters,
+):
     mock = mocker.patch("tx2.visualization.gen_wordcloud")
     prepare_wordclouds(dummy_clusters, dummy_df.text)
 
@@ -63,7 +70,7 @@ def test_get_scatterpoints_wo_labels(dummy_df, dummy_embeddings):
     assert (y == dummy_embeddings[2]).all()
     assert (colors == np.zeros([len(dummy_df)])).all()
 
-    
+
 def test_get_scatterpoints_empty(dummy_df, dummy_embeddings):
     x, y, colors = _get_scatter_points_from_embeddings([0, 1], np.array([]))
     assert len(x) == 0
@@ -92,34 +99,40 @@ def test_plot_wordclouds_no_crash(dummy_df, dummy_clusters):
 
 
 # TODO: also have to test mocking out checkbox values to check all sections
-def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
+def test_plot_embedding_projections_no_crash(
+    mocker,  # noqa: F811 -- mocker has to be passed in as fixture
+    dummy_wrapper,
+    dummy_df,
+):
     tx2.utils.DISABLE_DEBOUNCE = True
 
     dash = Dashboard(dummy_wrapper)
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
-    
-def test_plot_embedding_projections_no_crash(mocker, dummy_wrapper, dummy_df):
-    tx2.utils.DISABLE_DEBOUNCE = True
 
-    dash = Dashboard(dummy_wrapper)
-    plot_embedding_projections(dummy_df.text.iloc[0], dash)
 
-    
-def test_plot_embedding_projections_w_training_no_crash(mocker, dummy_wrapper, dummy_df):
+def test_plot_embedding_projections_w_training_no_crash(
+    mocker,  # noqa: F811 -- mocker has to be passed in as fixture
+    dummy_wrapper,
+    dummy_df,
+):
     tx2.utils.DISABLE_DEBOUNCE = True
     dash = Dashboard(dummy_wrapper)
     dash.chk_show_train = type("checkbox", (object,), {})()
     dash.chk_show_train.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
 
-    
-def test_plot_embedding_projections_w_errorfocus_no_crash(mocker, dummy_wrapper, dummy_df):
+
+def test_plot_embedding_projections_w_errorfocus_no_crash(
+    mocker,  # noqa: F811 -- mocker has to be passed in as fixture
+    dummy_wrapper,
+    dummy_df,
+):
     tx2.utils.DISABLE_DEBOUNCE = True
     dash = Dashboard(dummy_wrapper)
     dash.chk_focus_errors = type("checkbox", (object,), {})()
     dash.chk_focus_errors.value = True
     plot_embedding_projections(dummy_df.text.iloc[0], dash)
-    
+
 
 def test_plot_metrics_no_crash(dummy_df, dummy_encodings):
     plot_metrics(dummy_df.target, dummy_df.target, dummy_encodings)

@@ -4,15 +4,25 @@ from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
 import pandas as pd
-from nltk.corpus import stopwords
-from sklearn.cluster import (DBSCAN, OPTICS, AffinityPropagation,
-                             AgglomerativeClustering, Birch,
-                             FeatureAgglomeration, KMeans, MeanShift,
-                             MiniBatchKMeans, SpectralBiclustering,
-                             SpectralClustering, SpectralCoclustering)
+from sklearn.cluster import (
+    DBSCAN,
+    OPTICS,
+    AffinityPropagation,
+    AgglomerativeClustering,
+    Birch,
+    FeatureAgglomeration,
+    KMeans,
+    MeanShift,
+    MiniBatchKMeans,
+    SpectralBiclustering,
+    SpectralClustering,
+    SpectralCoclustering,
+)
 from sklearn.feature_extraction.text import CountVectorizer
 
-from tx2 import utils
+from tx2 import utils, STOPWORDS
+
+import nltk
 
 
 def cluster_projections(
@@ -128,10 +138,13 @@ def frequent_words_in_cluster(
     :return: A list of tuples, each tuple containing the word and the number of times
         it appears in that cluster.
     """
-    counter = CountVectorizer(stop_words=stopwords.words("english"))
+    counter = CountVectorizer(stop_words=STOPWORDS)
     cv_fit = counter.fit_transform(texts)
     freq_words = sorted(
-        zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0)),
+        # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
+        #   scikitlearn, numpy, and numba versions to play nice with that requirement however.
+        #   for now leaving scikit-learn as pre-1.0
+        zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0)),
         key=lambda x: x[1],
         reverse=True,
     )
@@ -174,11 +187,14 @@ def frequent_words_by_class_in_cluster(
     for classification in encodings.values():
         local_df = working_df[working_df.target == classification]
         counter = CountVectorizer(
-            stop_words=stopwords.words("english"), vocabulary=vocab
+            stop_words=STOPWORDS, vocabulary=vocab
         )
         cv_fit = counter.fit_transform(local_df.text.values)
+        # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
+        #   scikitlearn, numpy, and numba versions to play nice with that requirement however.
+        #   for now leaving scikit-learn as pre-1.0
         class_freq_words = list(
-            zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0))
+            zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0))
         )
         for pair in class_freq_words:
             word_dict[pair[0]][str(classification)] = pair[1]

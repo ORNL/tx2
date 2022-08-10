@@ -4,7 +4,6 @@ import os
 import pickle
 import json
 import logging
-import numpy as np
 
 
 def check(filepath: str, overwrite: bool) -> bool:

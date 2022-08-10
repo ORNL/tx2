@@ -8,6 +8,7 @@ import numpy as np
 import pandas as pd
 import torch
 import umap
+
 # TODO: not crazy about this, but library agnosticism later
 from torch.utils.data import DataLoader
 from tqdm.autonotebook import tqdm
@@ -35,6 +36,7 @@ class Wrapper:
         classifier=None,
         language_model=None,
         tokenizer=None,
+        cuda_device=None,
         cache_path="data",
         overwrite=False,
     ):
@@ -59,6 +61,9 @@ class Wrapper:
             <https://huggingface.co/transformers/main_classes/tokenizer.html>`_. Note that **this
             argument is not required**, if the user intends to manually specify encode and
             classification functions.
+        :param cuda_device: Set the device for pytorch to place tensors on, pass either "cpu" or
+            "cuda". This variable is used by the default embedding function. If unspecified and a
+            GPU is found, "cuda" will be used, otherwise it defaults to "cpu".
         :param cache_path: The directory path to cache intermediate outputs from the
             :meth:`tx2.wrapper.Wrapper.prepare` function. This allows the wrapper to precompute
             needed values for the dashboard to reduce render time and allow rerunning all wrapper
@@ -75,19 +80,19 @@ class Wrapper:
         based on a language model layer being specified in the constructor. If classifier or language
         model were not specified to the constructor, **this variable must be assigned to a custom
         function definition.**
-        
+
         .. admonition:: Example
-        
-            Below is a simplified example of creating a customized embed function. 
+
+            Below is a simplified example of creating a customized embed function.
             :code:`my_custom_embedding_function` will be used by the wrapper, and will be
             called with an array of pre-encoded inputs for a single entry, and is expected
             to return an array. (TODO: 1d or 2d?)
-            
+
             .. code-block:: python
-            
+
                 def my_custom_embedding_function(inputs):
                     return np.mean(my_transformer(inputs['input_id'], inputs['attention_mask'])[0])
-                    
+
                 wrapper = Wrapper(...)
                 wrapper.embedding_function = my_custom_embedding_function
         """
@@ -121,11 +126,11 @@ class Wrapper:
 
         self.encodings = encodings
         """A dictionary associating class label names with integer values.
-        
+
         example:
-        
+
         .. code-block::
-            
+
             {
                 "label1": 0,
                 "label2": 1,
@@ -133,12 +138,18 @@ class Wrapper:
         """
 
         self.classifier = classifier
-        """A class containing the entire network, which can be called as a function taking the 
+        """A class containing the entire network, which can be called as a function taking the
         encoded input and returning the output classification."""
         self.language_model = language_model
         """A variable containing only the huggingface language model portion of the network."""
         self.tokenizer = tokenizer
         """The huggingface tokenizer to use for encoding text input."""
+        self.cuda_device = cuda_device
+        """Set the device for pytorch to place tensors on, pass either "cpu" or "cuda". This
+        variable is used by the default embedding function. If unspecified and a GPU is found,
+        "cuda" will be used, otherwise it defaults to "cpu"."""
+        if self.cuda_device is None:
+            self.cuda_device = utils.get_device()
 
         self.cache_path = cache_path
         """The directory path to cache pre-calculated values."""
@@ -189,7 +200,7 @@ class Wrapper:
         self.encoder_options = dict(
             add_special_tokens=True,
             max_length=self.max_len,
-            pad_to_max_length=True,
+            padding="max_length",
             truncation=True,
             return_token_type_ids=True,
         )
@@ -205,13 +216,13 @@ class Wrapper:
         """The predicted class for each entry in :code:`test_texts`, as returned by
         :meth:`tx2.wrapper.Wrapper.classify`."""
         self.embeddings_training = None
-        """Precomputed embeddings for each entry in :code:`train_texts`, as returned by 
+        """Precomputed embeddings for each entry in :code:`train_texts`, as returned by
         :meth:`tx2.wrapper.Wrapper.embed`."""
         self.embeddings_testing = None
-        """Precomputed embeddings for each entry in :code:`test_texts`, as returned by 
+        """Precomputed embeddings for each entry in :code:`test_texts`, as returned by
         :meth:`tx2.wrapper.Wrapper.embed`."""
         self.projector = None
-        """The trained UMAP projector. See `umap-learn documentation 
+        """The trained UMAP projector. See `umap-learn documentation
         <https://umap-learn.readthedocs.io/en/latest/>`_."""
         self.projections_training = None
         """The two dimensional projections of :code:`embeddings_training`, for each entry in :code:`train_texts`."""
@@ -220,10 +231,10 @@ class Wrapper:
         self.salience_maps = None
         """The salience map for each entry in :code:`test_texts` as calculated by :meth:`tx2.calc.salience_map`."""
         self.clusters = None
-        """A dictionary of cluster names, each associated with a list of indices of points in that cluster, as 
+        """A dictionary of cluster names, each associated with a list of indices of points in that cluster, as
          calculated by :meth:`tx2.calc.cluster_projections`."""
         self.cluster_profiles = None
-        """A dictionary of aggregate sorted salience maps for each cluster as calculated by 
+        """A dictionary of aggregate sorted salience maps for each cluster as calculated by
         :meth:`tx2.calc.aggregate_cluster_salience_maps`."""
         self.cluster_word_freqs = None
         """A dictionary of clusters and sorted top word frequencies for each, as calculated by
@@ -286,9 +297,11 @@ class Wrapper:
     # TODO: move out?
     def _determine_cluster_label(self, cluster, cluster_profiles, cluster_name):
         """Determine the center point to render a cluster label at"""
-        projections = self.project(self.test_texts[cluster].reset_index(drop=True))
+        if type(self.test_texts) == pd.Series:
+            projections = self.project(self.test_texts[cluster].reset_index(drop=True))
+        else:
+            projections = self.project(self.test_texts[cluster])
 
-        # TODO: clean up
         x = []
         y = []
         for point in projections:
@@ -386,22 +399,19 @@ class Wrapper:
 
     # TODO
     def _default_encoding_function(self, text):
-        encoded = self.tokenizer.encode_plus(
-            text,
-            None,
-            **self.encoder_options,
-        )
+        encoded = self.tokenizer.encode_plus(text, None, **self.encoder_options)
         return {
-            "input_ids": torch.tensor(encoded["input_ids"], device=utils.get_device()),
+            "input_ids": torch.tensor(encoded["input_ids"], device=self.cuda_device),
             "attention_mask": torch.tensor(
-                encoded["attention_mask"], device=utils.get_device()
+                encoded["attention_mask"], device=self.cuda_device
             ),
         }
 
     def _default_classification_function(self, inputs):
-        return torch.argmax(
-            self.classifier(inputs["input_ids"], inputs["attention_mask"]), dim=1
-        )
+        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        if type(output) != torch.Tensor:
+            output = output.logits
+        return torch.argmax(output, dim=1)
 
     def _default_embedding_function(self, inputs):
         return self.language_model(inputs["input_ids"], inputs["attention_mask"])[0][
@@ -409,7 +419,10 @@ class Wrapper:
         ]  # [CLS] token embedding
 
     def _default_soft_classification_function(self, inputs):
-        return self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        if type(output) != torch.Tensor:
+            output = output.logits
+        return output
 
     def _prepare_input_data(self, texts):
         encoded_data = dataset.EncodedDataset(texts, self)

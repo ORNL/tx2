@@ -3,6 +3,7 @@
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![PyPI version](https://badge.fury.io/py/tx2.svg)](https://badge.fury.io/py/tx2)
 [![JOSS status](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94/status.svg)](https://joss.theoj.org/papers/b7c161917e5a31af052a597bf98f0e94)
+[![tests](https://github.com/ORNL/tx2/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/ORNL/tx2/actions/workflows/tests.yml)
 
 Welcome to TX2! This library is intended to aid in the explorability and explainability of
 transformer classification networks, or transformer language models with sequence classification
@@ -10,7 +11,7 @@ heads. The basic function of this library is to take a trained transformer and
 test/train dataset and produce an ipywidget dashboard as seen in the screenshot below,
 which can be displayed in a jupyter notebook or jupyter lab.
 
-![screenshot]( https://raw.githubusercontent.com/ORNL/tx2/master/docs/source/screenshot.png)
+![screenshot]( https://raw.githubusercontent.com/ORNL/tx2/master/sphinx/source/screenshot.png)
 
 NOTE: Currently this library's implementation is partially torch-dependent, and so will
 not work with tensorflow/keras models - we hope to address this limitation in the future!
@@ -26,14 +27,13 @@ pip install tx2
 NOTE: depending on the environment, it may be better to install some of the dependencies separately before
 pip installing tx2, e.g. in conda:
 ```bash
-conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets numpy -c
-conda-forge
+conda install pytorch-gpu pandas scikit-learn matplotlib ipywidgets "numpy<=1.20" -c conda-forge
 ```
 
 If you do not have access to a GPU on your machine, install the regular pytorch
 package:
 ```bash
-conda install pytorch pandas scikit-learn matplotlib ipywidgets numpy
+conda install pytorch pandas scikit-learn matplotlib ipywidgets "numpy<=1.20"
 ```
 
 Note that `pytorch-gpu` can only be found in the `conda-forge` channel.
@@ -51,7 +51,7 @@ Packages you'll need to install for the notebooks to work (in addition to the
 conda installs above):
 
 ```bash
-pip install tqdm transformers>=4.1.1
+pip install tqdm transformers~=4.1.1
 ```
 
 Running through each full notebook will produce the ipywidget dashboard near the
@@ -66,7 +66,7 @@ The documentation can be viewed at [https://ornl.github.io/tx2/](https://ornl.gi
 
 The documentation can also be built from scratch with sphinx as needed.
 
-Install all required dependencies: 
+Install all required dependencies:
 ```bash
 pip install -r requirements.txt
 ```
@@ -86,17 +86,20 @@ as discussed in the Basic Usage page of the documentation.
 
 ## Citation
 
-To cite usage of TX2 in a publication, the DOI for this code is [https://doi.org/10.11578/dc.20210129.1](https://doi.org/10.11578/dc.20210129.1).
+To cite usage of TX2 in a publication, the DOI for this code is [https://doi.org/10.21105/joss.03652](https://doi.org/10.21105/joss.03652)
 
-bibtex: 
+bibtex:
 ```
-@misc{ doecode_50372,
-    title = {Transformer eXplainability and eXploration },
-    author = {Martindale, Nathan and Stewart, Scott L.},
-    abstractNote = {The Transformer eXplainability and eXploration library is intended to aid in the explorability and explainability of transformer classification networks, or transformer language models with sequence classification heads. The basic function of this library is to take a trained transformer and test/train dataset and produce an ipywidget dashboard which can be displayed in a jupyter notebook or in jupyter lab.},
-    url = {https://doi.org/10.11578/dc.20210129.1},
-    howpublished = {[Computer Software] \url{https://doi.org/10.11578/dc.20210129.1}},
-    year = {2021},
-    month = {jan}
+@article{Martindale2021,
+  doi = {10.21105/joss.03652},
+  url = {https://doi.org/10.21105/joss.03652},
+  year = {2021},
+  publisher = {The Open Journal},
+  volume = {6},
+  number = {68},
+  pages = {3652},
+  author = {Nathan Martindale and Scott L. Stewart},
+  title = {TX$^2$: Transformer eXplainability and eXploration},
+  journal = {Journal of Open Source Software}
 }
 ```

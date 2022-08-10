@@ -33,7 +33,7 @@ setup(
         "scikit-learn~=1.1",  # get_feature_names deprecated and removed by 1.2
         "nltk~=3.2",
         "pandas~=1.4",
-        "numpy~=1.22",  # weird version conflicts with numba
+        "numpy~=1.22",
         "torch~=1.12",
         "tqdm",
         "umap-learn~=0.5",

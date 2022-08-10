@@ -3,9 +3,9 @@
 **/.ipynb_checkpoints/*
 **/*.stats
 
-docs/build/*
-!docs/build/.gitkeep
-docs/.buildinfo
+sphinx/build/*
+!sphinx/build/.gitkeep
+sphinx/.buildinfo
 
 tx2.egg-info
 dist/*

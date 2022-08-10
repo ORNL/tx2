@@ -1,6 +1,5 @@
 import asyncio
 import numpy as np
-from threading import Timer
 from torch import cuda
 
 

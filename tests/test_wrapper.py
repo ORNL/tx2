@@ -1,5 +1,3 @@
-import numpy as np
-
 from tx2.wrapper import Wrapper
 
 
@@ -9,7 +7,7 @@ from tx2.wrapper import Wrapper
 
 
 def test_wrapper_init_no_crash(dummy_df, dummy_encodings):
-    wrapper = Wrapper(
+    wrapper = Wrapper(  # noqa: F841 -- just testing no errors
         train_texts=dummy_df.text,
         train_labels=dummy_df.target,
         test_texts=dummy_df.text,
@@ -19,7 +17,7 @@ def test_wrapper_init_no_crash(dummy_df, dummy_encodings):
 
 
 def test_wrapper_init_np_no_crash(dummy_np_data, dummy_encodings):
-    wrapper = Wrapper(
+    wrapper = Wrapper(  # noqa: F841 -- just testing no errors
         train_texts=dummy_np_data[0],
         train_labels=dummy_np_data[1],
         test_texts=dummy_np_data[0],
@@ -31,20 +29,41 @@ def test_wrapper_init_np_no_crash(dummy_np_data, dummy_encodings):
 # TODO: tests to ensure exceptions are thrown in prepare if incorrect combination of things have not been specified.
 
 
-def test_wrapper_prepare_no_crash(dummy_df, dummy_encodings, dummy_model, clear_files_teardown):
+def test_wrapper_prepare_no_crash(
+    dummy_df, dummy_encodings, dummy_model, clear_files_teardown
+):
     wrapper = Wrapper(
         train_texts=dummy_df.text,
         train_labels=dummy_df.target,
         test_texts=dummy_df.text,
         test_labels=dummy_df.target,
         encodings=dummy_encodings,
-        cache_path="testdata"
+        cache_path="testdata",
     )
-    
+
     wrapper.encode_function = dummy_model.custom_encode
     wrapper.classification_function = dummy_model.custom_classify
     wrapper.embedding_function = dummy_model.custom_embedding
     wrapper.soft_classification_function = dummy_model.custom_softclassify
-    
+
     wrapper.prepare(umap_args=dict(n_neighbors=2))
 
+    
+def test_wrapper_np_prepare_no_crash(
+    dummy_np_data, dummy_encodings, dummy_model, clear_files_teardown
+):
+    wrapper = Wrapper(
+        train_texts=dummy_np_data[0],
+        train_labels=dummy_np_data[1],
+        test_texts=dummy_np_data[0],
+        test_labels=dummy_np_data[1],
+        encodings=dummy_encodings,
+        cache_path="testdata2",
+    )
+
+    wrapper.encode_function = dummy_model.custom_encode
+    wrapper.classification_function = dummy_model.custom_classify
+    wrapper.embedding_function = dummy_model.custom_embedding
+    wrapper.soft_classification_function = dummy_model.custom_softclassify
+
+    wrapper.prepare(umap_args=dict(n_neighbors=2))
