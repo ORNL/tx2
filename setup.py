@@ -1,11 +1,20 @@
 from setuptools import setup
+import re
 
-with open("README.md", 'r', encoding='utf-8') as infile:
+
+def get_property(prop):
+    result = re.search(
+        r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop), open("tx2/__init__.py").read()
+    )
+    return result.group(1)
+
+
+with open("README.md", "r", encoding="utf-8") as infile:
     long_description = infile.read()
 
 setup(
     name="tx2",
-    version="2021.12.0",
+    version=get_property("__version__"),
     description="Transformer eXplainability and eXploration",
     long_description=long_description,
     long_description_content_type="text/markdown",
@@ -18,18 +27,18 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    python_requires=">=3.6",
+    python_requires="==3.9",
     packages=["tx2"],
     install_requires=[
-        "sklearn",
-        "nltk",
-        "pandas",
-        "numpy",
-        "torch",
+        "scikit-learn~=1.1",  # get_feature_names deprecated and removed by 1.2
+        "nltk~=3.2",
+        "pandas~=1.4",
+        "numpy~=1.22",  # weird version conflicts with numba
+        "torch~=1.12",
         "tqdm",
-        "umap-learn",
-        "matplotlib",
-        "wordcloud",
-        "ipywidgets",
+        "umap-learn~=0.5",
+        "matplotlib~=3.5",
+        "ipywidgets~=7.7",
+        "wordcloud~=1.8",
     ],
 )
