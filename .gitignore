@@ -1,6 +1,7 @@
 .idea/*
 **/*.pyc
 **/.ipynb_checkpoints/*
+**/.virtual_documents/*
 **/*.stats
 
 sphinx/build/*
@@ -10,3 +11,4 @@ sphinx/.buildinfo
 tx2.egg-info
 dist/*
 build/*
+data/*

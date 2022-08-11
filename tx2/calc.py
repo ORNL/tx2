@@ -1,5 +1,6 @@
 """Helper calculation functions for the wrapper and dashboard."""
 
+import logging
 from typing import Any, Dict, List, Tuple, Union
 
 import numpy as np
@@ -138,18 +139,19 @@ def frequent_words_in_cluster(
     :return: A list of tuples, each tuple containing the word and the number of times
         it appears in that cluster.
     """
-    counter = CountVectorizer(stop_words=STOPWORDS)
-    cv_fit = counter.fit_transform(texts)
-    freq_words = sorted(
-        # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
-        #   scikitlearn, numpy, and numba versions to play nice with that requirement however.
-        #   for now leaving scikit-learn as pre-1.0
-        zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0)),
-        key=lambda x: x[1],
-        reverse=True,
-    )
-
-    return freq_words
+    freq_words = [("",0)]
+    try:
+        counter = CountVectorizer(stop_words=STOPWORDS)
+        cv_fit = counter.fit_transform(texts)
+        freq_words = sorted(
+            zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0)),
+            key=lambda x: x[1],
+            reverse=True,
+        )
+    except ValueError as e:
+        logging.warning(f"ValueError in frequent_words_in_cluster. Could be caused by cluster of empty text.")
+    finally:
+        return freq_words
 
 
 def frequent_words_by_class_in_cluster(
@@ -190,11 +192,8 @@ def frequent_words_by_class_in_cluster(
             stop_words=STOPWORDS, vocabulary=vocab
         )
         cv_fit = counter.fit_transform(local_df.text.values)
-        # NOTE: get_feature_names_out is scikit-learn 1.0, was having difficulty getting
-        #   scikitlearn, numpy, and numba versions to play nice with that requirement however.
-        #   for now leaving scikit-learn as pre-1.0
         class_freq_words = list(
-            zip(counter.get_feature_names(), cv_fit.toarray().sum(axis=0))
+            zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0))
         )
         for pair in class_freq_words:
             word_dict[pair[0]][str(classification)] = pair[1]

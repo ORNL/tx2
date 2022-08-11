@@ -8,9 +8,10 @@ umap-learn~=0.5
 matplotlib~=3.5
 ipywidgets~=7.7
 wordcloud~=1.8
+ipympl~=0.9
 
-autodocsumm
-sphinx
-sphinx-rtd-theme
-pytest
-pytest-mock
+autodocsumm==0.2.2
+sphinx==3.3.1
+sphinx-rtd-theme==0.5.0
+pytest~=7.1
+pytest-mock~=3.8

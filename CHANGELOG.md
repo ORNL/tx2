@@ -11,9 +11,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - bumped package versions
 - specified package versions in requirements and setup.py
 - updating example jupyter notebooks to use new versions of packages
+- api update to devices where "mps" is now checked in addition to "cuda"
+- adding ipympl to dependency list
 
 ### Fixed 
 - updated to patched numpy version 1.22
+- potential issue in calc.frequent_words_in_cluster() where clusters of empty string values would stop computation
+
 
 
 

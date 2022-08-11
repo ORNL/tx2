@@ -40,6 +40,17 @@ def dummy_df():
 
 
 @pytest.fixture
+def dummy_empty_df():
+    rows = [
+        {"text": " ", "target": 0},
+        {"text": " ", "target": 0},
+        {"text": " ", "target": 1},
+        {"text": " ", "target": 1},
+    ]
+    return pd.DataFrame(rows)
+
+
+@pytest.fixture
 def dummy_np_data(dummy_df):
     texts = np.array(dummy_df.text)
     targets = np.array(dummy_df.target)

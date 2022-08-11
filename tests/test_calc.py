@@ -6,6 +6,11 @@ def test_frequent_words_in_cluster(dummy_df):
     assert freq_words == [("row", 4), ("testing", 4), ("awesome", 2)]
 
 
+def test_frequent_words_in_cluster_handle_empty(dummy_empty_df):
+    freq_words = frequent_words_in_cluster(dummy_empty_df.text)
+    assert freq_words == [("", 0)]
+
+
 def test_frequent_words_by_class_in_cluster(dummy_df, dummy_encodings, dummy_clusters):
     cluster_text = dummy_df.text[dummy_clusters["0"]]
     cluster_text_labels = dummy_df.target[dummy_clusters["0"]]

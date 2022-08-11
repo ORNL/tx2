@@ -1,6 +1,6 @@
 import asyncio
 import numpy as np
-from torch import cuda
+from torch import cuda, has_mps
 
 
 DISABLE_DEBOUNCE = False
@@ -10,9 +10,14 @@ DISABLE_DEBOUNCE = False
 def get_device() -> str:
     """Determine the device to put pytorch tensors on
 
-    :return: "cuda" or "cpu"
+    :return: "cuda", "cpu", or "mps"
     """
-    device = "cuda" if cuda.is_available() else "cpu"
+    if cuda.is_available():
+        device = "cuda"
+    elif has_mps:
+        device = "mps"
+    else:
+        device = "cpu"
     return device
 
 
