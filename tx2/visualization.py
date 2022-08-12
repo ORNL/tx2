@@ -3,10 +3,12 @@
 import itertools
 import math
 from typing import Dict, List, Union
+import logging
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
+from IPython.core.interactiveshell import InteractiveShell
 from IPython.display import clear_output, display
 from matplotlib.lines import Line2D
 from sklearn.metrics import confusion_matrix
@@ -116,6 +118,7 @@ def plot_big_wordcloud(index: int, clusters: Dict[str, List[int]]):
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.set_title(str(cluster))
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
     return fig
 
@@ -133,6 +136,7 @@ def plot_passed_wordcloud(cloud, name):
     ax.xaxis.set_ticklabels([])
     ax.yaxis.set_ticklabels([])
     ax.set_title(name)
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
     return fig
 
@@ -166,6 +170,7 @@ def plot_wordclouds(dashboard):
         ):
             axs[-1][i].set_axis_off()
 
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
 
     return fig
@@ -259,6 +264,7 @@ def plot_confusion_matrix(
             color="white" if cm[i, j] > text_fg_threshold else "black",
         )
 
+    fig.patch.set_facecolor("white")
     return fig
 
 
@@ -378,8 +384,8 @@ def plot_embedding_projections(text, dashboard, prediction=None):
 
     # if text differs from the selected index, render new point
     if (
-        dashboard.prior_reference_point is None
-        or dashboard.prior_reference_text != text
+        dashboard.prior_reference_point is None or
+        dashboard.prior_reference_text != text
     ):
         text_projection = dashboard.transformer_wrapper.project([text])[0]
         if prediction is None:
@@ -453,11 +459,25 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     ax.legend(handles=legend_elements)
 
     # output
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
-    with dashboard.out_projection_scatter:
-        clear_output(wait=True)
-        dashboard.current_figures["umap"] = fig
-        display(fig)
+
+    # NOTE: we essentially mimic the append_display_data function for an output widget
+    # https://github.com/jupyter-widgets/ipywidgets/blob/master/python/ipywidgets/ipywidgets/widgets/widget_output.py#L173
+    # this otherwise does not work well in jupyter lab because it handles cell
+    # outputs slightly differently than notebook, and you're not supposed to use
+    # the context manager in a separate thread (caused because of this method's
+    # debounce)
+    fmt = InteractiveShell.instance().display_formatter.format
+    data, metadata = fmt(fig)
+    dashboard.out_projection_scatter.outputs = (
+        {
+            'output_type': 'display_data',
+            'data': data,
+            'metadata': metadata
+        },
+    )
+
     dashboard.html_graph_status.value = (
         "<p>" + tx2.visualization.get_nice_html_label("Ready!", "#008000") + "</p>"
     )
@@ -489,6 +509,7 @@ def plot_clusters(clusters, cluster_values):
         ax.set_yticklabels(y_labels)
         axs[ax_x][ax_y].set_title(str(cluster))
 
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
     return fig
 
@@ -540,5 +561,6 @@ def plot_clusters_stacked(clusters, cluster_words_classified, encodings, colors)
         ax.set_yticklabels(y_labels)
         axs[ax_x][ax_y].set_title(str(cluster))
 
+    fig.patch.set_facecolor("white")
     fig.tight_layout()
     return fig
