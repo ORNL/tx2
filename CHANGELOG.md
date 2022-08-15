@@ -6,13 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Suggested dev_env.yml environment for contributors
+- api update to devices where "mps" is now checked in addition to "cuda"
+
 ### Changed
 - stopwords will be from tx2 init rather than nltk download
 - bumped package versions
 - specified package versions in requirements and setup.py
 - updating example jupyter notebooks to use new versions of packages
-- api update to devices where "mps" is now checked in addition to "cuda"
-- adding ipympl to dependency list
+- change datasources in jupyter example notebooks
 
 ### Fixed 
 - updated to patched numpy version 1.22
