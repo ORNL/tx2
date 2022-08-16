@@ -23,8 +23,6 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 from tx2 import utils, STOPWORDS
 
-import nltk
-
 
 def cluster_projections(
     projections, clustering_alg, **clustering_args
