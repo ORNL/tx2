@@ -27,11 +27,10 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    python_requires="==3.9",
+    python_requires="~=3.9",
     packages=["tx2"],
     install_requires=[
         "scikit-learn~=1.1",
-        "nltk~=3.2",
         "pandas~=1.4",
         "numpy~=1.22",
         "torch~=1.12",
