@@ -4,22 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [1.1.0] - 2022-08-30
 
 ### Added
-- Suggested dev_env.yml environment for contributors
-- api update to devices where "mps" is now checked in addition to "cuda"
+- Suggested dev_env.yml environment for contributors.
+- API update to devices where "mps" is now checked in addition to "cuda".
 
 ### Changed
-- stopwords will be from tx2 init rather than nltk download
-- bumped package versions
-- specified package versions in requirements and setup.py
-- updating example jupyter notebooks to use new versions of packages
-- change datasources in jupyter example notebooks
+- Stopwords will be from tx2 init rather than nltk download.
+- Bumped package versions.
+- Specified package versions in requirements and setup.py.
+- Updating example jupyter notebooks to use new versions of packages.
+- Datasources in jupyter example notebooks.
 
 ### Fixed 
-- updated to patched numpy version 1.22
-- potential issue in calc.frequent_words_in_cluster() where clusters of empty string values would stop computation
+- Updated to patched numpy version 1.22.
+- Potential issue in calc.frequent_words_in_cluster() where clusters of empty
+  string values would stop computation.
 
 
 
@@ -28,7 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Wrapper function still expecting pandas series instead of numpy array.
-- missing nltk.download("stopwords")
+- Missing nltk.download("stopwords").
 
 
 
