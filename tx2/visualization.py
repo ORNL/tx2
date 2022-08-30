@@ -3,13 +3,11 @@
 import itertools
 import math
 from typing import Dict, List, Union
-import logging
 
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 from IPython.core.interactiveshell import InteractiveShell
-from IPython.display import clear_output, display
 from matplotlib.lines import Line2D
 from sklearn.metrics import confusion_matrix
 from wordcloud import WordCloud
@@ -384,8 +382,8 @@ def plot_embedding_projections(text, dashboard, prediction=None):
 
     # if text differs from the selected index, render new point
     if (
-        dashboard.prior_reference_point is None or
-        dashboard.prior_reference_text != text
+        dashboard.prior_reference_point is None
+        or dashboard.prior_reference_text != text
     ):
         text_projection = dashboard.transformer_wrapper.project([text])[0]
         if prediction is None:
@@ -471,11 +469,7 @@ def plot_embedding_projections(text, dashboard, prediction=None):
     fmt = InteractiveShell.instance().display_formatter.format
     data, metadata = fmt(fig)
     dashboard.out_projection_scatter.outputs = (
-        {
-            'output_type': 'display_data',
-            'data': data,
-            'metadata': metadata
-        },
+        {"output_type": "display_data", "data": data, "metadata": metadata},
     )
 
     dashboard.html_graph_status.value = (

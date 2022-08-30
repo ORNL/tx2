@@ -137,7 +137,7 @@ def frequent_words_in_cluster(
     :return: A list of tuples, each tuple containing the word and the number of times
         it appears in that cluster.
     """
-    freq_words = [("",0)]
+    freq_words = [("", 0)]
     try:
         counter = CountVectorizer(stop_words=STOPWORDS)
         cv_fit = counter.fit_transform(texts)
@@ -146,8 +146,10 @@ def frequent_words_in_cluster(
             key=lambda x: x[1],
             reverse=True,
         )
-    except ValueError as e:
-        logging.warning(f"ValueError in frequent_words_in_cluster. Could be caused by cluster of empty text.")
+    except ValueError:
+        logging.warning(
+            "ValueError in frequent_words_in_cluster. Could be caused by cluster of empty text."
+        )
     finally:
         return freq_words
 
@@ -186,9 +188,7 @@ def frequent_words_by_class_in_cluster(
     # iterate through each classification and get the number of entries with that word in it
     for classification in encodings.values():
         local_df = working_df[working_df.target == classification]
-        counter = CountVectorizer(
-            stop_words=STOPWORDS, vocabulary=vocab
-        )
+        counter = CountVectorizer(stop_words=STOPWORDS, vocabulary=vocab)
         cv_fit = counter.fit_transform(local_df.text.values)
         class_freq_words = list(
             zip(counter.get_feature_names_out(), cv_fit.toarray().sum(axis=0))

@@ -48,7 +48,7 @@ def test_wrapper_prepare_no_crash(
 
     wrapper.prepare(umap_args=dict(n_neighbors=2))
 
-    
+
 def test_wrapper_np_prepare_no_crash(
     dummy_np_data, dummy_encodings, dummy_model, clear_files_teardown
 ):

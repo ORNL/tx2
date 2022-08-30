@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updating example jupyter notebooks to use new versions of packages.
 - Datasources in jupyter example notebooks.
 
-### Fixed 
+### Fixed
 - Updated to patched numpy version 1.22.
 - Potential issue in calc.frequent_words_in_cluster() where clusters of empty
   string values would stop computation.

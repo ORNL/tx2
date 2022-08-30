@@ -61,8 +61,8 @@ class Wrapper:
             <https://huggingface.co/transformers/main_classes/tokenizer.html>`_. Note that **this
             argument is not required**, if the user intends to manually specify encode and
             classification functions.
-        :param device: Set the device for pytorch to place tensors on, pass either "cpu", 
-            "cuda", or "mps". This variable is used by the default embedding function. 
+        :param device: Set the device for pytorch to place tensors on, pass either "cpu",
+            "cuda", or "mps". This variable is used by the default embedding function.
             If unspecified, "cuda" or "mps" will be used if GPU is found, otherwise it defaults to "cpu".
         :param cache_path: The directory path to cache intermediate outputs from the
             :meth:`tx2.wrapper.Wrapper.prepare` function. This allows the wrapper to precompute
