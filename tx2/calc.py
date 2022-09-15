@@ -20,6 +20,7 @@ from sklearn.cluster import (
     SpectralCoclustering,
 )
 from sklearn.feature_extraction.text import CountVectorizer
+import torch
 
 from tx2 import utils, STOPWORDS
 
@@ -196,6 +197,57 @@ def frequent_words_by_class_in_cluster(
         for pair in class_freq_words:
             word_dict[pair[0]][str(classification)] = pair[1]
     return word_dict
+
+
+def salience_map_raw(
+    soft_classify_function, text: str, encodings: Dict[str, int], length: int = 256
+) -> List[Tuple[str, np.ndarray, np.ndarray, str]]:
+    """Calculates the total change in output classification probabilities when each
+    individual word in the text is removed, a proxy for each word's "importance" in
+    the model prediction.
+    :param soft_classify_function: A function that takes as input an array of texts
+        and returns an array of output values for each category.
+    :param text: The text to compute the salience map for.
+    :param encodings: The dictionary of class/category encodings.
+    :param length: The maximum number of words to stop at. Since transformer tokens
+        are unlikely to always be full words, this won't directly correspond to what
+        the model actually uses, but it's to help at least marginally cut down on
+        processing time. (Running this function on each text in an entire data frame
+        can take a while.)
+    :return: An array of tuples. Each tuple corresponds to that word being removed,
+        and includes the word that was removed, the output prediction values, the diff
+        between the unaltered text and altered text output prediction values, and the
+        new predicted category with the text removed: :code:`("WORD", PRED_VALUES,
+        PRED_VALUES - ORIGINAL_PRED_VALUES, PRED_CATEGORY)`. Note that the first entry
+        in the map is the outputs for the original text.
+    """
+    # TODO: this function could probably be optimized - not utilizing batching capabilities of soft_classify_function
+    # (pass in entire array of text variants, and recombine results afterwards)
+    # also note that technically it's removing every instance of a word, not just the current indexed one
+    words = text.split(" ")
+
+    texts = []
+    texts.append(text)
+    delta_words = [""]
+    for index, word in enumerate(words):
+        if index > length:
+            break
+        delta_words.append(word)
+        # current_text = text.replace(word, "")
+        current_text = " ".join(words[:index] + words[index + 1 :])
+        texts.append(current_text)
+
+
+    all_scores = soft_classify_function(texts)
+    
+    # get index of predicted class for each output
+    cats = torch.argmax(all_scores, dim=1)
+
+    diffs = (all_scores - all_scores[0]).to("cpu").detach().tolist()
+
+    deltas = list(zip(delta_words, all_scores, diffs, cats))
+
+    return deltas
 
 
 def salience_map(
