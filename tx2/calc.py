@@ -243,7 +243,7 @@ def salience_map_raw(
     # get index of predicted class for each output
     cats = torch.argmax(all_scores, dim=1)
 
-    diffs = (all_scores - all_scores[0]).to("cpu").detach().tolist()
+    diffs = (all_scores - all_scores[0]).to("cpu").detach().numpy()
 
     deltas = list(zip(delta_words, all_scores, diffs, cats))
 
@@ -310,7 +310,7 @@ def sort_salience_map(salience) -> List[Tuple[str, float]]:
     diffs = []
 
     for entry in salience:
-        diff = abs(entry[2][0]).sum()
+        diff = abs(entry[2]).sum()
         diffs.append((entry[0], diff))
 
     diffs = sorted(diffs, key=lambda x: x[1], reverse=True)

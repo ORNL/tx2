@@ -657,7 +657,7 @@ class Wrapper:
             self.salience_maps = read(self.salience_maps_path)
             self.salience_computed = True
         else:
-            #self._compute_all_salience_maps()
+            # self._compute_all_salience_maps()
             self._compute_all_salience_maps_raw()
 
         logging.info("Checking for cached cluster profiles...")
