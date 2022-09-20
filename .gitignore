@@ -13,3 +13,5 @@ tx2.egg-info
 dist/*
 build/*
 data/*
+prof/*
+examples/data/*

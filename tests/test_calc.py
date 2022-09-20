@@ -1,4 +1,4 @@
-from tx2.calc import frequent_words_in_cluster, frequent_words_by_class_in_cluster
+from tx2.calc import frequent_words_in_cluster, frequent_words_by_class_in_cluster, sort_salience_map
 
 
 def test_frequent_words_in_cluster(dummy_df):
@@ -26,3 +26,12 @@ def test_frequent_words_by_class_in_cluster(dummy_df, dummy_encodings, dummy_clu
     }
 
     assert freq_words_by_class == expected_output
+
+
+def test_sort_salience_map(dummy_salience):
+    result = sort_salience_map(dummy_salience)
+
+    assert result == [
+        ("test_avg6.5_sum26", 26),
+        ("test_avg2_sum8", 8)
+    ]

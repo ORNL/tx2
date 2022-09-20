@@ -29,6 +29,15 @@ def replacement_debounce():
 
 
 @pytest.fixture
+def dummy_salience():
+    salience = [
+        ("test_avg2_sum8", None, np.array([2, 2, 2, 2]), None),
+        ("test_avg6.5_sum26", None, np.array([2, 4, 8, 12]), None),
+    ]
+    return salience
+
+
+@pytest.fixture
 def dummy_df():
     rows = [
         {"text": "testing row 0", "target": 0},
