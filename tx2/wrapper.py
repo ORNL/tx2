@@ -9,9 +9,7 @@ import pandas as pd
 import torch
 import umap
 
-# TODO: not crazy about this, but library agnosticism later
 from torch.utils.data import DataLoader
-import torch
 from tqdm.autonotebook import tqdm
 
 from tx2 import calc, dataset, utils
@@ -333,7 +331,7 @@ class Wrapper:
         logging.info("Done!")
 
         self.salience_computed = True
-        
+
     # TODO: raw version should eventually be the actual version.
     def _compute_all_salience_maps_raw(self):
         """Get a salience map of every test entrypoint and store it. This is one of
@@ -344,7 +342,7 @@ class Wrapper:
         logging.info("Computing salience maps...")
         self.salience_maps = []
         for entry in tqdm(self.test_texts, total=len(self.test_texts)):
-            deltas = calc.salience_map_raw(
+            deltas = calc.salience_map_batch(
                 self.raw_soft_classify, entry[: self.max_len], self.encodings
             )
             self.salience_maps.append(deltas)
@@ -389,9 +387,7 @@ class Wrapper:
         # get the labels and label positions
         self.cluster_labels = []
         for index, cluster in enumerate(self.clusters):
-            x, y, label = self._determine_cluster_label(
-                self.clusters[cluster], cluster
-            )
+            x, y, label = self._determine_cluster_label(self.clusters[cluster], cluster)
             self.cluster_labels.append((x, y, label))
         logging.info("Saving cluster labels...")
         write(self.cluster_labels, self.cluster_labels_path)
@@ -419,13 +415,22 @@ class Wrapper:
         logging.info("Done!")
 
     # TODO
-    def _default_encoding_function(self, text):
-        encoded = self.tokenizer.encode_plus(text, None, **self.encoder_options)
+    # def _default_encoding_function(self, texts):
+    #     encoded = self.tokenizer.encode_plus(texts, None, **self.encoder_options)
+    #     return {
+    #         "input_ids": torch.tensor(encoded["input_ids"], device=self.device),
+    #         "attention_mask": torch.tensor(
+    #             encoded["attention_mask"], device=self.device
+    #         ),
+    #     }
+
+    def _default_encoding_function(self, texts):
+        encoded = self.tokenizer(
+            list(texts), return_tensors="pt", **self.encoder_options
+        )
         return {
-            "input_ids": torch.tensor(encoded["input_ids"], device=self.device),
-            "attention_mask": torch.tensor(
-                encoded["attention_mask"], device=self.device
-            ),
+            "input_ids": encoded.input_ids.to(self.device),
+            "attention_mask": encoded.attention_mask.to(self.device),
         }
 
     def _default_classification_function(self, inputs):
@@ -452,7 +457,9 @@ class Wrapper:
         )
         return loader
 
-    def recompute_visual_clusterings(self, clustering_alg: str = "DBSCAN", clustering_args={}):
+    def recompute_visual_clusterings(
+        self, clustering_alg: str = "DBSCAN", clustering_args={}
+    ):
         """Re-run the clustering algorithm. Note that this automatically overrides any
         previously cached data for clusters.
 
@@ -466,7 +473,10 @@ class Wrapper:
         self._compute_visual_clusters(clustering_alg, **clustering_args)
 
     def recompute_projections(
-            self, umap_args: Dict = {}, clustering_alg: str = "DBSCAN", clustering_args: Dict = {}
+        self,
+        umap_args: Dict = {},
+        clustering_alg: str = "DBSCAN",
+        clustering_args: Dict = {},
     ):
         """Re-run both projection training and clustering algorithms. Note that this
         automatically overrides both previously saved projections as well as clustering
@@ -500,7 +510,7 @@ class Wrapper:
         encodings = self.encode_function(text)
         return encodings
 
-    def soft_classify(self, texts: List[str]): # -> List[List[float]]:
+    def soft_classify(self, texts: List[str]):  # -> List[List[float]]:
         """Get the non-argmaxed final prediction layer outputs of the classification head.
 
         :param texts: An array of texts to predict on.
@@ -515,6 +525,7 @@ class Wrapper:
                 output = output.to("cpu").detach().tolist()
                 outputs.extend(output)
         return outputs
+
     def raw_soft_classify(self, texts: List[str]) -> torch.Tensor:
         with torch.no_grad():
             loader = self._prepare_input_data(texts)
@@ -524,7 +535,7 @@ class Wrapper:
                 if outputs is None:
                     outputs = output
                 else:
-                    outputs = torch.cat((outputs, output))#.to(device=self.device)
+                    outputs = torch.cat((outputs, output))  # .to(device=self.device)
         return outputs
 
     def classify(self, texts: List[str]) -> List[int]:

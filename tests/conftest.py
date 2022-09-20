@@ -97,9 +97,9 @@ def dummy_model(dummy_df):
             self.clf = LogisticRegression()
             self.clf.fit(x, df.target)
 
-        def custom_encode(self, text):
-            transformed = torch.tensor(self.vectorizer.transform([text]).toarray())
-            return torch.squeeze(transformed)
+        def custom_encode(self, texts):
+            transformed = torch.tensor(self.vectorizer.transform(texts).toarray())
+            return transformed
 
         def custom_classify(self, inputs):
             return torch.tensor(self.clf.predict(inputs))

@@ -15,3 +15,5 @@ build/*
 data/*
 prof/*
 examples/data/*
+profile/data/*
+profile/results/*

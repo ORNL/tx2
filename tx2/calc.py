@@ -199,7 +199,7 @@ def frequent_words_by_class_in_cluster(
     return word_dict
 
 
-def salience_map_raw(
+def salience_map_batch(
     soft_classify_function, text: str, encodings: Dict[str, int], length: int = 256
 ) -> List[Tuple[str, np.ndarray, np.ndarray, str]]:
     """Calculates the total change in output classification probabilities when each
@@ -237,12 +237,12 @@ def salience_map_raw(
         current_text = " ".join(words[:index] + words[index + 1 :])
         texts.append(current_text)
 
-
     all_scores = soft_classify_function(texts)
-    
+
     # get index of predicted class for each output
     cats = torch.argmax(all_scores, dim=1)
 
+    # TODO: This appears to be the biggest slowdown in the prepare function right now
     diffs = (all_scores - all_scores[0]).to("cpu").detach().numpy()
 
     deltas = list(zip(delta_words, all_scores, diffs, cats))

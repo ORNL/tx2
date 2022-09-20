@@ -1,6 +1,5 @@
 from tx2.wrapper import Wrapper
 
-
 # TODO: write support for numpy arrays (should take train_texts, train_y, test_texts, test_y)
 # NOTE: it may actually be better to _only_ support numpy arrays. It's trivial to get those arrays from the dataframe, and it's
 #   the same number of arguments. This also simplifies some of the function calls in the visualization module.

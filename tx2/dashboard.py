@@ -499,7 +499,7 @@ class Dashboard:
 
         new_text = self.transformer_wrapper.test_texts[index]
         # below: THIS IS TECHNICALLY INCORRECT, shows the color of correct class instead of
-        # predicted, but still need index. Leaving this her and then just modifying color in
+        # predicted, but still need index. Leaving this here and then just modifying color in
         # on_text_area_change
         self.prior_reference_point = (
             self.transformer_wrapper.projections_testing[index],

@@ -6,9 +6,13 @@ class EncodedDataset(Dataset):
         self.texts = texts
         self.wrapper = wrapper
 
+        self.encoded = self.wrapper.encode(self.texts)
+
     def __getitem__(self, index):
-        encoded = self.wrapper.encode(self.texts[index])
-        return encoded
+        return {
+            "input_ids": self.encoded["input_ids"][index],
+            "attention_mask": self.encoded["attention_mask"][index],
+        }
 
     def __len__(self):
         return len(self.texts)

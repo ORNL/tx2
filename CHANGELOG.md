@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.1] - TBD
 
+### Changed
+- Performance enhancements by using batch operations in hugging face and torch
+
 ### Fixed
 - Corrected bug in how summation is occuring in sort_salience_map() and added unit test
 
