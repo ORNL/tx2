@@ -4,13 +4,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.1.1] - TBD
+## [1.2.1] - 2022-09-21
+
+### Added
+- Profiler script.
 
 ### Changed
-- Performance enhancements by using batch operations in hugging face and torch
+- Performance enhancements by using batch operations in hugging face and torch.
+  All interaction functions now need to support accepting an array of texts.
+  (The encoding function has changed as a result.)
 
 ### Fixed
-- Corrected bug in how summation is occuring in sort_salience_map() and added unit test
+- Corrected bug in how summation is occuring in sort_salience_map() and added unit test.
 
 
 
