@@ -414,38 +414,31 @@ class Wrapper:
         write(self.cluster_class_word_sets, self.cluster_class_words_path)
         logging.info("Done!")
 
-    # TODO
-    # def _default_encoding_function(self, texts):
-    #     encoded = self.tokenizer.encode_plus(texts, None, **self.encoder_options)
-    #     return {
-    #         "input_ids": torch.tensor(encoded["input_ids"], device=self.device),
-    #         "attention_mask": torch.tensor(
-    #             encoded["attention_mask"], device=self.device
-    #         ),
-    #     }
-
     def _default_encoding_function(self, texts):
         encoded = self.tokenizer(
             list(texts), return_tensors="pt", **self.encoder_options
         )
-        return {
-            "input_ids": encoded.input_ids.to(self.device),
-            "attention_mask": encoded.attention_mask.to(self.device),
-        }
+        return torch.cat((encoded.input_ids.to(self.device).unsqueeze(1), encoded.attention_mask.to(self.device).unsqueeze(1)), dim=1)
 
     def _default_classification_function(self, inputs):
-        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        input_ids = inputs[:, 0, :]
+        attention_mask = inputs[:, 1, :]
+        output = self.classifier(input_ids, attention_mask)
         if type(output) != torch.Tensor:
             output = output.logits
         return torch.argmax(output, dim=1)
 
     def _default_embedding_function(self, inputs):
-        return self.language_model(inputs["input_ids"], inputs["attention_mask"])[0][
+        input_ids = inputs[:, 0, :]
+        attention_mask = inputs[:, 1, :]
+        return self.language_model(input_ids, attention_mask)[0][
             :, 0, :
         ]  # [CLS] token embedding
 
     def _default_soft_classification_function(self, inputs):
-        output = self.classifier(inputs["input_ids"], inputs["attention_mask"])
+        input_ids = inputs[:, 0, :]
+        attention_mask = inputs[:, 1, :]
+        output = self.classifier(input_ids, attention_mask)
         if type(output) != torch.Tensor:
             output = output.logits
         return output
