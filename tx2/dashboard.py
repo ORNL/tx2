@@ -251,6 +251,7 @@ class Dashboard:
             text_options.append((i, [i, text]))
 
         self.drop_text_picker.options = text_options
+        self.drop_text_picker.index = 0
 
     def _create_section_layouts(self):
         # ------------
