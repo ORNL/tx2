@@ -81,7 +81,7 @@ as discussed in the Basic Usage page of the documentation.
 To cite usage of TX2 in a publication, the DOI for this code is [https://doi.org/10.21105/joss.03652](https://doi.org/10.21105/joss.03652)
 
 bibtex:
-```
+```bibtex
 @article{Martindale2021,
   doi = {10.21105/joss.03652},
   url = {https://doi.org/10.21105/joss.03652},
