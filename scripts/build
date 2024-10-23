@@ -1,8 +1,0 @@
-#!/bin/bash
-
-python -m build
-twine check dist/*
-#twine upload --repository testpypi dist/* --verbose --skip-existing
-#echo -e "\ncheck https://test.pypi.org/project/curifactory\n"
-#read -p "press any key to continue..."
-twine upload dist/* --skip-existing
