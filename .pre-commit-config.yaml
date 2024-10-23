@@ -1,12 +1,53 @@
 repos:
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v2.3.0
+  rev: v4.4.0
   hooks:
+  - id: check-merge-conflict
+  - id: check-ast
+  - id: check-json
+  - id: check-toml
   - id: check-yaml
   - id: end-of-file-fixer
   - id: trailing-whitespace
-  - id: flake8
 - repo: https://github.com/psf/black
-  rev: 22.8.0
+  rev: 23.1.0
   hooks:
   - id: black
+- repo: https://github.com/PyCQA/flake8
+  rev: 6.0.0
+  hooks:
+  - id: flake8
+- repo: https://github.com/PyCQA/isort
+  rev: 5.12.0
+  hooks:
+  - id: isort
+- repo: https://github.com/asottile/pyupgrade  # update python syntax
+  rev: v3.3.1
+  hooks:
+  - id: pyupgrade
+    args: [--py39-plus]
+- repo: https://github.com/kynan/nbstripout  # erase jupyter output cells
+  rev: 0.6.0
+  hooks:
+  - id: nbstripout
+- repo: local
+  hooks:
+  # - id: pylint
+  #   name: pylint
+  #   entry: pylint
+  #   types: [python]
+  #   args: ["--output-format=colorized"]
+  #   language: system
+  #   require_serial: true
+  - id: test
+    name: test
+    entry: make
+    args: ["test"]
+    language: system
+    pass_filenames: false
+  - id: clean
+    name: clean
+    entry: make
+    args: ["clean"]
+    language: system
+    pass_filenames: false

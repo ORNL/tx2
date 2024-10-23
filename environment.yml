@@ -1,0 +1,25 @@
+name: tx2
+channels:
+  - conda-forge
+dependencies:
+  - python
+  - pytorch
+  - scikit-learn
+  - pandas
+  - numpy
+  - tqdm
+  - umap-learn
+  - matplotlib
+  - ipywidgets
+  - wordcloud
+  - ca-certificates
+  - openssl
+  - jupyter
+  - jupyterlab
+  - black
+  - isort
+  - transformers
+  - pytest
+  - pytest-mock
+  - ipympl
+  - pre-commit
