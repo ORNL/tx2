@@ -1,15 +1,16 @@
-from setuptools import setup
 import re
+
+from setuptools import setup
 
 
 def get_property(prop):
     result = re.search(
-        r'{}\s*=\s*[\'"]([^\'"]*)[\'"]'.format(prop), open("tx2/__init__.py").read()
+        rf'{prop}\s*=\s*[\'"]([^\'"]*)[\'"]', open("tx2/__init__.py").read()
     )
     return result.group(1)
 
 
-with open("README.md", "r", encoding="utf-8") as infile:
+with open("README.md", encoding="utf-8") as infile:
     long_description = infile.read()
 
 setup(
@@ -27,7 +28,7 @@ setup(
         "License :: OSI Approved :: BSD License",
         "Operating System :: OS Independent",
     ],
-    python_requires="~=3.9",
+    python_requires=">=3.9",
     packages=["tx2"],
     install_requires=[
         "scikit-learn",
